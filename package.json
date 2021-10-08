@@ -3,12 +3,17 @@
   "private": true,
   "workspaces": [
     "packages/*",
-    "subgraphs/*"
+    "subgraphs/exchange",
+    "subgraphs/masterchefV2"
   ],
   "scripts": {
     "build": "yarn workspaces run build",
     "codegen": "yarn workspaces run codegen",
     "prepare": "yarn workspaces run prepare",
+    "create": "yarn workspaces run deploy",
+    "deploy": "yarn workspaces run deploy",
+    "create-hosted": "yarn workspaces run create-hosted",
+    "deploy-hosted": "yarn workspaces run deploy-hosted",
     "prepare:mainnet": "yarn workspaces run prepare:mainnet",
     "prepare:rinkeby": "yarn workspaces run prepare:rinkeby",
     "prepare:ropsten": "yarn workspaces run prepare:ropsten",
@@ -16,8 +21,8 @@
     "prepare:shibuya": "yarn workspaces run prepare:shibuya"
   },
   "devDependencies": {
-    "@graphprotocol/graph-cli": "^0.22.0",
-    "@graphprotocol/graph-ts": "^0.22.0",
+    "@graphprotocol/graph-cli": "^0.21.1",
+    "@graphprotocol/graph-ts": "^0.20.0",
     "@sushiswap/core": "^1.4.2",
     "@sushiswap/prettier-config": "^0.1.0",
     "@typescript-eslint/eslint-plugin": "^4.0.0",

@@ -13,6 +13,9 @@
     "remove-local": "graph remove --node http://localhost:8020/ digitalnative/standardprotocol",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 digitalnative/standardprotocol",
     "deploy": "graph deploy --node $GRAPH_URL --ipfs $IPFS_URL $GRAPH_USER/$CHAIN-exchange subgraph.yaml",
+    "create": "graph create --node $GRAPH_URL $GRAPH_USER/$CHAIN-exchange",
+    "create-hosted": "graph create --node https://api.thegraph.com/deploy/ $GRAPH_USER/$CHAIN-exchange",
+    "deploy-hosted": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ $GRAPH_USER/$CHAIN-exchange subgraph.yaml",
     "deploy-studio:mainnet": "graph deploy --studio sushi---mainnet-exchange",
     "prepare": "mustache ../../config/$CHAIN.json template.yaml > subgraph.yaml"
   }

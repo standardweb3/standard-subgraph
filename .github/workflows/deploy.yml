@@ -22,8 +22,11 @@ jobs:
       matrix:
         include:
           - chain: rinkeby
-            graph_url: https://api.thegraph.com/deploy/
-            ipfs_url: https://api.thegraph.com/ipfs/
+            graph_service: hosted
+          - chain: shibuya
+            graph_service: private
+            graph_url: null
+            ipfs_url: null
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -34,14 +37,13 @@ jobs:
           CHAIN: ${{ matrix.chain }}
         with:
           cmd: install
-
+        # graph auth --product hosted-service "${{ secrets.GRAPH_API_KEY }}"
       - name: Graph CLI - Auth
         shell: bash
         run: |
           yarn global add @graphprotocol/graph-cli
           echo "$(yarn global bin)" >> $GITHUB_PATH
           echo "::add-mask::${{ secrets.GRAPH_API_KEY }}"
-          graph auth --product hosted-service "${{ secrets.GRAPH_API_KEY }}"
 
       - name: Yarn - Prepare Subgraph
         uses: borales/actions-yarn@v2.3.0
@@ -50,11 +52,27 @@ jobs:
         with:
           cmd: prepare
 
-      - name: Yarn - Deploy Subgraph
+      - name: Yarn - Subgraph Code Generation
         uses: borales/actions-yarn@v2.3.0
+        env:
+          CHAIN: ${{ matrix.chain }}
+        with:
+          cmd: codegen
+
+      - name: Yarn - Deploy Subgraph to Hosted Service
+        uses: borales/actions-yarn@v2.3.0
+        if: ${{ matrix.graph_service == 'hosted' }}
+        env:
+          CHAIN: ${{ matrix.chain }}
+        with:
+          cmd: deploy-hosted --access-token ${{ secrets.GRAPH_API_KEY }}
+
+      - name: Yarn - Deploy Subgraph to Private Service
+        uses: borales/actions-yarn@v2.3.0
+        if: ${{ matrix.graph_service == 'private' }}
         env:
           CHAIN: ${{ matrix.chain }}
           GRAPH_URL: ${{ matrix.graph_url }}
           IPFS_URL: ${{ matrix.ipfs_url }}
         with:
-          cmd: deploy
+          cmd: deploy --access-token ${{ secrets.PRIVATE_GRAPH_API_KEY }}

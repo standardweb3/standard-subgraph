@@ -8,9 +8,9 @@ dataSources:
     name: MasterPool
     network: {{ network }}
     source:
-      address: '{{ address }}'
+      address: '{{ masterchefV2.address }}'
       abi: MasterPool
-      startBlock: {{ startBlock }}
+      startBlock: {{ masterchefV2.startBlock }}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4

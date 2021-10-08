@@ -4,7 +4,7 @@ name: Subgraph Deploy
 on:
   push:
     branches:
-      - develop
+      - master
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -46,6 +46,7 @@ jobs:
         # env:
         #   GRAPH_API_KEY: ${{ secrets.GRAPH_API_KEY }}
         run: |
+          echo "$(yarn global bin)" >> $GITHUB_PATH
           echo "::add-mask::${{ secrets.GRAPH_API_KEY }}"
           graph auth --product hosted-service "${{ secrets.GRAPH_API_KEY }}"
 

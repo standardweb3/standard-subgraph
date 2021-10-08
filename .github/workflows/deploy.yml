@@ -30,6 +30,8 @@ jobs:
 
       - name: Yarn - Install
         uses: borales/actions-yarn@v2.3.0
+        env:
+          CHAIN: ${{ matrix.chain }}
         with:
           cmd: install
 
@@ -38,21 +40,24 @@ jobs:
         with:
           cmd: global add @graphprotocol/graph-cli
 
-      - name: Graph CLI | Auth
+      - name: Graph CLI - Auth
         shell: bash
-        env:
-          GRAPH_API_KEY: ${{ secrets.GRAPH_API_KEY }}
+        # echo "::add-mask::$GRAPH_API_KEY"
+        # env:
+        #   GRAPH_API_KEY: ${{ secrets.GRAPH_API_KEY }}
         run: |
-          echo "::add-mask::$GRAPH_API_KEY"
-          graph auth --product hosted-service $GRAPH_API_KEY
+          echo "::add-mask::${{ secrets.GRAPH_API_KEY }}"
+          graph auth --product hosted-service "${{ secrets.GRAPH_API_KEY }}"
 
-      - uses: borales/actions-yarn@v2.3.0
+      - name: Yarn - Prepare Subgraph
+        uses: borales/actions-yarn@v2.3.0
         env:
           CHAIN: ${{ matrix.chain }}
         with:
           cmd: prepare
 
-      # - uses: borales/actions-yarn@v2.3.0
+      # - name: Yarn - Deploy Subgraph
+      #   uses: borales/actions-yarn@v2.3.0
       #   env:
       #     CHAIN: ${{ matrix.chain }}
       #     GRAPH_URL: ${{ matrix.graph_url }}

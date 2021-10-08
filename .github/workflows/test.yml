@@ -1,3 +1,6 @@
+---
+name: Subgraph Test
+
 on: push
 
 jobs:

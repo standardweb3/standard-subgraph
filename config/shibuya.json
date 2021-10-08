@@ -16,9 +16,5 @@
     "address": "",
     "startBlock": ""
   },
-  "whitelist": [
-    "",
-    "",
-    ""
-  ]
+  "whitelist": [""]
 }

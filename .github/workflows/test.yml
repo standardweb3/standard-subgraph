@@ -6,17 +6,46 @@ on: push
 jobs:
   build:
     runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        include:
+          - chain: rinkeby
+            graph_service: hosted
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-#       - name: Yarn Install
-#         env:
-#           INFURA_ENDPOINT: ${{ secrets.INFURA_ENDPOINT }}
-#         run: |
-#           yarn --frozen-lockfile
 
-#       - name: Yarn Test
-#         env:
-#           INFURA_ENDPOINT: ${{ secrets.INFURA_ENDPOINT }}
-#         run: |
-#           yarn test
+      - name: Yarn - Install
+        uses: borales/actions-yarn@v2.3.0
+        env:
+          CHAIN: ${{ matrix.chain }}
+        with:
+          cmd: install
+
+      - name: Graph CLI - Auth
+        shell: bash
+        run: |
+          yarn global add @graphprotocol/graph-cli
+
+      - name: Yarn - Prepare Subgraph
+        uses: borales/actions-yarn@v2.3.0
+        env:
+          CHAIN: ${{ matrix.chain }}
+        with:
+          cmd: prepare
+
+      - name: Yarn - Subgraph Code Generation
+        uses: borales/actions-yarn@v2.3.0
+        env:
+          CHAIN: ${{ matrix.chain }}
+        with:
+          cmd: codegen
+
+      - name: Yarn - Subgraph Code Generation
+        uses: borales/actions-yarn@v2.3.0
+        env:
+          CHAIN: ${{ matrix.chain }}
+        with:
+          cmd: test

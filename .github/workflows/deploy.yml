@@ -11,10 +11,10 @@ on:
 
 env:
   GRAPH_USER: digitalnativeinc
+  GRAPH_CLI_VERSION: 0.22.2
 
 jobs:
   subgraph-deploy:
-    name: Subgraph Deploy
     runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
@@ -23,10 +23,10 @@ jobs:
         include:
           - chain: rinkeby
             graph_service: hosted
-          - chain: shibuya
-            graph_service: private
-            graph_url: null
-            ipfs_url: null
+          # - chain: shibuya
+          #   graph_service: private
+          #   graph_url: null
+          #   ipfs_url: null
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -37,11 +37,11 @@ jobs:
           CHAIN: ${{ matrix.chain }}
         with:
           cmd: install
-        # graph auth --product hosted-service "${{ secrets.GRAPH_API_KEY }}"
+
       - name: Graph CLI - Auth
         shell: bash
         run: |
-          yarn global add @graphprotocol/graph-cli
+          yarn global add @graphprotocol/graph-cli@${{ env.GRAPH_CLI_VERSION }}
           echo "$(yarn global bin)" >> $GITHUB_PATH
           echo "::add-mask::${{ secrets.GRAPH_API_KEY }}"
 

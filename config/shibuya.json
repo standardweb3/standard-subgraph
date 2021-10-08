@@ -1,22 +1,19 @@
 {
   "network": "shibuya",
-  "factory_address": "",
-  "masterchef_address": "",
-  "sushi_bar_address": "",
-  "sushi_maker_address": "",
-  "sushi_token_address": "",
-  "weth_address": "",
+  "factory_address": "0x0E60C35FCf3184dcE5CF04D4b736e56F2DE7CaF7",
+  "dai_address": "",
+  "dai_weth_pair": "",
   "uniswap_factory_address": "",
-  "bentobox_address": "",
-  "kashi_pair_medium_risk_master_address": "",
-  "minimum_usd_threshold_new_pairs": "3000",
-  "minimum_liquidity_threshold_eth": "1000",
+  "minimum_usd_threshold_new_pairs": "300",
+  "minimum_liquidity_threshold_eth": "0.01",
+  "native_address": "0x321F318e7C276c93Cf3094fd3a9d7c4362fd19FB",
   "factory": {
-    "address": "",
-    "startBlock": ""
+    "address": "0x0E60C35FCf3184dcE5CF04D4b736e56F2DE7CaF7",
+    "startBlock": "150000"
   },
   "masterchefV2": {
     "address": "",
-    "startBlock": ""
-  }
+    "startBlock": "150000"
+  },
+  "whitelist": ["0x321F318e7C276c93Cf3094fd3a9d7c4362fd19FB"]
 }

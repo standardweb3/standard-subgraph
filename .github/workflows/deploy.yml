@@ -35,17 +35,13 @@ jobs:
         with:
           cmd: install
 
-      - name: Yarn - Add Graph CLI
-        uses: borales/actions-yarn@v2.3.0
-        with:
-          cmd: global add @graphprotocol/graph-cli
-
       - name: Graph CLI - Auth
         shell: bash
         # echo "::add-mask::$GRAPH_API_KEY"
         # env:
         #   GRAPH_API_KEY: ${{ secrets.GRAPH_API_KEY }}
         run: |
+          yarn global add @graphprotocol/graph-cli
           echo "$(yarn global bin)" >> $GITHUB_PATH
           echo "::add-mask::${{ secrets.GRAPH_API_KEY }}"
           graph auth --product hosted-service "${{ secrets.GRAPH_API_KEY }}"

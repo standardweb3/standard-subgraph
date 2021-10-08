@@ -16,15 +16,15 @@
     "prepare:shibuya": "yarn workspaces run prepare:shibuya"
   },
   "devDependencies": {
-    "@graphprotocol/graph-cli": "^0.21.1",
-    "@graphprotocol/graph-ts": "^0.20.0",
+    "@graphprotocol/graph-cli": "^0.22.0",
+    "@graphprotocol/graph-ts": "^0.22.0",
     "@sushiswap/core": "^1.4.2",
     "@sushiswap/prettier-config": "^0.1.0",
     "@typescript-eslint/eslint-plugin": "^4.0.0",
     "@typescript-eslint/parser": "^4.0.0",
     "ejs": "^3.1.6",
     "eslint": "^7.0.0",
-    "eslint-config-prettier": "^6.0.0",
+    "eslint-config-prettier": "^8.0.0",
     "handlebars": "^4.7.7",
     "mustache": "^4.2.0",
     "prettier": "^2.0.0",

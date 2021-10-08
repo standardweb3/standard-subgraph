@@ -4,7 +4,7 @@ name: Subgraph Deploy
 on:
   push:
     branches:
-      - master
+      - develop
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -41,7 +41,7 @@ jobs:
       - name: Graph CLI | Auth
         shell: bash
         env:
-          GRAPH_API_KEY: ${{ secret.GRAPH_API_KEY }}
+          GRAPH_API_KEY: ${{ secrets.GRAPH_API_KEY }}
         run: |
           echo "::add-mask::$GRAPH_API_KEY"
           graph auth --product hosted-service $GRAPH_API_KEY
@@ -52,10 +52,10 @@ jobs:
         with:
           cmd: prepare
 
-      - uses: borales/actions-yarn@v2.3.0
-        env:
-          CHAIN: ${{ matrix.chain }}
-          GRAPH_URL: ${{ matrix.graph_url }}
-          IPFS_URL: ${{ matrix.ipfs_url }}
-        with:
-          cmd: deploy
+      # - uses: borales/actions-yarn@v2.3.0
+      #   env:
+      #     CHAIN: ${{ matrix.chain }}
+      #     GRAPH_URL: ${{ matrix.graph_url }}
+      #     IPFS_URL: ${{ matrix.ipfs_url }}
+      #   with:
+      #     cmd: deploy

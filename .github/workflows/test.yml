@@ -1,12 +1,11 @@
-# on: push
+on: push
 
-# jobs:
-#   build:
-#     runs-on: ubuntu-20.04
-#     steps:
-#       - name: Checkout Repository
-#         uses: actions/checkout@v2
-
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 #       - name: Yarn Install
 #         env:
 #           INFURA_ENDPOINT: ${{ secrets.INFURA_ENDPOINT }}

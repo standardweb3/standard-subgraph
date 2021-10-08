@@ -1,0 +1,24 @@
+{
+  "network": "shibuya",
+  "factory_address": "",
+  "dai_address": "",
+  "dai_weth_pair": "",
+  "masterchef_address": "",
+  "sushi_bar_address": "",
+  "sushi_maker_address": "",
+  "sushi_token_address": "",
+  "weth_address": "",
+  "uniswap_factory_address": "",
+  "minimum_usd_threshold_new_pairs": "300",
+  "minimum_liquidity_threshold_eth": "0.01",
+  "native_address": "",
+  "factory": {
+    "address": "",
+    "startBlock": ""
+  },
+  "whitelist": [
+    "",
+    "",
+    ""
+  ]
+}

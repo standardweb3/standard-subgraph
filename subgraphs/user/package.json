@@ -1,0 +1,16 @@
+{
+  "name": "user",
+  "license": "MIT",
+  "version": "1.0.0",
+  "author": "SushiSwap",
+  "scripts": {
+    "codegen": "graph codegen subgraph.yaml",
+    "build": "graph build subgraph.yaml",
+    "deploy": "graph deploy --node $GRAPH_URL --ipfs $IPFS_URL sushiswap/user subgraph.yaml",
+    "prepare": "echo UNSUPPORTED",
+    "prepare:goerli": "echo",
+    "prepare:mainnet": "echo",
+    "prepare:rinkeby": "echo",
+    "prepare:ropsten": "echo"
+  }
+}

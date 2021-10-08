@@ -1,0 +1,20 @@
+{
+  "name": "@sushiswap/subgraph-abis",
+  "version": "1.0.0",
+  "description": "Abis",
+  "license": "MIT",
+  "private": true,
+  "files": [
+    "./*.json"
+  ],
+  "scripts": {
+    "codegen": "echo",
+    "build": "echo",
+    "prepare": "echo",
+    "prepare:goerli": "echo",
+    "prepare:mainnet": "echo",
+    "prepare:rinkeby": "echo",
+    "prepare:shibuya": "echo",
+    "prepare:shiden": "echo"
+  }
+}

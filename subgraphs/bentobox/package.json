@@ -1,0 +1,23 @@
+{
+  "name": "bentobox",
+  "license": "MIT",
+  "version": "1.0.0",
+  "author": "SushiSwap",
+  "files": [
+    "generated"
+  ],
+  "scripts": {
+    "codegen": "graph codegen subgraph.yaml",
+    "build": "graph build subgraph.yaml",
+    "create-local": "graph create --node http://localhost:8020/ /sushiswap/bentobox",
+    "remove-local": "graph remove --node http://localhost:8020/ /sushiswap/bentobox",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 /sushiswap/bentobox",
+    "deploy:mainnet": "graph deploy --node $GRAPH_URL --ipfs $IPFS_URL sushiswap/bentobox subgraph.yaml",
+    "deploy:ropsten": "graph deploy --node $GRAPH_URL --ipfs $IPFS_URL sushiswap/ropsten-bentobox subgraph.yaml",
+    "prepare": "echo UNSUPPORTED",
+    "prepare:mainnet": "mustache config/mainnet.json template.yaml > subgraph.yaml",
+    "prepare:ropsten": "mustache config/ropsten.json template.yaml > subgraph.yaml",
+    "prepare:goerli": "echo",
+    "prepare:rinkeby": "echo"
+  }
+}

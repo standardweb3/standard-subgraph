@@ -1,0 +1,61 @@
+---
+name: Subgraph Deploy
+
+on:
+  push:
+    branches:
+      - master
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+env:
+  GRAPH_USER: digitalnativeinc
+
+jobs:
+  subgraph-deploy:
+    name: Subgraph Deploy
+    runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        include:
+          - chain: rinkeby
+            graph_url: https://api.thegraph.com/deploy/
+            ipfs_url: https://api.thegraph.com/ipfs/
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Yarn - Install
+        uses: borales/actions-yarn@v2.3.0
+        with:
+          cmd: install
+
+      - name: Yarn - Add Graph CLI
+        uses: borales/actions-yarn@v2.3.0
+        with:
+          cmd: global add @graphprotocol/graph-cli
+
+      - name: Graph CLI | Auth
+        shell: bash
+        env:
+          GRAPH_API_KEY: ${{ secret.GRAPH_API_KEY }}
+        run: |
+          echo "::add-mask::$GRAPH_API_KEY"
+          graph auth --product hosted-service $GRAPH_API_KEY
+
+      - uses: borales/actions-yarn@v2.3.0
+        env:
+          CHAIN: ${{ matrix.chain }}
+        with:
+          cmd: prepare
+
+      - uses: borales/actions-yarn@v2.3.0
+        env:
+          CHAIN: ${{ matrix.chain }}
+          GRAPH_URL: ${{ matrix.graph_url }}
+          IPFS_URL: ${{ matrix.ipfs_url }}
+        with:
+          cmd: deploy

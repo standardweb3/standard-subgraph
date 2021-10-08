@@ -1,0 +1,19 @@
+{
+  "name": "exchange",
+  "license": "MIT",
+  "version": "1.2.0",
+  "author": "SushiSwap",
+  "files": [
+    "generated"
+  ],
+  "scripts": {
+    "codegen": "graph codegen subgraph.yaml",
+    "build": "graph build subgraph.yaml",
+    "create-local": "graph create --node http://localhost:8020/ digitalnative/standardprotocol",
+    "remove-local": "graph remove --node http://localhost:8020/ digitalnative/standardprotocol",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 digitalnative/standardprotocol",
+    "deploy": "graph deploy --node $GRAPH_URL --ipfs $IPFS_URL $GRAPH_USER/$CHAIN-exchange subgraph.yaml",
+    "deploy-studio:mainnet": "graph deploy --studio sushi---mainnet-exchange",
+    "prepare": "mustache ../../config/$CHAIN.json template.yaml > subgraph.yaml"
+  }
+}

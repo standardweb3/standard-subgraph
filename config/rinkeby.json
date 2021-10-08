@@ -1,0 +1,20 @@
+{
+    "network": "rinkeby",
+    "factory_address": "0xb10db5fc1c2ca4d72e6ebe1a9494b61fa3b71385",
+    "dai_address":"0xc7ad46e0b8a400bb3c915120d284aafba8fc4735",
+    "dai_weth_pair": "0x524bc643e91989c78f67bd7238f0757370fce495",
+    "masterchef_address": "0x80c7dd17b01855a6d2347444a0fcc36136a314de",
+    "sushi_bar_address": "0x1be211d8da40bc0ae8719c6663307bfc987b1d6c",
+    "sushi_maker_address": "0x1b9d177ccdea3c79b6c8f40761fc8dc9d0500eaa",
+    "sushi_token_address": "0x0769fd68dfb93167989c6f7254cd0d766fb2841f",
+    "weth_address": "0xc778417e063141139fce010982780140aa0cd5ab",
+    "uniswap_factory_address": "0xb10db5fc1c2ca4d72e6ebe1a9494b61fa3b71385",
+    "minimum_usd_threshold_new_pairs": "300",
+    "minimum_liquidity_threshold_eth": "0.01",
+    "native_address": "0xc778417e063141139fce010982780140aa0cd5ab",
+    "factory": {
+        "address": "0xb10db5fc1c2ca4d72e6ebe1a9494b61fa3b71385",
+        "startBlock": "9314205"
+    },
+    "whitelist": ["0xc778417e063141139fce010982780140aa0cd5ab", "0xc7ad46e0b8a400bb3c915120d284aafba8fc4735","0xccf56fb87850fe6cff0cd16f491933c138b7eadd"]
+}

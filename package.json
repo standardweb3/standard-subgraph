@@ -2,7 +2,9 @@
   "name": "@sushiswap/subgraphs",
   "private": true,
   "workspaces": [
-    "packages/*",
+    "packages/abis",
+    "packages/constants",
+    "packages/pricing",
     "subgraphs/exchange",
     "subgraphs/masterchefV2"
   ],

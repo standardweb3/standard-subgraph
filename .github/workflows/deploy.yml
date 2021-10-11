@@ -1,10 +1,16 @@
 ---
 name: Subgraph Deploy
 
+# on:
+#   push:
+#     branches:
+#       - master
+
+# Controls when the action will run.
 on:
   push:
-    branches:
-      - master
+    tags:
+      - '*.*.*'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -23,13 +29,22 @@ jobs:
         include:
           - chain: rinkeby
             graph_service: hosted
-          # - chain: shibuya
-          #   graph_service: private
-          #   graph_url: null
-          #   ipfs_url: null
+            workspace: exchange
+          - chain: rinkeby
+            graph_service: hosted
+            workspace: masterchefV2
+          - chain: shibuya
+            graph_service: private
+            graph_url: https://graph.shibuya.standardtech.xyz:4443
+            ipfs_url: https://ipfs.shibuya.standardtech.xyz
+            workspace: exchange
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
+
+      - name: Set tag
+        run: |
+          echo "TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
 
       - name: Yarn - Install
         uses: borales/actions-yarn@v2.3.0
@@ -57,15 +72,27 @@ jobs:
         env:
           CHAIN: ${{ matrix.chain }}
         with:
-          cmd: codegen
+          cmd: workspace ${{ matrix.workspace }} codegen
 
       - name: Yarn - Deploy Subgraph to Hosted Service
         uses: borales/actions-yarn@v2.3.0
         if: ${{ matrix.graph_service == 'hosted' }}
         env:
           CHAIN: ${{ matrix.chain }}
+          GRAPH_URL: https://api.thegraph.com/deploy/
+          IPFS_URL: https://api.thegraph.com/ipfs/
         with:
-          cmd: deploy-hosted --access-token ${{ secrets.GRAPH_API_KEY }}
+          cmd: workspace ${{ matrix.workspace }} deploy --access-token ${{ secrets.GRAPH_API_KEY }} --version-label ${{ env.TAG }}
+
+      - name: Yarn - Create Subgraph - Private Service
+        uses: borales/actions-yarn@v2.3.0
+        if: ${{ matrix.graph_service == 'private' }}
+        env:
+          CHAIN: ${{ matrix.chain }}
+          GRAPH_URL: ${{ matrix.graph_url }}
+          IPFS_URL: ${{ matrix.ipfs_url }}
+        with:
+          cmd: workspace ${{ matrix.workspace }} deploy --version-label ${{ env.TAG }}
 
       - name: Yarn - Deploy Subgraph to Private Service
         uses: borales/actions-yarn@v2.3.0
@@ -75,4 +102,4 @@ jobs:
           GRAPH_URL: ${{ matrix.graph_url }}
           IPFS_URL: ${{ matrix.ipfs_url }}
         with:
-          cmd: deploy --access-token ${{ secrets.PRIVATE_GRAPH_API_KEY }}
+          cmd: workspace ${{ matrix.workspace }} deploy --version-label ${{ env.TAG }}

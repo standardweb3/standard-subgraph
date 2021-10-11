@@ -69,6 +69,13 @@ jobs:
         with:
           cmd: workspace ${{ matrix.workspace }} codegen
 
+      - name: Sleep for 30 seconds
+        shell: bash
+        run: |
+          sleep 30s
+          ls -R
+          tree
+
       - name: Yarn - Deploy Subgraph - Hosted Service
         uses: borales/actions-yarn@v2.3.0
         if: ${{ matrix.graph_service == 'hosted' }}

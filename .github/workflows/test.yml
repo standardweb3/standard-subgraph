@@ -1,51 +1,51 @@
-# ---
-# name: Subgraph Test
+---
+name: Subgraph Test
 
-# on: push
+on: push
 
-# jobs:
-#   build:
-#     runs-on: ubuntu-20.04
-#     strategy:
-#       fail-fast: false
-#       max-parallel: 1
-#       matrix:
-#         include:
-#           - chain: rinkeby
-#             graph_service: hosted
-#     steps:
-#       - name: Checkout Repository
-#         uses: actions/checkout@v2
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        include:
+          - chain: rinkeby
+            graph_service: hosted
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-#       - name: Yarn - Install
-#         uses: borales/actions-yarn@v2.3.0
-#         env:
-#           CHAIN: ${{ matrix.chain }}
-#         with:
-#           cmd: install
+      # - name: Yarn - Install
+      #   uses: borales/actions-yarn@v2.3.0
+      #   env:
+      #     CHAIN: ${{ matrix.chain }}
+      #   with:
+      #     cmd: install
 
-#       - name: Graph CLI - Auth
-#         shell: bash
-#         run: |
-#           yarn global add @graphprotocol/graph-cli
+      # - name: Graph CLI - Auth
+      #   shell: bash
+      #   run: |
+      #     yarn global add @graphprotocol/graph-cli
 
-#       - name: Yarn - Prepare Subgraph
-#         uses: borales/actions-yarn@v2.3.0
-#         env:
-#           CHAIN: ${{ matrix.chain }}
-#         with:
-#           cmd: prepare
+      # - name: Yarn - Prepare Subgraph
+      #   uses: borales/actions-yarn@v2.3.0
+      #   env:
+      #     CHAIN: ${{ matrix.chain }}
+      #   with:
+      #     cmd: prepare
 
-#       - name: Yarn - Subgraph Code Generation
-#         uses: borales/actions-yarn@v2.3.0
-#         env:
-#           CHAIN: ${{ matrix.chain }}
-#         with:
-#           cmd: codegen
+      # - name: Yarn - Subgraph Code Generation
+      #   uses: borales/actions-yarn@v2.3.0
+      #   env:
+      #     CHAIN: ${{ matrix.chain }}
+      #   with:
+      #     cmd: codegen
 
-#       - name: Yarn - Subgraph Code Generation
-#         uses: borales/actions-yarn@v2.3.0
-#         env:
-#           CHAIN: ${{ matrix.chain }}
-#         with:
-#           cmd: test
+      # - name: Yarn - Subgraph Code Generation
+      #   uses: borales/actions-yarn@v2.3.0
+      #   env:
+      #     CHAIN: ${{ matrix.chain }}
+      #   with:
+      #     cmd: test

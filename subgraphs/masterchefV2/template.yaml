@@ -1,29 +1,29 @@
 specVersion: 0.0.3
-description: MasterPool
-repository: https://github.com/digitalnative/sushiswap-subgraph
+description: MasterChefV2
+repository: https://github.com/digitalnativeinc/standard-subgraph
 schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: MasterPool
+    name: MasterChefV2
     network: {{ network }}
     source:
-      address: '{{ masterchefV2.address }}'
-      abi: MasterPool
-      startBlock: {{ masterchefV2.startBlock }}
+      address: '{{ address }}'
+      abi: MasterChefV2
+      startBlock: {{ startBlock }}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
       language: wasm/assemblyscript
-      file: ./src/mappings/masterPool.ts
+      file: ./src/mappings/masterchefV2.ts
       entities:
-        - MasterPool
+        - MasterChefV2
         - Pool
         - User
         - Rewarder
       abis:
-        - name: MasterPool
-          file: ./packages/abis/MasterPool.json
+        - name: MasterChefV2
+          file: ./packages/abis/MasterChefV2.json
         - name: ConvexRewarder
           file: ./packages/abis/ConvexRewarder.json
         - name: ComplexRewarder
@@ -53,10 +53,6 @@ dataSources:
           handler: logSetPool
         - event: LogUpdatePool(indexed uint256,uint64,uint256,uint256)
           handler: logUpdatePool
-        - event: LogUpdateReward(uint256)
-          handler: logUpdateReward
-        - event: OwnershipTransferred(indexed address,indexed address)
-          handler: ownershipTransferred
 templates:
   - kind: ethereum/contract
     name: CloneRewarderTime

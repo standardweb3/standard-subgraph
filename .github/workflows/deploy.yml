@@ -1,11 +1,6 @@
 ---
 name: Subgraph Deploy
 
-# on:
-#   push:
-#     branches:
-#       - master
-
 # Controls when the action will run.
 on:
   push:
@@ -74,7 +69,7 @@ jobs:
         with:
           cmd: workspace ${{ matrix.workspace }} codegen
 
-      - name: Yarn - Deploy Subgraph to Hosted Service
+      - name: Yarn - Deploy Subgraph - Hosted Service
         uses: borales/actions-yarn@v2.3.0
         if: ${{ matrix.graph_service == 'hosted' }}
         env:
@@ -92,9 +87,9 @@ jobs:
           GRAPH_URL: ${{ matrix.graph_url }}
           IPFS_URL: ${{ matrix.ipfs_url }}
         with:
-          cmd: workspace ${{ matrix.workspace }} deploy --version-label ${{ env.TAG }}
+          cmd: workspace ${{ matrix.workspace }} create-subgraph --version-label ${{ env.TAG }}
 
-      - name: Yarn - Deploy Subgraph to Private Service
+      - name: Yarn - Deploy Subgraph - Private Service
         uses: borales/actions-yarn@v2.3.0
         if: ${{ matrix.graph_service == 'private' }}
         env:

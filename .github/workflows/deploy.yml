@@ -23,21 +23,21 @@ jobs:
       matrix:
         include:
           - chain: rinkeby
-            graph_service: hosted
             workspace: exchange
+            graph_service: hosted
           - chain: rinkeby
-            graph_service: hosted
             workspace: masterchefV2
+            graph_service: hosted
           - chain: shibuya
+            workspace: exchange
             graph_service: private
             graph_url: https://graph.shibuya.standardtech.xyz:4443
             ipfs_url: https://ipfs.shibuya.standardtech.xyz
-            workspace: exchange
           - chain: shibuya
+            workspace: masterchefV2
             graph_service: private
             graph_url: https://graph.shibuya.standardtech.xyz:4443
             ipfs_url: https://ipfs.shibuya.standardtech.xyz
-            workspace: exchange
           # - chain: shiden
           #   graph_service: private
           #   graph_url: https://graph.shiden.standardtech.xyz:4443

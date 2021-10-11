@@ -14,8 +14,6 @@
     "prepare": "yarn workspaces run prepare",
     "create": "yarn workspaces run deploy",
     "deploy": "yarn workspaces run deploy",
-    "create-hosted": "yarn workspaces run create-hosted",
-    "deploy-hosted": "yarn workspaces run deploy-hosted",
     "prepare:mainnet": "yarn workspaces run prepare:mainnet",
     "prepare:rinkeby": "yarn workspaces run prepare:rinkeby",
     "prepare:ropsten": "yarn workspaces run prepare:ropsten",

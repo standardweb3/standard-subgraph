@@ -11,9 +11,7 @@
     "remove-local": "graph remove --node http://localhost:8020/ $GRAPH_USER/rinkeby-master-pool",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 $GRAPH_USER/rinkeby-master-pool",
     "deploy": "graph deploy --node $GRAPH_URL --ipfs $IPFS_URL $GRAPH_USER/$CHAIN-master-pool subgraph.yaml",
-    "create-subgraph": "graph create --node $GRAPH_URL $GRAPH_USER/$CHAIN-exchange",
-    "create-hosted": "graph create --node https://api.thegraph.com/deploy/ $GRAPH_USER/$CHAIN-master-pool",
-    "deploy-hosted": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ $GRAPH_USER/$CHAIN-master-pool subgraph.yaml",
+    "create-subgraph": "graph create --node $GRAPH_URL $GRAPH_USER/$CHAIN-master-pool",
     "prepare": "mustache ../../config/$CHAIN.json template.yaml > subgraph.yaml"
   }
 }

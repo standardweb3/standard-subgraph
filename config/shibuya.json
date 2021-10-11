@@ -12,7 +12,7 @@
     "startBlock": "150000"
   },
   "masterchefV2": {
-    "address": "",
+    "address": "0xbd06347154BB07FE9c2fba66659AE96DB39B8E87",
     "startBlock": "150000"
   },
   "whitelist": ["0x321F318e7C276c93Cf3094fd3a9d7c4362fd19FB"]

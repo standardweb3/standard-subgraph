@@ -10,8 +10,8 @@
     "create-local": "graph create --node http://localhost:8020/ digitalnativeinc/ethereum-blocks",
     "remove-local": "graph remove --node http://localhost:8020/ digitalnativeinc/ethereum-blocks",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 digitalnativeinc/ethereum-blocks",
-    "create-subgraph": "graph create --node $GRAPH_URL $GRAPH_USER/$CHAIN-master-pool",
-    "deploy": "graph deploy --node $GRAPH_URL --ipfs $IPFS_URL $GRAPH_USER/$CHAIN-master-pool subgraph.yaml"
+    "create-subgraph": "graph create --node $GRAPH_URL $GRAPH_USER/$CHAIN-blocks",
+    "deploy": "graph deploy --node $GRAPH_URL --ipfs $IPFS_URL $GRAPH_USER/$CHAIN-blocks subgraph.yaml"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "^0.17.1",

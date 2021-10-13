@@ -1,6 +1,6 @@
 {
   "name": "pricing",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Common logic and utilities to use throughout the project",
   "license": "MIT",
   "private": true,

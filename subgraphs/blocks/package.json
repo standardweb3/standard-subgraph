@@ -1,0 +1,20 @@
+{
+  "name": "blocks",
+  "license": "UNLICENSED",
+  "version": "1.1.0",
+  "scripts": {
+    "codegen": "graph codegen subgraph.yaml",
+    "build": "graph build subgraph.yaml",
+    "test": "graph test subgraph.yaml",
+    "prepare": "mustache ../../config/$CHAIN.json template.yaml > subgraph.yaml",
+    "create-local": "graph create --node http://localhost:8020/ digitalnativeinc/ethereum-blocks",
+    "remove-local": "graph remove --node http://localhost:8020/ digitalnativeinc/ethereum-blocks",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 digitalnativeinc/ethereum-blocks",
+    "create-subgraph": "graph create --node $GRAPH_URL $GRAPH_USER/$CHAIN-master-pool",
+    "deploy": "graph deploy --node $GRAPH_URL --ipfs $IPFS_URL $GRAPH_USER/$CHAIN-master-pool subgraph.yaml"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-cli": "^0.17.1",
+    "@graphprotocol/graph-ts": "0.17.0"
+  }
+}

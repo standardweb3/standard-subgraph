@@ -1,23 +1,16 @@
 {
   "network": "shiden",
-  "factory_address": "",
-  "masterchef_address": "",
-  "sushi_bar_address": "",
-  "sushi_maker_address": "",
-  "sushi_token_address": "",
-  "weth_address": "",
-  "uniswap_factory_address": "",
-  "bentobox_address": "",
-  "kashi_pair_medium_risk_master_address": "",
+  "factory_address": "0x1E3F3d16D8087752D8254906125B7fC39cb1bF59",
+  "uniswap_factory_address": "0x1E3F3d16D8087752D8254906125B7fC39cb1bF59",
   "minimum_usd_threshold_new_pairs": "300",
   "minimum_liquidity_threshold_eth": "0.01",
   "native_address": "",
   "factory": {
-    "address": "",
-    "startBlock": ""
+    "address": "0x1E3F3d16D8087752D8254906125B7fC39cb1bF59",
+    "startBlock": "496851"
   },
   "masterchefV2": {
-    "address": "",
-    "startBlock": ""
+    "address": "0xe78c60C7a36E7b948a5C6cFF8D800F6a2727C93d",
+    "startBlock": "496851"
   }
 }

@@ -5,6 +5,7 @@
     "packages/abis",
     "packages/constants",
     "packages/pricing",
+    "subgraphs/blocks",
     "subgraphs/exchange",
     "subgraphs/masterchefV2"
   ],

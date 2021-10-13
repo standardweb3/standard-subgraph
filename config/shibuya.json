@@ -3,7 +3,7 @@
   "factory_address": "0x0E60C35FCf3184dcE5CF04D4b736e56F2DE7CaF7",
   "dai_address": "",
   "dai_weth_pair": "",
-  "uniswap_factory_address": "",
+  "uniswap_factory_address": "0x0E60C35FCf3184dcE5CF04D4b736e56F2DE7CaF7",
   "minimum_usd_threshold_new_pairs": "300",
   "minimum_liquidity_threshold_eth": "0.01",
   "native_address": "0x321F318e7C276c93Cf3094fd3a9d7c4362fd19FB",

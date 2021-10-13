@@ -2,7 +2,7 @@
   "name": "masterchefV2",
   "private": true,
   "license": "MIT",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "SushiSwap",
   "scripts": {
     "codegen": "graph codegen subgraph.yaml",

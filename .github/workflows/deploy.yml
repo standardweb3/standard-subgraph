@@ -28,9 +28,9 @@ jobs:
           - chain: rinkeby
             workspace: masterchefV2
             graph_service: hosted
-          # - chain: rinkeby
-          #   workspace: blocks
-          #   graph_service: hosted
+          - chain: rinkeby
+            workspace: blocks
+            graph_service: hosted
           - chain: shibuya
             workspace: exchange
             graph_service: private

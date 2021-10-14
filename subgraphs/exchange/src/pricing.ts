@@ -1,6 +1,6 @@
 import {
-  ADDRESS_ZERO,
-  BIG_DECIMAL_1E18,
+  // ADDRESS_ZERO,
+  // BIG_DECIMAL_1E18,
   BIG_DECIMAL_ONE,
   BIG_DECIMAL_ZERO,
   DAI,
@@ -13,13 +13,13 @@ import {
   USDC_WETH_PAIR,
   USDT,
   USDT_WETH_PAIR,
-  WHITELIST,
+  // WHITELIST,
 } from 'const'
 import { Address, BigDecimal, BigInt, dataSource, ethereum, log } from '@graphprotocol/graph-ts'
 import { Pair, Token } from '../generated/schema'
 
 import { Factory as FactoryContract } from '../generated/templates/Pair/Factory'
-import { Pair as PairContract } from '../generated/templates/Pair/Pair'
+// import { Pair as PairContract } from '../generated/templates/Pair/Pair'
 
 // export const uniswapFactoryContract = FactoryContract.bind(Address.fromString("0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f"))
 
@@ -176,7 +176,7 @@ export function findEthPerToken(token: Token): BigDecimal {
   }
 
   const whitelist = token.whitelistPairs
-  
+
   for (let i = 0; i < whitelist.length; ++i) {
     const pairAddress = whitelist[i]
     const pair = Pair.load(pairAddress)

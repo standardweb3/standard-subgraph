@@ -7,10 +7,10 @@
   "native_address": "",
   "factory": {
     "address": "0x1E3F3d16D8087752D8254906125B7fC39cb1bF59",
-    "startBlock": "496851"
+    "startBlock": "496924"
   },
   "masterchefV2": {
     "address": "0xe78c60C7a36E7b948a5C6cFF8D800F6a2727C93d",
-    "startBlock": "496851"
+    "startBlock": "496924"
   }
 }

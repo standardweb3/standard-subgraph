@@ -1,6 +1,6 @@
 {
   "network": "rinkeby",
-  "factory_address": "0xF659492744608B595670c1508aa0F5b92B84B94d",
+  "factory_address": "0xf659492744608b595670c1508aa0f5b92b84b94d",
   "dai_address": "0xc7ad46e0b8a400bb3c915120d284aafba8fc4735",
   "dai_weth_pair": "0x5ea23619fe6d692963e86574d9d1c798f4fc1626",
   "masterchef_address": "",
@@ -8,16 +8,16 @@
   "sushi_maker_address": "",
   "sushi_token_address": "0xC8aEEDb09f4d90d59eE47fEd8c70D10Fd267b2ab",
   "weth_address": "0xc778417e063141139fce010982780140aa0cd5ab",
-  "uniswap_factory_address": "0xF659492744608B595670c1508aa0F5b92B84B94d",
+  "uniswap_factory_address": "0xf659492744608b595670c1508aa0f5b92b84b94d",
   "minimum_usd_threshold_new_pairs": "300",
   "minimum_liquidity_threshold_eth": "0.01",
   "native_address": "0xc778417e063141139fce010982780140aa0cd5ab",
   "factory": {
-    "address": "0xF659492744608B595670c1508aa0F5b92B84B94d",
+    "address": "0xf659492744608b595670c1508aa0f5b92b84b94d",
     "startBlock": "9417137"
   },
   "masterchefV2": {
-    "address": "0x22079B36Af1AB814350fff725CD8F67f3C70b753",
+    "address": "0x22079b36af1ab814350fff725cd8f67f3c70b753",
     "startBlock": "9417364"
   },
   "whitelist": [

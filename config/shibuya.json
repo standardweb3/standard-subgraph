@@ -1,26 +1,26 @@
 {
   "network": "shibuya",
-  "factory_address": "0x0E60C35FCf3184dcE5CF04D4b736e56F2DE7CaF7",
-  "usdc_address": "0xA4F42578c723A5B6781A9F49d586B8645ba85C31",
-  "usdc_weth_pair": "0x2364e5878ea2d400c2B21732AB9B0CD0555Ed8f5",
+  "factory_address": "0x0e60c35fcf3184dce5cf04d4b736e56f2de7caf7",
+  "usdc_address": "0xa4f42578c723a5b6781a9f49d586b8645ba85c31",
+  "usdc_weth_pair": "0x2364e5878ea2d400c2b21732ab9b0cd0555ed8f5",
   "dai_address": "",
   "dai_weth_pair": "",
-  "uniswap_factory_address": "0x0E60C35FCf3184dcE5CF04D4b736e56F2DE7CaF7",
-  "sushi_token_address": "0xB0a1AA4CB76c0e35d9Ac9eba422bF76534Bf155A",
+  "uniswap_factory_address": "0x0e60c35fcf3184dce5cf04d4b736e56f2de7caf7",
+  "sushi_token_address": "0xb0a1aa4cb76c0e35d9ac9eba422bf76534bf155a",
   "minimum_usd_threshold_new_pairs": "100",
   "minimum_liquidity_threshold_eth": "0.01",
-  "native_address": "0x321F318e7C276c93Cf3094fd3a9d7c4362fd19FB",
+  "native_address": "0x321f318e7c276c93cf3094fd3a9d7c4362fd19fb",
   "factory": {
-    "address": "0x0E60C35FCf3184dcE5CF04D4b736e56F2DE7CaF7",
+    "address": "0x0e60c35fcf3184dce5cf04d4b736e56f2de7caf7",
     "startBlock": "150000"
   },
   "masterchefV2": {
-    "address": "0xbd06347154BB07FE9c2fba66659AE96DB39B8E87",
+    "address": "0xbd06347154bb07fe9c2fba66659ae96db39b8e87",
     "startBlock": "150000"
   },
   "whitelist": [
-    "0x321F318e7C276c93Cf3094fd3a9d7c4362fd19FB",
-    "0xA4F42578c723A5B6781A9F49d586B8645ba85C31",
-    "0xB0a1AA4CB76c0e35d9Ac9eba422bF76534Bf155A"
+    "0x321f318e7c276c93cf3094fd3a9d7c4362fd19fb",
+    "0xa4f42578c723a5b6781a9f49d586b8645ba85c31",
+    "0xb0a1aa4cb76c0e35d9ac9eba422bf76534bf155a"
   ]
 }

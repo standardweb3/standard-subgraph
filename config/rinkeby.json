@@ -6,7 +6,7 @@
   "masterchef_address": "",
   "sushi_bar_address": "",
   "sushi_maker_address": "",
-  "sushi_token_address": "0xC8aEEDb09f4d90d59eE47fEd8c70D10Fd267b2ab",
+  "sushi_token_address": "0xc8aeedb09f4d90d59ee47fed8c70d10fd267b2ab",
   "weth_address": "0xc778417e063141139fce010982780140aa0cd5ab",
   "uniswap_factory_address": "0xf659492744608b595670c1508aa0f5b92b84b94d",
   "minimum_usd_threshold_new_pairs": "300",
@@ -23,6 +23,6 @@
   "whitelist": [
     "0xc778417e063141139fce010982780140aa0cd5ab",
     "0xc7ad46e0b8a400bb3c915120d284aafba8fc4735",
-    "0xC8aEEDb09f4d90d59eE47fEd8c70D10Fd267b2ab"
+    "0xc8aeedb09f4d90d59ee47fed8c70d10fd267b2ab"
   ]
 }

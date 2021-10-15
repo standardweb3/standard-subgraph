@@ -18,5 +18,8 @@
   "masterchefV2": {
     "address": "",
     "startBlock": ""
+  },
+  "erc721": {
+    "startBlock": ""
   }
 }

@@ -18,6 +18,9 @@
     "address": "0xbd06347154bb07fe9c2fba66659ae96db39b8e87",
     "startBlock": "150000"
   },
+  "erc721": {
+    "startBlock": "150000"
+  },
   "whitelist": [
     "0x321f318e7c276c93cf3094fd3a9d7c4362fd19fb",
     "0xa4f42578c723a5b6781a9f49d586b8645ba85c31",

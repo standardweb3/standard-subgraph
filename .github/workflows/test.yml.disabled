@@ -1,21 +1,21 @@
----
-name: Subgraph Test
+# ---
+# name: Subgraph Test
 
-on: push
+# on: push
 
-jobs:
-  build:
-    runs-on: ubuntu-20.04
-    strategy:
-      fail-fast: false
-      max-parallel: 1
-      matrix:
-        include:
-          - chain: rinkeby
-            graph_service: hosted
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+# jobs:
+#   build:
+#     runs-on: ubuntu-20.04
+#     strategy:
+#       fail-fast: false
+#       max-parallel: 1
+#       matrix:
+#         include:
+#           - chain: rinkeby
+#             graph_service: hosted
+#     steps:
+#       - name: Checkout Repository
+#         uses: actions/checkout@v2
 
       # - name: Yarn - Install
       #   uses: borales/actions-yarn@v2.3.0

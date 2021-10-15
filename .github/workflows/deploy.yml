@@ -31,6 +31,9 @@ jobs:
           - chain: rinkeby
             workspace: blocks
             graph_service: hosted
+          - chain: rinkeby
+            workspace: erc721
+            graph_service: hosted
           - chain: shibuya
             workspace: exchange
             graph_service: private
@@ -43,6 +46,11 @@ jobs:
             ipfs_url: https://ipfs.shibuya.standardtech.xyz
           - chain: shibuya
             workspace: blocks
+            graph_service: private
+            graph_url: https://graph.shibuya.standardtech.xyz:4443
+            ipfs_url: https://ipfs.shibuya.standardtech.xyz
+          - chain: shibuya
+            workspace: erc721
             graph_service: private
             graph_url: https://graph.shibuya.standardtech.xyz:4443
             ipfs_url: https://ipfs.shibuya.standardtech.xyz
@@ -69,19 +77,18 @@ jobs:
         run: |
           echo "TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
 
+      - name: Yarn - Restore cache
+        uses: actions/cache@v2
+        with:
+          path: '**/node_modules' 
+          key: node_modules-${{ hashFiles('**/yarn.lock') }}
+
       - name: Yarn - Install
         uses: borales/actions-yarn@v2.3.0
         env:
           CHAIN: ${{ matrix.chain }}
         with:
-          cmd: install
-
-      - name: Graph CLI - Auth
-        shell: bash
-        run: |
-          yarn global add @graphprotocol/graph-cli@${{ env.GRAPH_CLI_VERSION }}
-          echo "$(yarn global bin)" >> $GITHUB_PATH
-          echo "::add-mask::${{ secrets.GRAPH_API_KEY }}"
+          cmd: install --prefer-offline
 
       - name: Yarn - Prepare Subgraph
         uses: borales/actions-yarn@v2.3.0

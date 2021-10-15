@@ -1,0 +1,20 @@
+{
+  "name": "erc721",
+  "license": "MIT",
+  "version": "1.1.0",
+  "files": [
+    "generated"
+  ],
+  "scripts": {
+    "codegen": "graph codegen subgraph.yaml",
+    "build": "graph build subgraph.yaml",
+    "test": "graph test subgraph.yaml",
+    "create-local": "graph create --node http://localhost:8020/ digitalnative/standardprotocol",
+    "remove-local": "graph remove --node http://localhost:8020/ digitalnative/standardprotocol",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 digitalnative/standardprotocol",
+    "deploy": "graph deploy --node $GRAPH_URL --ipfs $IPFS_URL $GRAPH_USER/$CHAIN-erc721 subgraph.yaml",
+    "create-subgraph": "graph create --node $GRAPH_URL $GRAPH_USER/$CHAIN-erc721",
+    "deploy-studio:mainnet": "graph deploy --studio sushi---mainnet-erc721",
+    "prepare": "mustache ../../config/$CHAIN.json template.yaml > subgraph.yaml"
+  }
+}

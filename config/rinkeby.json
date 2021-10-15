@@ -29,6 +29,9 @@
     "address": "0x22079b36af1ab814350fff725cd8f67f3c70b753",
     "startBlock": "9417364"
   },
+  "erc721": {
+    "startBlock": "9417364"
+  },
   "whitelist": [
     "0xc778417e063141139fce010982780140aa0cd5ab",
     "0xc7ad46e0b8a400bb3c915120d284aafba8fc4735",

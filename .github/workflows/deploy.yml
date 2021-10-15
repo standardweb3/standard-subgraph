@@ -23,44 +23,55 @@ jobs:
       matrix:
         include:
           - chain: rinkeby
+            subgraphs: exchange masterchefV2 blocks
             workspace: exchange
             graph_service: hosted
-          - chain: rinkeby
-            workspace: masterchefV2
-            graph_service: hosted
-          - chain: rinkeby
-            workspace: blocks
-            graph_service: hosted
           - chain: shibuya
-            workspace: exchange
-            graph_service: private
-            graph_url: https://graph.shibuya.standardtech.xyz:4443
-            ipfs_url: https://ipfs.shibuya.standardtech.xyz
-          - chain: shibuya
-            workspace: masterchefV2
-            graph_service: private
-            graph_url: https://graph.shibuya.standardtech.xyz:4443
-            ipfs_url: https://ipfs.shibuya.standardtech.xyz
-          - chain: shibuya
-            workspace: blocks
+            subgraphs: exchange masterchefV2 blocks
             graph_service: private
             graph_url: https://graph.shibuya.standardtech.xyz:4443
             ipfs_url: https://ipfs.shibuya.standardtech.xyz
           - chain: shiden
+            subgraphs: exchange masterchefV2 blocks
             graph_service: private
             graph_url: https://graph.shiden.standardtech.xyz:4443
             ipfs_url: https://ipfs.shiden.standardtech.xyz
-            workspace: exchange
-          - chain: shiden
-            graph_service: private
-            graph_url: https://graph.shiden.standardtech.xyz:4443
-            ipfs_url: https://ipfs.shiden.standardtech.xyz
-            workspace: masterchefV2
-          - chain: shiden
-            graph_service: private
-            graph_url: https://graph.shiden.standardtech.xyz:4443
-            ipfs_url: https://ipfs.shiden.standardtech.xyz
-            workspace: blocks
+          # - chain: rinkeby
+          #   workspace: masterchefV2
+          #   graph_service: hosted
+          # - chain: rinkeby
+          #   workspace: blocks
+          #   graph_service: hosted
+          # - chain: shibuya
+          #   workspace: exchange
+          #   graph_service: private
+          #   graph_url: https://graph.shibuya.standardtech.xyz:4443
+          #   ipfs_url: https://ipfs.shibuya.standardtech.xyz
+          # - chain: shibuya
+          #   workspace: masterchefV2
+          #   graph_service: private
+          #   graph_url: https://graph.shibuya.standardtech.xyz:4443
+          #   ipfs_url: https://ipfs.shibuya.standardtech.xyz
+          # - chain: shibuya
+          #   workspace: blocks
+          #   graph_service: private
+          #   graph_url: https://graph.shibuya.standardtech.xyz:4443
+          #   ipfs_url: https://ipfs.shibuya.standardtech.xyz
+          # - chain: shiden
+          #   graph_service: private
+          #   graph_url: https://graph.shiden.standardtech.xyz:4443
+          #   ipfs_url: https://ipfs.shiden.standardtech.xyz
+          #   workspace: exchange
+          # - chain: shiden
+          #   graph_service: private
+          #   graph_url: https://graph.shiden.standardtech.xyz:4443
+          #   ipfs_url: https://ipfs.shiden.standardtech.xyz
+          #   workspace: masterchefV2
+          # - chain: shiden
+          #   graph_service: private
+          #   graph_url: https://graph.shiden.standardtech.xyz:4443
+          #   ipfs_url: https://ipfs.shiden.standardtech.xyz
+          #   workspace: blocks
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -69,19 +80,7 @@ jobs:
         run: |
           echo "TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
 
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      # - uses: actions/cache@v2
-      #   id: yarn-cache
-      #   with:
-      #     path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-      #     key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-yarn-
-
-      - name: Restore node_modules cache
+      - name: Yarn - Restore cache
         uses: actions/cache@v2
         with:
           path: '**/node_modules' 
@@ -94,13 +93,6 @@ jobs:
         with:
           cmd: install --prefer-offline
 
-      # - name: Graph CLI - Auth
-      #   shell: bash
-      #   run: |
-      #     yarn global add @graphprotocol/graph-cli@${{ env.GRAPH_CLI_VERSION }}
-      #     echo "$(yarn global bin)" >> $GITHUB_PATH
-      #     echo "::add-mask::${{ secrets.GRAPH_API_KEY }}"
-
       - name: Yarn - Prepare Subgraph
         uses: borales/actions-yarn@v2.3.0
         env:
@@ -108,39 +100,54 @@ jobs:
         with:
           cmd: prepare
 
-      - name: Yarn - Subgraph Code Generation
-        uses: borales/actions-yarn@v2.3.0
-        env:
-          CHAIN: ${{ matrix.chain }}
-        with:
-          cmd: workspace ${{ matrix.workspace }} codegen
+      # - name: Yarn - Subgraph Code Generation
+      #   uses: borales/actions-yarn@v2.3.0
+      #   env:
+      #     CHAIN: ${{ matrix.chain }}
+      #   with:
+      #     cmd: workspace ${{ matrix.workspace }} codegen
 
-      - name: Yarn - Deploy Subgraph - Hosted Service
-        uses: borales/actions-yarn@v2.3.0
-        if: ${{ matrix.graph_service == 'hosted' }}
-        env:
-          CHAIN: ${{ matrix.chain }}
-          GRAPH_URL: https://api.thegraph.com/deploy/
-          IPFS_URL: https://api.thegraph.com/ipfs/
-        with:
-          cmd: workspace ${{ matrix.workspace }} deploy --access-token ${{ secrets.GRAPH_API_KEY }} --version-label ${{ env.TAG }}
+      # - name: Yarn - Deploy Subgraph - Hosted Service
+      #   uses: borales/actions-yarn@v2.3.0
+      #   if: ${{ matrix.graph_service == 'hosted' }}
+      #   env:
+      #     CHAIN: ${{ matrix.chain }}
+      #     GRAPH_URL: https://api.thegraph.com/deploy/
+      #     IPFS_URL: https://api.thegraph.com/ipfs/
+      #   with:
+      #     cmd: workspace ${{ matrix.workspace }} deploy --access-token ${{ secrets.GRAPH_API_KEY }} --version-label ${{ env.TAG }}
 
-      - name: Yarn - Create Subgraph - Private Service
-        uses: borales/actions-yarn@v2.3.0
-        if: ${{ matrix.graph_service == 'private' }}
+      # - name: Yarn - Create Subgraph - Private Service
+      #   uses: borales/actions-yarn@v2.3.0
+      #   if: ${{ matrix.graph_service == 'private' }}
+      #   env:
+      #     CHAIN: ${{ matrix.chain }}
+      #     GRAPH_URL: ${{ matrix.graph_url }}
+      #     IPFS_URL: ${{ matrix.ipfs_url }}
+      #   with:
+      #     cmd: workspace ${{ matrix.workspace }} create-subgraph --version-label ${{ env.TAG }}
+
+      # - name: Yarn - Deploy Subgraph - Private Service
+      #   uses: borales/actions-yarn@v2.3.0
+      #   if: ${{ matrix.graph_service == 'private' }}
+      #   env:
+      #     CHAIN: ${{ matrix.chain }}
+      #     GRAPH_URL: ${{ matrix.graph_url }}
+      #     IPFS_URL: ${{ matrix.ipfs_url }}
+      #   with:
+      #     cmd: workspace ${{ matrix.workspace }} deploy --version-label ${{ env.TAG }}
+      # if: ${{ matrix.graph_service == 'private' }}
+
+      - name: Yarn - Deploy Subgraph
+        shell: bash
         env:
           CHAIN: ${{ matrix.chain }}
           GRAPH_URL: ${{ matrix.graph_url }}
           IPFS_URL: ${{ matrix.ipfs_url }}
-        with:
-          cmd: workspace ${{ matrix.workspace }} create-subgraph --version-label ${{ env.TAG }}
-
-      - name: Yarn - Deploy Subgraph - Private Service
-        uses: borales/actions-yarn@v2.3.0
-        if: ${{ matrix.graph_service == 'private' }}
-        env:
-          CHAIN: ${{ matrix.chain }}
-          GRAPH_URL: ${{ matrix.graph_url }}
-          IPFS_URL: ${{ matrix.ipfs_url }}
-        with:
-          cmd: workspace ${{ matrix.workspace }} deploy --version-label ${{ env.TAG }}
+        run: |
+          yarn prepare
+          for WORKSPACE in ${{ matrix.subgraphs }}; do
+            yarn workspace $WORKSPACE codegen
+            if [ ${{ matrix.graph_service }} -eq 'private' ]; then yarn workspace $WORKSPACE create-subgraph --version-label ${{ env.TAG }}; fi
+            yarn workspace $WORKSPACE deploy --version-label ${{ env.TAG }}
+          done

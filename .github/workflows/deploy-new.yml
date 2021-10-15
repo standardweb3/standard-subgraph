@@ -1,0 +1,63 @@
+---
+name: Subgraph Deploy
+
+# Controls when the action will run.
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+env:
+  GRAPH_USER: digitalnativeinc
+  GRAPH_CLI_VERSION: 0.22.2
+
+jobs:
+  subgraph-deploy:
+    runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        include:
+          - chain: rinkeby
+            subgraphs: exchange masterchefV2 blocks
+            workspace: exchange
+            graph_service: hosted
+          - chain: shibuya
+            subgraphs: exchange masterchefV2 blocks
+            graph_service: private
+            graph_url: https://graph.shibuya.standardtech.xyz:4443
+            ipfs_url: https://ipfs.shibuya.standardtech.xyz
+          - chain: shiden
+            subgraphs: exchange masterchefV2 blocks
+            graph_service: private
+            graph_url: https://graph.shiden.standardtech.xyz:4443
+            ipfs_url: https://ipfs.shiden.standardtech.xyz
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set tag
+        run: |
+          echo "TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+
+      - name: Yarn - Restore cache
+        uses: actions/cache@v2
+        with:
+          path: '**/node_modules' 
+          key: node_modules-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Yarn - Deploy Subgraph - TBD
+        shell: bash
+        env:
+          CHAIN: ${{ matrix.chain }}
+          GRAPH_URL: ${{ matrix.graph_url }}
+          IPFS_URL: ${{ matrix.ipfs_url }}
+        run: |
+          yarn install --prefer-offline
+          yarn prepare
+          for WORKSPACE in ${{ matrix.subgraphs }}; do
+            yarn workspace $WORKSPACE codegen
+            if [ ${{ matrix.graph_service }} -eq 'private' ]; then yarn workspace $WORKSPACE create-subgraph --version-label ${{ env.TAG }}; fi
+            yarn workspace ${{ matrix.workspace }} deploy --access-token ${{ secrets.GRAPH_API_KEY }} --version-label ${{ env.TAG }}
+            yarn workspace $WORKSPACE deploy --version-label ${{ env.TAG }}
+          done

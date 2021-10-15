@@ -83,7 +83,7 @@ jobs:
 
       - name: Yarn - Install
         uses: borales/actions-yarn@v2.3.0
-        if: steps.yarn-cache.outputs.cache-hit != 'true'
+        # if: steps.yarn-cache.outputs.cache-hit != 'true'
         env:
           CHAIN: ${{ matrix.chain }}
         with:

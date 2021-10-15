@@ -33,8 +33,14 @@ export const LOCKUP_BLOCK_NUMBER = BigInt.fromI32(10959148);
 
 export const MASTER_CHEF_START_BLOCK = BigInt.fromI32(10750000);
 
+export const MASTER_CHEF_V2_START_BLOCK = BigInt.fromString("{{ masterchefV2.startBlock }}{{^masterchefV2.startBlock}}0{{/masterchefV2.startBlock}}");
+
 export const UNISWAP_SUSHI_ETH_PAIR_FIRST_LIQUDITY_BLOCK =
   BigInt.fromI32(10750005);
+
+export const SUSHI_WETH_PAIR_FIRST_LIQUIDITY_BLOCK = BigInt.fromString("{{ sushi_weth_liquidity_block }}{{^sushi_weth_liquidity_block}}0{{/sushi_weth_liquidity_block}}")
+
+export const SUSHI_USDC_PAIR_FIRST_LIQUIDITY_BLOCK = BigInt.fromString("{{ sushi_usdc_liquidity_block }}{{^sushi_usdc_liquidity_block}}0{{/sushi_usdc_liquidity_block}}")
 
 export const ACC_SUSHI_PRECISION = BigInt.fromString("1000000000000");
 
@@ -65,7 +71,7 @@ export const MASTER_CHEF_ADDRESS = Address.fromString(
 );
 
 export const MASTER_CHEF_V2_ADDRESS = Address.fromString(
-  "0xef0881ec094552b2e128cf945ef17a6752b4ec5d"
+  "{{ masterchefV2.address }}{{^masterchefV2.address}}0x0000000000000000000000000000000000000000{{/masterchefV2.address}}"
 );
 
 export const SUSHI_BAR_ADDRESS = Address.fromString("{{ sushi_bar_address }}{{^sushi_bar_address}}0x0000000000000000000000000000000000000000{{/sushi_bar_address}}");
@@ -82,6 +88,11 @@ export const SUSHI_USDT_PAIR_ADDRESS = Address.fromString(
   "{{ sushi_usdt_pair_address }}{{^sushi_usdt_pair_address}}0x0000000000000000000000000000000000000000{{/sushi_usdt_pair_address}}"
 );
 
+export const SUSHI_USDC_PAIR_ADDRESS = Address.fromString(
+  "{{ sushi_usdc_pair }}{{^sushi_usdc_pair}}0x0000000000000000000000000000000000000000{{/sushi_usdc_pair}}"
+);
+
+
 export const XSUSHI_USDC_PAIR_ADDRESS = Address.fromString(
   "{{ xsushi_usdc_pair_address }}{{^xsushi_usdc_pair_address}}0x0000000000000000000000000000000000000000{{/xsushi_usdc_pair_address}}"
 );
@@ -96,7 +107,11 @@ export const SUSHI_DISTRIBUTOR_ADDRESS = Address.fromString(
 
 export const USDC_WETH_PAIR = "{{ usdc_weth_pair }}{{^usdc_weth_pair}}0x0000000000000000000000000000000000000000{{/usdc_weth_pair}}";
 
+export const USDC_WETH_PAIR_ADDRESS = Address.fromString("{{ usdc_weth_pair }}{{^usdc_weth_pair}}0x0000000000000000000000000000000000000000{{/usdc_weth_pair}}");
+
 export const DAI_WETH_PAIR = "{{ dai_weth_pair }}{{^dai_weth_pair}}0x0000000000000000000000000000000000000000{{/dai_weth_pair}}";
+
+export const DAI_WETH_PAIR_ADDRESS = Address.fromString("{{ dai_weth_pair }}{{^dai_weth_pair}}0x0000000000000000000000000000000000000000{{/dai_weth_pair}}");
 
 export const USDT_WETH_PAIR = "{{ usdt_weth_pair }}{{^usdt_weth_pair}}0x0000000000000000000000000000000000000000{{/usdt_weth_pair}}";
 
@@ -119,6 +134,8 @@ export const SUSHISWAP_WETH_USDT_PAIR_ADDRESS = Address.fromString(
 );
 
 export const USDT_ADDRESS = Address.fromString("{{ usdt_address }}{{^usdt_address}}0x0000000000000000000000000000000000000000{{/usdt_address}}");
+
+export const USDC_ADDRESS = Address.fromString("{{ usdc_address }}{{^usdc_address}}0x0000000000000000000000000000000000000000{{/usdc_address}}");
 
 export const UNISWAP_FACTORY_ADDRESS = Address.fromString(
   "{{ uniswap_factory_address }}{{^uniswap_factory_address}}0x0000000000000000000000000000000000000000{{/uniswap_factory_address}}"

@@ -21,6 +21,8 @@ dataSources:
         - Pool
         - User
         - Rewarder
+        - History
+        - PoolHistory
       abis:
         - name: MasterPool
           file: ./packages/abis/MasterPool.json

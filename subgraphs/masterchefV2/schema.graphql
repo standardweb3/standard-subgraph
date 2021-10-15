@@ -11,12 +11,36 @@ type MasterChef @entity {
 
   # Migrator
   migrator: Bytes!
-  
+
   pools: [Pool!] @derivedFrom(field: "masterChef")
   poolCount: BigInt!
 
   #history: [History!]! @derivedFrom(field: "masterChef")
 
+  timestamp: BigInt!
+  block: BigInt!
+
+  # v1 integration
+  slpBalanceDecimal: BigDecimal!
+  slpAge: BigDecimal!
+  slpAgeRemoved: BigDecimal!
+  slpDeposited: BigDecimal!
+  slpWithdrawn: BigDecimal!
+  history: [History!]! @derivedFrom(field: "owner")
+  updatedAt: BigInt!
+}
+
+# v1 integration
+type History @entity {
+  # Master chef id concatenated with timestamp
+  id: ID!
+  owner: MasterChef!
+
+  slpBalanceDecimal: BigDecimal!
+  slpAge: BigDecimal!
+  slpAgeRemoved: BigDecimal!
+  slpDeposited: BigDecimal!
+  slpWithdrawn: BigDecimal!
   timestamp: BigInt!
   block: BigInt!
 }
@@ -33,6 +57,7 @@ type Pool @entity {
   lastRewardBlock: BigInt!
   accSushiPerShare: BigInt!
 
+  #slp token balance
   slpBalance: BigInt!
 
   users: [User!]! @derivedFrom(field: "pool")
@@ -40,6 +65,37 @@ type Pool @entity {
 
   timestamp: BigInt!
   block: BigInt!
+
+  #v1 integration
+  slpBalanceDecimal: BigDecimal!
+  slpAge: BigDecimal!
+  slpAgeRemoved: BigDecimal!
+  slpDeposited: BigDecimal!
+  slpWithdrawn: BigDecimal!
+  updatedAt: BigInt!
+  entryUSD: BigDecimal!
+  exitUSD: BigDecimal!
+  sushiHarvested: BigDecimal!
+  sushiHarvestedUSD: BigDecimal!
+}
+
+#v1 integration
+type PoolHistory @entity {
+  # Pool id concatenated with timestamp
+  id: ID!
+  pool: Pool!
+  slpBalanceDecimal: BigDecimal!
+  slpAge: BigDecimal!
+  slpAgeRemoved: BigDecimal!
+  slpDeposited: BigDecimal!
+  slpWithdrawn: BigDecimal!
+  userCount: BigInt!
+  timestamp: BigInt!
+  block: BigInt!
+  entryUSD: BigDecimal!
+  exitUSD: BigDecimal!
+  sushiHarvested: BigDecimal!
+  sushiHarvestedUSD: BigDecimal!
 }
 
 type Rewarder @entity {
@@ -61,8 +117,14 @@ type User @entity {
 
   amount: BigInt!
   rewardDebt: BigInt!
-  sushiHarvested: BigInt!
+  #v2 to v1: BigInt -> BigDecimal
+  sushiHarvested: BigDecimal!
 
   timestamp: BigInt!
   block: BigInt!
+
+  #v1 integration
+  entryUSD: BigDecimal!
+  exitUSD: BigDecimal!
+  sushiHarvestedUSD: BigDecimal!
 }

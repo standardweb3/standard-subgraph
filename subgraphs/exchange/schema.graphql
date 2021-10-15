@@ -479,3 +479,32 @@ type Swap @entity {
   # derived info
   amountUSD: BigDecimal!
 }
+
+
+# type BondedStrategy @entity {
+#   id: ID!
+#   totalSupply: BigInt!
+#   stnd: Bytes!
+
+#   users: [BondedStrategyUser!]  @derivedFrom(field: "bondedStrategy")
+# }
+
+# # BondedStrategyHistory
+# enum Timeframe {
+#   Day
+# }
+
+# type BondedStrategyHistory @entity {
+#   timeframe: Timeframe!
+#   id: ID!
+#   date: Int!
+# }
+
+# type BondedStrategyUser @entity {
+#   # address
+#   id: ID!
+#   bondedStrategy: BondedStrategy!
+
+#   bonded: BigInt!
+#   lastBonded: BigInt!
+# }

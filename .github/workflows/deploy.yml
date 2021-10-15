@@ -93,12 +93,12 @@ jobs:
         with:
           cmd: install --prefer-offline
 
-      - name: Yarn - Prepare Subgraph
-        uses: borales/actions-yarn@v2.3.0
-        env:
-          CHAIN: ${{ matrix.chain }}
-        with:
-          cmd: prepare
+      # - name: Yarn - Prepare Subgraph
+      #   uses: borales/actions-yarn@v2.3.0
+      #   env:
+      #     CHAIN: ${{ matrix.chain }}
+      #   with:
+      #     cmd: prepare
 
       # - name: Yarn - Subgraph Code Generation
       #   uses: borales/actions-yarn@v2.3.0

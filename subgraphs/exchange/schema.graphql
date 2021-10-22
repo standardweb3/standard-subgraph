@@ -481,30 +481,115 @@ type Swap @entity {
 }
 
 
-# type BondedStrategy @entity {
-#   id: ID!
-#   totalSupply: BigInt!
-#   stnd: Bytes!
+type BondedStrategy @entity {
+  id: ID!
+  # total bonded STND
+  totalSupply: BigInt!
+  # address of STND
+  stnd: Bytes!
 
-#   users: [BondedStrategyUser!]  @derivedFrom(field: "bondedStrategy")
-# }
+  # total claimed amount in USD
+  totalClaimedUSD: BigDecimal!
+  remainingRewardETH: BigDecimal!
 
-# # BondedStrategyHistory
-# enum Timeframe {
-#   Day
-# }
+  users: [BondedStrategyUser!]  @derivedFrom(field: "bondedStrategy")
+  usersCount: BigInt!
 
-# type BondedStrategyHistory @entity {
-#   timeframe: Timeframe!
-#   id: ID!
-#   date: Int!
-# }
+  block: BigInt!
+  timestamp: BigInt!
 
-# type BondedStrategyUser @entity {
-#   # address
-#   id: ID!
-#   bondedStrategy: BondedStrategy!
+  inception: BigInt!
+}
 
-#   bonded: BigInt!
-#   lastBonded: BigInt!
-# }
+# BondedStrategyHistory
+enum Timeframe {
+  Day
+}
+
+type BondedStrategyHistory @entity {
+  timeframe: Timeframe!
+  id: ID!
+  date: Int!
+
+  bondedStrategy: BondedStrategy!
+
+  totalSupply: BigInt!
+  totalSupplyUSD: BigDecimal!
+
+  usersCount: BigInt!
+
+  totalClaimedUSD: BigDecimal!
+
+  remainingRewardETH: BigDecimal!
+  remainingRewardUSD: BigDecimal!
+
+  # last block of the day
+  block: BigInt!
+  # last update timestamp of the day
+  timestamp: BigInt!
+}
+
+type BondedStrategyUser @entity {
+  # address
+  id: ID!
+  bondedStrategy: BondedStrategy!
+  claims: [BondedStrategyUserClaim!]  @derivedFrom(field: "user")
+
+  # bonded STND
+  bonded: BigInt!
+  # timestamp for last bond
+  lastBonded: BigInt!
+
+  # total amount of claimed reward in USD
+  totalClaimedUSD: BigDecimal!
+}
+
+type BondedStrategyUserClaim @entity {
+  # user address - pair address
+  id: ID!
+  
+  user: BondedStrategyUser! 
+  pair: Bytes!
+
+  # last 
+  lastClaimed: BigInt!
+
+  # amount
+  amount: BigInt!
+  # amount in USD
+  amountUSD: BigDecimal!
+}
+
+type BondedStrategyPair @entity {
+  # address
+  id: ID!
+  pair: Pair!
+
+  claimedReward: BigInt!
+  claimedRewardUSD: BigDecimal!
+
+  remainingReward: BigInt!
+  remainingRewardETH: BigDecimal!
+
+  block: BigInt!
+  timestamp: BigInt!
+}
+
+type BondedStrategyPairHistory @entity {
+  id: ID!
+  date: Int!
+  timeframe: Timeframe!
+  pair: Bytes!
+
+  claimedReward: BigInt!
+  claimedRewardUSD: BigDecimal!
+
+  remainingReward: BigInt!
+  remainingRewardETH: BigDecimal!
+  remainingRewardUSD: BigDecimal!
+  
+  # last block of the day
+  block: BigInt!
+  # last update timestamp of the day
+  timestamp: BigInt!
+}

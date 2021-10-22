@@ -8,6 +8,8 @@ import {
   FACTORY_ADDRESS,
   MINIMUM_LIQUIDITY_THRESHOLD_ETH,
   NATIVE,
+  SUSHI_TOKEN_ADDRESS,
+  SUSHI_USDC_PAIR_ADDRESS,
   SUSHI_USDT_PAIR,
   USDC,
   USDC_WETH_PAIR,
@@ -19,20 +21,33 @@ import { Address, BigDecimal, BigInt, dataSource, ethereum, log } from '@graphpr
 import { Pair, Token } from '../generated/schema'
 
 import { Factory as FactoryContract } from '../generated/templates/Pair/Factory'
+import { getBundle, getToken } from './entities'
 // import { Pair as PairContract } from '../generated/templates/Pair/Pair'
 
 // export const uniswapFactoryContract = FactoryContract.bind(Address.fromString("0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f"))
 
 export const factoryContract = FactoryContract.bind(FACTORY_ADDRESS)
 
-export function getSushiPrice(): BigDecimal {
-  const pair = Pair.load(SUSHI_USDT_PAIR)
+// export function getSushiPrice(): BigDecimal {
+//   const pair = Pair.load(SUSHI_USDT_PAIR)
+
+//   if (pair) {
+//     return pair.token1Price
+//   }
+
+//   return BIG_DECIMAL_ZERO
+// }
+export function getStndPrice(): BigDecimal {
+  const pair = Pair.load(SUSHI_USDC_PAIR_ADDRESS.toHex())
 
   if (pair) {
     return pair.token1Price
   }
+  
+  const token = getToken(SUSHI_TOKEN_ADDRESS)
+  const bundle = getBundle()
 
-  return BIG_DECIMAL_ZERO
+  return token.derivedETH.times(bundle.ethPrice)
 }
 
 export function getEthPrice(block: ethereum.Block = null): BigDecimal {

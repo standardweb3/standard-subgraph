@@ -34,7 +34,6 @@ export function updateUser(address: Address): User {
 }
 
 export function updateUsers(addresses: Address[]): void {
-  log.info('Update users', [])
   for (let i = 0; i < addresses.length; i++) {
     updateUser(addresses[i])
   }

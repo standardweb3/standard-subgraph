@@ -16,6 +16,7 @@
     "deploy": "graph deploy --node $GRAPH_URL --ipfs $IPFS_URL $GRAPH_USER/$CHAIN-exchange subgraph.yaml",
     "create-subgraph": "graph create --node $GRAPH_URL $GRAPH_USER/$CHAIN-exchange",
     "deploy-studio:mainnet": "graph deploy --studio sushi---mainnet-exchange",
+    "deploy:rinkeby": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ billjhlee/rinkeby-exchange2 subgraph.yaml",
     "prepare": "mustache ../../config/$CHAIN.json template.yaml > subgraph.yaml"
   }
 }

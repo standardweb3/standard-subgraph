@@ -7,6 +7,8 @@ export const ADDRESS_ZERO = Address.fromString(
   "0x0000000000000000000000000000000000000000"
 );
 
+export const NETWORK = "{{ network }}"
+
 export const BIG_DECIMAL_1E6 = BigDecimal.fromString("1e6");
 
 export const BIG_DECIMAL_1E12 = BigDecimal.fromString("1e12");

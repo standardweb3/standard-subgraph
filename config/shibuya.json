@@ -5,11 +5,17 @@
   "usdc_weth_pair": "0x2364e5878ea2d400c2b21732ab9b0cd0555ed8f5",
   "dai_address": "",
   "dai_weth_pair": "",
+  "sushi_weth_liquidity_block": "",
+  "sushi_usdc_liquidity_block": "",
   "uniswap_factory_address": "0x0e60c35fcf3184dce5cf04d4b736e56f2de7caf7",
   "sushi_token_address": "0xb0a1aa4cb76c0e35d9ac9eba422bf76534bf155a",
   "minimum_usd_threshold_new_pairs": "100",
   "minimum_liquidity_threshold_eth": "0.01",
   "native_address": "0x321f318e7c276c93cf3094fd3a9d7c4362fd19fb",
+  "bondedstrategy": {
+    "address": "0x368ea929c4B871BF68678cDF07ABB7e4bC9e59c3",
+    "startBlock": "150000"
+  },
   "factory": {
     "address": "0x0e60c35fcf3184dce5cf04d4b736e56f2de7caf7",
     "startBlock": "150000"

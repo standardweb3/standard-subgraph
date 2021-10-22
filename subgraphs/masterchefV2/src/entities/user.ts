@@ -10,7 +10,6 @@ export function getUser(address: Address, pid: BigInt, block: ethereum.Block): U
   const uid = address.toHex()
   const id = pid.toString().concat('-').concat(uid)
   let user = User.load(id)
-  log.info('userid {}', [id])
 
   if (user === null) {
     user = new User(id)
@@ -23,12 +22,8 @@ export function getUser(address: Address, pid: BigInt, block: ethereum.Block): U
     user.sushiHarvestedUSD = BIG_DECIMAL_ZERO
     user.entryUSD = BIG_DECIMAL_ZERO
     user.exitUSD = BIG_DECIMAL_ZERO
-    log.info('add user 0',[])
-    log.info('plus: prev user count {}', [pool.userCount.toString()])
     pool.userCount = pool.userCount.plus(BIG_INT_ONE)
-    log.info('plus: pid {} user count {}',[pool.id.toString(), pool.userCount.toString()])
     pool.save()
-    log.info('pool saved 2', [])
   }
 
   user.timestamp = block.timestamp

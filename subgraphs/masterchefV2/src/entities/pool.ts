@@ -1,5 +1,5 @@
 import { Pool } from '../../generated/schema'
-import { BigInt, Address, dataSource, ethereum,log } from '@graphprotocol/graph-ts'
+import { BigInt, ethereum } from '@graphprotocol/graph-ts'
 import { BIG_INT_ZERO, ADDRESS_ZERO, BIG_DECIMAL_ZERO } from 'const'
 import { getMasterChef } from './masterChef'
 
@@ -7,7 +7,6 @@ export function getPool(pid: BigInt, block: ethereum.Block): Pool {
   const masterChef = getMasterChef(block)
 
   let pool = Pool.load(pid.toString())
-  log.info('user count {} pid {}', [pool ? pool.userCount.toString() : 'null', pid.toString()])
 
   if (pool === null) {
     pool = new Pool(pid.toString())

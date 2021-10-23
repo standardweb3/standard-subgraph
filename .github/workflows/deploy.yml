@@ -80,7 +80,7 @@ jobs:
       - name: Yarn - Restore cache
         uses: actions/cache@v2
         with:
-          path: '**/node_modules' 
+          path: '**/node_modules'
           key: node_modules-${{ hashFiles('**/yarn.lock') }}
 
       - name: Yarn - Install
@@ -103,6 +103,10 @@ jobs:
           CHAIN: ${{ matrix.chain }}
         with:
           cmd: workspace ${{ matrix.workspace }} codegen
+
+      - name: List generated files
+        run: |
+          ls -R
 
       - name: Yarn - Deploy Subgraph - Hosted Service
         uses: borales/actions-yarn@v2.3.0

@@ -1,19 +1,23 @@
 {
   "network": "shiden",
-  "factory_address": "0x1E3F3d16D8087752D8254906125B7fC39cb1bF59",
-  "uniswap_factory_address": "0x1E3F3d16D8087752D8254906125B7fC39cb1bF59",
+  "factory_address": "0x1e3f3d16d8087752d8254906125b7fc39cb1bf59",
+  "uniswap_factory_address": "0x1e3f3d16d8087752d8254906125b7fc39cb1bf59",
   "minimum_usd_threshold_new_pairs": "300",
   "minimum_liquidity_threshold_eth": "0.01",
   "native_address": "",
   "factory": {
-    "address": "0x1E3F3d16D8087752D8254906125B7fC39cb1bF59",
+    "address": "0x1e3f3d16d8087752d8254906125b7fc39cb1bf59",
     "startBlock": "496924"
   },
   "masterchefV2": {
-    "address": "0xe78c60C7a36E7b948a5C6cFF8D800F6a2727C93d",
+    "address": "0xe78c60c7a36e7b948a5c6cff8d800f6a2727c93d",
     "startBlock": "496924"
   },
   "erc721": {
+    "startBlock": "496924"
+  },
+  "bondedstrategy": {
+    "address": "0x4633c1f0f633cc42fd0ba394762283606c88ae52",
     "startBlock": "496924"
   }
 }

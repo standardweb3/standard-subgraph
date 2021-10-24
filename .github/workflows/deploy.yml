@@ -102,7 +102,7 @@ jobs:
         env:
           CHAIN: ${{ matrix.chain }}
         with:
-          cmd: workspace ${{ matrix.workspace }} codegen
+          cmd: codegen
 
       - name: List generated files
         run: |

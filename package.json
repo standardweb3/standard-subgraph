@@ -8,7 +8,8 @@
     "subgraphs/blocks",
     "subgraphs/exchange",
     "subgraphs/masterchefV2",
-    "subgraphs/erc721"
+    "subgraphs/erc721",
+    "subgraphs/candles"
   ],
   "scripts": {
     "build": "yarn workspaces run build",

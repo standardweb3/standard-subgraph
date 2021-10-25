@@ -1,19 +1,33 @@
 {
   "network": "shiden",
-  "factory_address": "0x1E3F3d16D8087752D8254906125B7fC39cb1bF59",
-  "uniswap_factory_address": "0x1E3F3d16D8087752D8254906125B7fC39cb1bF59",
+  "factory_address": "0x284c9540f6c3f9eba711bf3dea2bfdbfa495d647",
+  "uniswap_factory_address": "0x284c9540f6c3f9eba711bf3dea2bfdbfa495d647",
   "minimum_usd_threshold_new_pairs": "300",
   "minimum_liquidity_threshold_eth": "0.01",
-  "native_address": "",
+  "usdc_address": "0xfa9343c3897324496a05fc75abed6bac29f8a40f",
+  "usdc_weth_pair": "0xac0594d61109ccaab7337da5f7200c7b0a43d077",
+  "sushi_token_address": "0x722377a047e89ca735f09eb7cccab780943c4cb4",
+  "sushi_usdc_pair": "0x477643537a737a0f243355d1a31696b5362ff4aa",
+  "native_address": "0x0f933dc137d21ca519ae4c7e93f87a4c8ef365ef",
+  "weth_address": "0x0f933dc137d21ca519ae4c7e93f87a4c8ef365ef",
   "factory": {
-    "address": "0x1E3F3d16D8087752D8254906125B7fC39cb1bF59",
+    "address": "0x284c9540f6c3f9eba711bf3dea2bfdbfa495d647",
     "startBlock": "496924"
   },
   "masterchefV2": {
-    "address": "0xe78c60C7a36E7b948a5C6cFF8D800F6a2727C93d",
+    "address": "0xe78c60c7a36e7b948a5c6cff8d800f6a2727c93d",
     "startBlock": "496924"
   },
   "erc721": {
     "startBlock": "496924"
-  }
+  },
+  "bondedstrategy": {
+    "address": "0x4633c1f0f633cc42fd0ba394762283606c88ae52",
+    "startBlock": "496924"
+  },
+  "whitelist": [
+    "0xfa9343c3897324496a05fc75abed6bac29f8a40f",
+    "0x0f933dc137d21ca519ae4c7e93f87a4c8ef365ef",
+    "0x722377a047e89ca735f09eb7cccab780943c4cb4"
+  ]
 }

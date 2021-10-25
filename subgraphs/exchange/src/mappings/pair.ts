@@ -1,11 +1,13 @@
 import { ADDRESS_ZERO, BIG_DECIMAL_ZERO, MASTER_CHEF_ADDRESS, MINIMUM_USD_THRESHOLD_NEW_PAIRS, WHITELIST } from 'const'
 import { Address, BigDecimal, BigInt, dataSource, log, store } from '@graphprotocol/graph-ts'
 import { Burn, Mint, Pair, Swap, Token, Transaction } from '../../generated/schema'
+import { getBondedStrategyPair } from '../entities/bondedStrategyPair'
 import {
   Burn as BurnEvent,
   Mint as MintEvent,
   Pair as PairContract,
   Swap as SwapEvent,
+  SwitchFees as SwitchFeesEvent,
   Sync as SyncEvent,
   Transfer as TransferEvent,
 } from '../../generated/templates/Pair/Pair'
@@ -688,4 +690,8 @@ export function onSwap(event: SwapEvent): void {
     amount1Total.times(token1.derivedETH as BigDecimal).times(bundle.ethPrice)
   )
   token1DayData.save()
+}
+
+export function onSwitchFees(event:SwitchFeesEvent) {
+  getBondedStrategyPair(dataSource.address(), event.block);
 }

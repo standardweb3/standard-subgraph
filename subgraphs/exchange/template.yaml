@@ -89,6 +89,7 @@ templates:
       language: wasm/assemblyscript
       file: ./src/mappings/pair.ts
       entities:
+        - BondedStrategyPair
         - Bundle
         - Burn
         - LiquidityPosition
@@ -102,7 +103,7 @@ templates:
         - User
       abis:
         - name: Pair
-          file: ../../node_modules/@sushiswap/core/build/abi/UniswapV2Pair.json
+          file: ./packages/abis/UniswapV2Pair.json
         - name: Factory
           file: ../../node_modules/@sushiswap/core/build/abi/UniswapV2Factory.json
       eventHandlers:
@@ -116,3 +117,5 @@ templates:
           handler: onTransfer
         - event: Sync(uint112,uint112)
           handler: onSync
+        - event: SwitchFees(bool,bool)
+          handler: onSwitchFees

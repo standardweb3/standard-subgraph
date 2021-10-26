@@ -692,6 +692,6 @@ export function onSwap(event: SwapEvent): void {
   token1DayData.save()
 }
 
-export function onSwitchFees(event:SwitchFeesEvent) {
+export function onSwitchFees(event:SwitchFeesEvent): void {
   getBondedStrategyPair(dataSource.address(), event.block);
 }

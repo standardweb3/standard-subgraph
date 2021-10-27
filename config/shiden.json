@@ -22,7 +22,7 @@
     "startBlock": "496924"
   },
   "bondedstrategy": {
-    "address": "0x52c26847130ec1d8e25dec3d77262365e58a6f5c",
+    "address": "0x670cf2628816d95b36b1a4db2dfba80eaebd7b78",
     "startBlock": "496924"
   },
   "whitelist": [
@@ -31,4 +31,3 @@
     "0x722377a047e89ca735f09eb7cccab780943c4cb4"
   ]
 }
-

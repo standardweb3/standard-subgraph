@@ -694,5 +694,5 @@ export function onSwap(event: SwapEvent): void {
 
 export function onSwitchFees(event:SwitchFeesEvent): void {
   log.info("switchFee {}", [dataSource.address().toHex()]);
-  getBondedStrategyPair(dataSource.address(), event.block);
+  if (event.params.poolOn) getBondedStrategyPair(dataSource.address(), event.block);
 }

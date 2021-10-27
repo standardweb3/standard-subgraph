@@ -85,9 +85,7 @@ export function onDividendClaimed(event: DividendClaimed): void {
   const bondedStrategy = getBondedStrategy(event.block)
 
   // get pair instances (hard coded for rinkeby as of now. contract code needs to be updated)
-  const pairAddress = 
-    NETWORK === 'rinkeby' ? Address.fromString('0x5ea23619fe6d692963e86574d9d1c798f4fc1626')
-  : Address.fromString('0x2364e5878ea2d400c2b21732ab9b0cd0555ed8f5')
+  const pairAddress = event.params.claimingWith
   // pair contract is needed to query the balance of bondedStrategy
   const pairContract = PairContract.bind(pairAddress)
   // exchange pair is needed to get the lpToken price

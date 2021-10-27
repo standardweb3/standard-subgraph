@@ -70,7 +70,7 @@ dataSources:
         - name: ERC20NameBytes
           file: ../../packages/abis/ERC20NameBytes.json
       eventHandlers:
-        - event: DividendClaimed(address,uint256)
+        - event: DividendClaimed(address,address,uint256)
           handler: onDividendClaimed
         - event: Bonded(address,uint256)
           handler: onBonded

@@ -1,17 +1,17 @@
 {
-    "name": "dexcandles",
-    "license": "MIT",
-    "version": "1.0.0",
-    "author": "SushiSwap",
-    "scripts": {
-        "codegen": "graph codegen subgraph.yaml",
-        "build": "graph build subgraph.yaml",
-        "create-local": "graph create --node http://localhost:8020/ $GRAPH_USER/exchange-candles",
-        "remove-local": "graph remove --node http://localhost:8020/ $GRAPH_USER/exchange-candles",
-        "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 $GRAPH_USER/exchange-candles",
-        "deploy:rinkeby": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ billjhlee/rinkeby-exchange-candles subgraph.yaml",
-        "deploy": "graph deploy --node $GRAPH_URL --ipfs $IPFS_URL $GRAPH_USER/$CHAIN-exchange-candles subgraph.yaml",
-        "create-subgraph": "graph create --node $GRAPH_URL $GRAPH_USER/$CHAIN-exchange-candles",
-        "prepare": "mustache ../../config/$CHAIN.json template.yaml > subgraph.yaml"
-    }
+  "name": "candles",
+  "license": "MIT",
+  "version": "1.0.0",
+  "author": "SushiSwap",
+  "scripts": {
+    "codegen": "graph codegen subgraph.yaml",
+    "build": "graph build subgraph.yaml",
+    "create-local": "graph create --node http://localhost:8020/ $GRAPH_USER/candles",
+    "remove-local": "graph remove --node http://localhost:8020/ $GRAPH_USER/candles",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 $GRAPH_USER/candles",
+    "deploy:rinkeby": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ billjhlee/rinkeby-candles subgraph.yaml",
+    "deploy": "graph deploy --node $GRAPH_URL --ipfs $IPFS_URL $GRAPH_USER/$CHAIN-candles subgraph.yaml",
+    "create-subgraph": "graph create --node $GRAPH_URL $GRAPH_USER/$CHAIN-candles",
+    "prepare": "mustache ../../config/$CHAIN.json template.yaml > subgraph.yaml"
+  }
 }

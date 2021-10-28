@@ -3,6 +3,10 @@ name: Subgraph Deploy
 
 # Controls when the action will run.
 on:
+  push:
+    branches:
+      - master
+
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -18,15 +22,6 @@ jobs:
       max-parallel: 1
       matrix:
         include:
-          - chain: rinkeby
-            subgraphs: exchange masterchefV2 blocks
-            workspace: exchange
-            graph_service: hosted
-          - chain: shibuya
-            subgraphs: exchange masterchefV2 blocks
-            graph_service: private
-            graph_url: https://graph.shibuya.standardtech.xyz:4443
-            ipfs_url: https://ipfs.shibuya.standardtech.xyz
           - chain: shiden
             subgraphs: exchange masterchefV2 blocks
             graph_service: private
@@ -43,7 +38,7 @@ jobs:
       - name: Yarn - Restore cache
         uses: actions/cache@v2
         with:
-          path: '**/node_modules' 
+          path: '**/node_modules'
           key: node_modules-${{ hashFiles('**/yarn.lock') }}
 
       - name: Yarn - Deploy Subgraph - TBD

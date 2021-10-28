@@ -39,7 +39,7 @@ jobs:
         include:
           - chain: shiden
             subgraphs: exchange masterchefV2 blocks erc721 candles
-            graph_service: private
+            graph_hosted: false
             graph_url: https://graph.shiden.standardtech.xyz:4443
             ipfs_url: https://ipfs.shiden.standardtech.xyz
     env:
@@ -72,7 +72,7 @@ jobs:
         if:
         run: |
           for WORKSPACE in ${{ env.SUBGRAPHS }}; do
-            if [ ${{ matrix.graph_hosted }} == 'false' ]; then
+            if [[ ${{ matrix.graph_hosted }} == 'false' ]]; then
               yarn workspace $WORKSPACE create-subgraph
               yarn workspace $WORKSPACE deploy
             else

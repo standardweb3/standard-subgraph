@@ -24,8 +24,9 @@ jobs:
         include:
           - chain: rinkeby
             subgraphs: exchange masterchefV2 blocks erc721 candles
-            workspace: exchange
             graph_service: hosted
+            graph_url: https://api.thegraph.com/deploy/
+            ipfs_url: https://api.thegraph.com/ipfs/
           - chain: shibuya
             subgraphs: exchange masterchefV2 blocks erc721 candles
             graph_service: private
@@ -33,6 +34,8 @@ jobs:
             ipfs_url: https://ipfs.shibuya.standardtech.xyz
     env:
       CHAIN: ${{ matrix.chain }}
+      GRAPH_URL: ${{ matrix.graph_url }}
+      IPFS_URL: ${{ matrix.ipfs_url }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -43,26 +46,30 @@ jobs:
           path: '**/node_modules'
           key: node_modules-${{ hashFiles('**/yarn.lock') }}
 
-      - name: Yarn - Install
-        uses: borales/actions-yarn@v2.3.0
-        with:
-          cmd: install --prefer-offline
+      # - name: Yarn - Install
+      #   uses: borales/actions-yarn@v2.3.0
+      #   with:
+      #     cmd: install --prefer-offline
 
-      - name: Yarn - Prepare Subgraph
-        uses: borales/actions-yarn@v2.3.0
-        with:
-          cmd: prepare
+      # - name: Yarn - Prepare Subgraph
+      #   uses: borales/actions-yarn@v2.3.0
+      #   with:
+      #     cmd: prepare
 
-      - name: Yarn - Subgraph Code Generation
-        uses: borales/actions-yarn@v2.3.0
-        with:
-          cmd: codegen
+      # - name: Yarn - Subgraph Code Generation
+      #   uses: borales/actions-yarn@v2.3.0
+      #   with:
+      #     cmd: codegen
+
+      - name: Yarn - Prepare
+        shell: bash
+        run: |
+          yarn install --prefer-offline
+          yarn prepare
+          yarn codegen
 
       - name: Yarn - Deploy Subgraph
         shell: bash
-        env:
-          GRAPH_URL: ${{ matrix.graph_url }}
-          IPFS_URL: ${{ matrix.ipfs_url }}
         run: |
           for WORKSPACE in ${{ matrix.subgraphs }}; do
             if [ ${{ matrix.graph_service }} == 'private' ]; then
@@ -71,5 +78,4 @@ jobs:
             else
               yarn workspace $WORKSPACE deploy --access-token ${{ secrets.GRAPH_API_KEY }}
             fi
-            yarn workspace $WORKSPACE deploy
           done

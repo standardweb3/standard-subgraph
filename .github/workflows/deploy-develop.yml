@@ -11,13 +11,13 @@ on:
   workflow_dispatch:
     inputs:
       chain:
-        description: 'Chain to deploy'
+        description: 'Chain to deploy, e.g. rinkeby or shiden'
         required: true
       subgraphs:
         description: 'Space-separated list of subgraphs to deploy, e.g. exchange or exchange masterchefV2'
         required: true
       graph_hosted:
-        description: 'Bool defining if this is Graph Hosted or private Graph Node'
+        description: 'Bool defining if this is deployed to Hosted Graph'
         required: false
         default: true
       graph_url:
@@ -48,11 +48,11 @@ jobs:
             graph_url: https://graph.shibuya.standardtech.xyz:4443
             ipfs_url: https://ipfs.shibuya.standardtech.xyz
     env:
-      CHAIN: ${{ github.event_name == 'push' && matrix.chain || inputs.chain }}
-      SUBGRAPHS: ${{ github.event_name == 'push' && matrix.subgraphs || inputs.subgraphs }}
-      GRAPH_HOSTED: ${{ github.event_name == 'push' && matrix.graph_hosted || inputs.graph_hosted }}
-      GRAPH_URL: ${{ github.event_name == 'push' && matrix.graph_url || inputs.graph_url }}
-      IPFS_URL: ${{ github.event_name == 'push' && matrix.ipfs_url || inputs.ipfs_url }}
+      CHAIN: ${{ github.event_name == 'push' && matrix.chain || github.event.inputs.chain }}
+      SUBGRAPHS: ${{ github.event_name == 'push' && matrix.subgraphs || github.event.inputs.subgraphs }}
+      GRAPH_HOSTED: ${{ github.event_name == 'push' && matrix.graph_hosted || github.event.inputs.graph_hosted }}
+      GRAPH_URL: ${{ github.event_name == 'push' && matrix.graph_url || github.event.inputs.graph_url }}
+      IPFS_URL: ${{ github.event_name == 'push' && matrix.ipfs_url || github.event.inputs.ipfs_url }}
       GRAPH_USER: digitalnativeinc
       GRAPH_CLI_VERSION: 0.22.2
     steps:

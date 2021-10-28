@@ -41,7 +41,7 @@ jobs:
           path: '**/node_modules'
           key: node_modules-${{ hashFiles('**/yarn.lock') }}
 
-      - name: Yarn - Deploy Subgraph - TBD
+      - name: Yarn - Deploy Subgraph
         shell: bash
         env:
           CHAIN: ${{ matrix.chain }}
@@ -51,7 +51,7 @@ jobs:
           yarn install --prefer-offline
           yarn prepare
           for WORKSPACE in ${{ matrix.subgraphs }}; do
-            yarn workspace ${{ env.WORKSPACE }} codegen
+            yarn workspace $WORKSPACE codegen
             if [ ${{ matrix.graph_service }} -eq 'private' ]; then yarn workspace $WORKSPACE create-subgraph; fi
             yarn workspace ${{ matrix.workspace }} deploy --access-token ${{ secrets.GRAPH_API_KEY }}
             yarn workspace $WORKSPACE deploy

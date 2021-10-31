@@ -1,5 +1,5 @@
 {
-  "name": "exchange",
+  "name": "exchange-dev",
   "license": "MIT",
   "version": "1.1.0",
   "author": "DigitalNative",
@@ -13,8 +13,8 @@
     "create-local": "graph create --node http://localhost:8020/ digitalnative/standardprotocol",
     "remove-local": "graph remove --node http://localhost:8020/ digitalnative/standardprotocol",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 digitalnative/standardprotocol",
-    "deploy": "graph deploy --node $GRAPH_URL --ipfs $IPFS_URL $GRAPH_USER/$CHAIN-exchange subgraph.yaml",
-    "create-subgraph": "graph create --node $GRAPH_URL $GRAPH_USER/$CHAIN-exchange",
+    "deploy": "graph deploy --node $GRAPH_URL --ipfs $IPFS_URL $GRAPH_USER/$CHAIN-exchange-dev subgraph.yaml",
+    "create-subgraph": "graph create --node $GRAPH_URL $GRAPH_USER/$CHAIN-exchange-dev",
     "deploy-studio:mainnet": "graph deploy --studio sushi---mainnet-exchange",
     "deploy:rinkeby": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ billjhlee/rinkeby-exchange2 subgraph.yaml",
     "prepare": "mustache ../../config/$CHAIN.json template.yaml > subgraph.yaml"

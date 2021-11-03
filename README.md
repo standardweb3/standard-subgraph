@@ -1,4 +1,4 @@
-# SushiSwap Subgraph
+# Standard Tech Subgraph
 
 Aims to deliver analytics & historical data for Standard Tech. Still a work in progress. Feel free to contribute!
 

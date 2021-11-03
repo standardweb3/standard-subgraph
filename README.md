@@ -1,6 +1,6 @@
 # SushiSwap Subgraph
 
-Aims to deliver analytics & historical data for SushiSwap. Still a work in progress. Feel free to contribute!
+Aims to deliver analytics & historical data for Standard Tech. Still a work in progress. Feel free to contribute!
 
 The Graph exposes a GraphQL endpoint to query the events and entities within the SushiSwap ecosytem.
 

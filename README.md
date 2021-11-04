@@ -1,17 +1,18 @@
-# SushiSwap Subgraph
+# Standard Tech Subgraph
 
-Aims to deliver analytics & historical data for SushiSwap. Still a work in progress. Feel free to contribute!
+Aims to deliver analytics & historical data for Standard Tech. Still a work in progress. Feel free to contribute!
 
 The Graph exposes a GraphQL endpoint to query the events and entities within the SushiSwap ecosytem.
 
 Current subgraph locations:
 
 1. **Exchange**: Includes all SushiSwap Exchange data with Price Data, Volume, Users, etc:
-   + https://thegraph.com/explorer/subgraph/sushiswap/exchange (mainnet)
-   + https://thegraph.com/explorer/subgraph/sushiswap/fantom-exchange (ftm)
-   + https://thegraph.com/explorer/subgraph/sushiswap/matic-exchange (matic)
-   + https://thegraph.com/explorer/subgraph/sushiswap/xdai-exchange (xdai)
-   + https://thegraph.com/explorer/subgraph/sushiswap/bsc-exchange (bsc)
+
+   - https://thegraph.com/explorer/subgraph/sushiswap/exchange (mainnet)
+   - https://thegraph.com/explorer/subgraph/sushiswap/fantom-exchange (ftm)
+   - https://thegraph.com/explorer/subgraph/sushiswap/matic-exchange (matic)
+   - https://thegraph.com/explorer/subgraph/sushiswap/xdai-exchange (xdai)
+   - https://thegraph.com/explorer/subgraph/sushiswap/bsc-exchange (bsc)
 
 2. **Master Chef**: Indexes all MasterChef staking data: https://thegraph.com/explorer/subgraph/sushiswap/master-chef
 
@@ -26,7 +27,8 @@ Current subgraph locations:
 7. **BentoBox**: Indexes BentoBox and Kashi Lending data: https://thegraph.com/explorer/subgraph/sushiswap/bentobox
 
 8. **MiniChef**: Indexes MiniChef contracts that are used in place of MasterChefs for alternate networks:
-  + https://thegraph.com/explorer/subgraph/sushiswap/matic-minichef
+
+- https://thegraph.com/explorer/subgraph/sushiswap/matic-minichef
 
 ## To setup and deploy
 
@@ -86,8 +88,3 @@ We will add to this as development progresses.
   }
 }
 ```
-
-# Community Subgraphs
-
-1) croco-finance fork of this repo with slight modifications - [deployment](https://thegraph.com/explorer/subgraph/benesjan/sushi-swap), [code](https://github.com/croco-finance/sushiswap-subgraph)
-2) croco-finance dex-rewards-subgraph which tracks SLPs in MasterChef and all the corresponding rewards individually. (can be used for analysis of user's positions) - [deployment](https://thegraph.com/explorer/subgraph/benesjan/dex-rewards-subgraph), [code](https://github.com/croco-finance/dex-rewards-subgraph)

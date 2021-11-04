@@ -12,6 +12,7 @@ import { getBundle, getPair } from '../entities'
 import { getBondedStrategyHistory } from '../entities/bondedStrategyHistory'
 import { getStndPrice } from '../pricing'
 import { getBondedStrategyPairHistory } from '../entities/BondedStrategyPairHistory'
+import { Pair } from '../../../exchange-dev/generated/schema'
 
 export function onBonded(event: Bonded): void {
   // START: update bondedStrategy
@@ -89,7 +90,7 @@ export function onDividendClaimed(event: DividendClaimed): void {
   // pair contract is needed to query the balance of bondedStrategy
   const pairContract = PairContract.bind(pairAddress)
   // exchange pair is needed to get the lpToken price
-  const exchangePair = getPair(pairAddress, event.block)
+  const exchangePair = Pair.load(pairAddress.toHex())
   if (exchangePair !== null) {
     // get bundle for ethPrice to find lpTokenPrice
     const bundle = getBundle()

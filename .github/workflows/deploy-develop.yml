@@ -38,12 +38,12 @@ jobs:
       matrix:
         include:
           - chain: rinkeby
-            subgraphs: exchange masterchefV2 blocks erc721 candles
+            subgraphs: exchange masterchefV2 blocks candles
             graph_hosted: true
             graph_url: https://api.thegraph.com/deploy/
             ipfs_url: https://api.thegraph.com/ipfs/
           - chain: shibuya
-            subgraphs: exchange masterchefV2 blocks erc721 candles
+            subgraphs: exchange masterchefV2 blocks candles
             graph_hosted: false
             graph_url: https://graph.shibuya.standardtech.xyz:4443
             ipfs_url: https://api.thegraph.com/ipfs/

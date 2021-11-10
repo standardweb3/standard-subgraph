@@ -480,6 +480,7 @@ type Swap @entity {
   amountUSD: BigDecimal!
 }
 
+
 type BondedStrategy @entity {
   id: ID!
   # total bonded STND
@@ -491,7 +492,7 @@ type BondedStrategy @entity {
   totalClaimedUSD: BigDecimal!
   remainingRewardETH: BigDecimal!
 
-  users: [BondedStrategyUser!] @derivedFrom(field: "bondedStrategy")
+  users: [BondedStrategyUser!]  @derivedFrom(field: "bondedStrategy")
   usersCount: BigInt!
 
   block: BigInt!
@@ -532,7 +533,7 @@ type BondedStrategyUser @entity {
   # address
   id: ID!
   bondedStrategy: BondedStrategy!
-  claims: [BondedStrategyUserClaim!] @derivedFrom(field: "user")
+  claims: [BondedStrategyUserClaim!]  @derivedFrom(field: "user")
 
   # bonded STND
   bonded: BigInt!
@@ -546,11 +547,11 @@ type BondedStrategyUser @entity {
 type BondedStrategyUserClaim @entity {
   # user address - pair address
   id: ID!
-
-  user: BondedStrategyUser!
+  
+  user: BondedStrategyUser! 
   pair: Bytes!
 
-  # last
+  # last 
   lastClaimed: BigInt!
 
   # amount
@@ -586,7 +587,7 @@ type BondedStrategyPairHistory @entity {
   remainingReward: BigInt!
   remainingRewardETH: BigDecimal!
   remainingRewardUSD: BigDecimal!
-
+  
   # last block of the day
   block: BigInt!
   # last update timestamp of the day

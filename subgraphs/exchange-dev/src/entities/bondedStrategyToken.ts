@@ -6,6 +6,7 @@ export function getBondedStrategyToken(tokenId: Address, block: ethereum.Block):
   let token = BondedStrategyToken.load(tokenId.toHex())
 
   if (token === null) {
+    token = new BondedStrategyToken(tokenId.toHex())
     let exchangeToken = Token.load(tokenId.toHex())
     if (exchangeToken === null) {
       token.isPair = true

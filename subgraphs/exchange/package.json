@@ -17,7 +17,6 @@
     "create-subgraph": "graph create --node $GRAPH_URL $GRAPH_USER/$CHAIN-exchange",
     "deploy-studio:mainnet": "graph deploy --studio sushi---mainnet-exchange",
     "deploy:rinkeby": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ billjhlee/rinkeby-exchange2 subgraph.yaml",
-    "deploy:shiden": "graph deploy --node https://graph.shiden.standardtech.xyz:4443 --ipfs https://ipfs.shiden.standardtech.xyz digitalnativeinc/shiden-exchange subgraph.yaml --version-label 1.0.0",
     "prepare": "mustache ../../config/$CHAIN.json template.yaml > subgraph.yaml"
   }
 }

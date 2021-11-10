@@ -26,10 +26,6 @@ Current subgraph locations:
 
 7. **BentoBox**: Indexes BentoBox and Kashi Lending data: https://thegraph.com/explorer/subgraph/sushiswap/bentobox
 
-8. **MiniChef**: Indexes MiniChef contracts that are used in place of MasterChefs for alternate networks:
-
-- https://thegraph.com/explorer/subgraph/sushiswap/matic-minichef
-
 ## To setup and deploy
 
 For any of the subgraphs: `sushiswap` or `bar` as `[subgraph]`

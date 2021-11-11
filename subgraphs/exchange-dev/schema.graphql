@@ -1,12 +1,12 @@
-# # Search
-type _Schema_
-  # Token
-  @fulltext(
-    name: "tokenSearch"
-    language: en
-    algorithm: rank
-    include: [{ entity: "Token", fields: [{ name: "id" }, { name: "name" }, { name: "symbol" }] }]
-  )
+# # # Search
+# type _Schema_
+#   # Token
+#   @fulltext(
+#     name: "tokenSearch"
+#     language: en
+#     algorithm: rank
+#     include: [{ entity: "Token", fields: [{ name: "id" }, { name: "name" }, { name: "symbol" }] }]
+#   )
 #   # Pair
 #   @fulltext(
 #     name: "pairSearch"

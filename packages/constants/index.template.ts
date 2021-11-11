@@ -76,7 +76,7 @@ export const MASTER_CHEF_V2_ADDRESS = Address.fromString(
   "{{ masterchefV2.address }}{{^masterchefV2.address}}0x0000000000000000000000000000000000000000{{/masterchefV2.address}}"
 );
 
-export const SUSHI_BAR_ADDRESS = Address.fromString("{{ sushi_bar_address }}{{^sushi_bar_address}}0x0000000000000000000000000000000000000000{{/sushi_bar_address}}");
+export const SUSHI_BAR_ADDRESS = Address.fromString("{{ bar.address }}{{^bar.address}}0x0000000000000000000000000000000000000000{{/bar.address}}");
 
 export const SUSHI_MAKER_ADDRESS = Address.fromString(
   "{{ sushi_maker_address }}{{^sushi_maker_address}}0x0000000000000000000000000000000000000000{{/sushi_maker_address}}"
@@ -93,7 +93,6 @@ export const SUSHI_USDT_PAIR_ADDRESS = Address.fromString(
 export const SUSHI_USDC_PAIR_ADDRESS = Address.fromString(
   "{{ sushi_usdc_pair }}{{^sushi_usdc_pair}}0x0000000000000000000000000000000000000000{{/sushi_usdc_pair}}"
 );
-
 
 export const XSUSHI_USDC_PAIR_ADDRESS = Address.fromString(
   "{{ xsushi_usdc_pair_address }}{{^xsushi_usdc_pair_address}}0x0000000000000000000000000000000000000000{{/xsushi_usdc_pair_address}}"

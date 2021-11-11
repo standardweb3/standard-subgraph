@@ -12,12 +12,10 @@ import {
   SUSHI_WETH_PAIR_FIRST_LIQUIDITY_BLOCK,
   BIG_INT_ZERO,
   SUSHI_USDC_PAIR_ADDRESS, SUSHI_USDC_PAIR_FIRST_LIQUIDITY_BLOCK ,
-  DAI_WETH_PAIR_ADDRESS
 } from "const";
 import {
   Address,
   BigDecimal,
-  BigInt,
   ethereum,
   log,
 } from "@graphprotocol/graph-ts";

@@ -1,0 +1,18 @@
+{
+  "name": "bar",
+  "license": "MIT",
+  "version": "1.0.0",
+  "author": "SushiSwap",
+  "scripts": {
+    "codegen": "graph codegen subgraph.yaml",
+    "build": "graph build subgraph.yaml",
+    "create-local": "graph create --node http://localhost:8020/ $GRAPH_USER/xstnd",
+    "remove-local": "graph remove --node http://localhost:8020/ $GRAPH_USER/xstnd",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 $GRAPH_USER/xstnd",
+    "deploy:rinkeby": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ billjhlee/rinkeby-xstnd subgraph.yaml",
+    "deploy:mainnet": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ billjhlee/ethereum-xstnd subgraph.yaml",
+    "deploy": "graph deploy --node $GRAPH_URL --ipfs $IPFS_URL $GRAPH_USER/$CHAIN-xstnd subgraph.yaml",
+    "create-subgraph": "graph create --node $GRAPH_URL $GRAPH_USER/$CHAIN-xstnd",
+    "prepare": "mustache ../../config/$CHAIN.json template.yaml > subgraph.yaml"
+  }
+}

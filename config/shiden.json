@@ -25,6 +25,10 @@
     "address": "0x670cf2628816d95b36b1a4db2dfba80eaebd7b78",
     "startBlock": "496924"
   },
+  "bar": {
+    "address": "0xfC76114C5AdeBfa257153eA82b8594C3B25baebe",
+    "startBlock": "648843"
+  },
   "whitelist": [
     "0xfa9343c3897324496a05fc75abed6bac29f8a40f",
     "0x0f933dc137d21ca519ae4c7e93f87a4c8ef365ef",

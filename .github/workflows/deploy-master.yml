@@ -74,7 +74,7 @@ jobs:
           for WORKSPACE in ${{ env.SUBGRAPHS }}; do
             if [[ ${{ matrix.graph_hosted }} == 'false' ]]; then
               yarn workspace $WORKSPACE create-subgraph
-              yarn workspace $WORKSPACE deploy --version-label 1.1.0
+              yarn workspace $WORKSPACE deploy --version-label 1.0.0
             else
               yarn workspace $WORKSPACE deploy --access-token ${{ secrets.GRAPH_API_KEY }}
             fi

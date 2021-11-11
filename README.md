@@ -41,10 +41,6 @@ Please use our node utility: [sushi-data](https://github.com/sushiswap/sushi-dat
 
 Note: This is in on going development as well.
 
-## Example Queries
-
-We will add to this as development progresses.
-
 ### Maker
 
 ```graphql

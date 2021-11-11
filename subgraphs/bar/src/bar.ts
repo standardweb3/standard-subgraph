@@ -27,7 +27,7 @@ function createBar(block: ethereum.Block): Bar {
   const bar = new Bar(dataSource.address().toHex())
   bar.decimals = contract.decimals()
   bar.name = contract.name()
-  bar.sushi = contract.sushi()
+  bar.sushi = contract.stnd()
   bar.symbol = contract.symbol()
   bar.totalSupply = BIG_DECIMAL_ZERO
   bar.sushiStaked = BIG_DECIMAL_ZERO

@@ -2,8 +2,9 @@ import {
   ADDRESS_ZERO,
   BIG_DECIMAL_1E18,
   BIG_DECIMAL_1E6,
+  BIG_DECIMAL_ONE,
   BIG_DECIMAL_ZERO,
-  BIG_INT_ZERO,
+  // BIG_INT_ZERO,
   SUSHI_BAR_ADDRESS,
   SUSHI_TOKEN_ADDRESS,
   SUSHI_USDC_PAIR_ADDRESS,
@@ -14,13 +15,14 @@ import { Bar as BarContract, Transfer as TransferEvent } from '../generated/Sush
 
 import { Pair as PairContract } from '../generated/SushiBar/Pair'
 import { SushiToken as SushiTokenContract } from '../generated/SushiBar/SushiToken'
+import { getSushiPrice } from '../../../packages/pricing'
 
 // TODO: Get averages of multiple sushi stablecoin pairs
-function getSushiPrice(): BigDecimal {
-  const pair = PairContract.bind(SUSHI_USDC_PAIR_ADDRESS)
-  const reserves = pair.getReserves()
-  return reserves.value1.toBigDecimal().times(BIG_DECIMAL_1E18).div(reserves.value0.toBigDecimal()).div(BIG_DECIMAL_1E6)
-}
+// function getSushiPrice(): BigDecimal {
+//   const pair = PairContract.bind(SUSHI_USDC_PAIR_ADDRESS)
+//   const reserves = pair.getReserves()
+//   return reserves.value1.toBigDecimal().times(BIG_DECIMAL_1E18).div(reserves.value0.toBigDecimal()).div(BIG_DECIMAL_1E6)
+// }
 
 function createBar(block: ethereum.Block): Bar {
   const contract = BarContract.bind(dataSource.address())
@@ -144,13 +146,15 @@ export function transfer(event: TransferEvent): void {
   const bar = getBar(event.block)
   const barContract = BarContract.bind(SUSHI_BAR_ADDRESS)
 
-  const sushiPrice = getSushiPrice()
+  const sushiPrice = getSushiPrice(event.block)
 
   bar.totalSupply = barContract.totalSupply().divDecimal(BIG_DECIMAL_1E18)
-  bar.sushiStaked = SushiTokenContract.bind(SUSHI_TOKEN_ADDRESS)
+  const sushiTotalBalance = SushiTokenContract.bind(SUSHI_TOKEN_ADDRESS)
     .balanceOf(SUSHI_BAR_ADDRESS)
     .divDecimal(BIG_DECIMAL_1E18)
-  bar.ratio = bar.sushiStaked.div(bar.totalSupply)
+  
+  if (bar.totalSupply.equals(BIG_DECIMAL_ZERO)) bar.ratio = BIG_DECIMAL_ONE
+  else bar.ratio = sushiTotalBalance.div(bar.totalSupply)
 
   const what = value.times(bar.ratio)
 

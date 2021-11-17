@@ -1,21 +1,25 @@
 {
   "network": "mainnet",
-  "factory_address": "0xbf4dd73c9f90e9f2ddba56933ced7eafdf56a8a9",
-  "uniswap_factory_address": "0xbf4dd73c9f90e9f2ddba56933ced7eafdf56a8a9",
-  "minimum_usd_threshold_new_pairs": "2250",
-  "minimum_liquidity_threshold_eth": "0.5",
+  "factory_address": "0x53ac1d1fa4f9f6c604b8b198ce29a50d28cba893",
+  "uniswap_factory_address": "0x53ac1d1fa4f9f6c604b8b198ce29a50d28cba893",
+  "minimum_usd_threshold_new_pairs": "1000",
+  "minimum_liquidity_threshold_eth": "0.2",
   "dai_address": "0x6b175474e89094c44da98b954eedeac495271d0f",
-  "dai_weth_pair": "",
+  "dai_weth_pair": "0xf1ebbf7aa9e802d28a2fb491cf290e6b39722555",
   "usdc_address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
-  "usdc_weth_pair": "",
+  "usdc_weth_pair": "0x6d74748b7089409cd7c52dcb2cbcc3b204360296",
+  "usdc_weth_liquidity_block": "13621545",
   "usdt_address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
-  "usdt_weth_pair": "",
+  "usdt_weth_pair": "0x8784a0f6d01a9fe3b1b6e803ceaa7549c655b580",
   "sushi_token_address": "0x9040e237c3bf18347bb00957dc22167d0f2b999d",
   "sushi_usdc_pair": "",
+  "sushi_usdc_pair_liquidity_block": "",
+  "sushi_weth_pair": "0x895d4538bbd5e53809d6c5680dd88367a0837eb4",
+  "sushi_weth_liquidity_block": "13621821",
   "native_address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
   "weth_address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
   "factory": {
-    "address": "0xbf4dd73c9f90e9f2ddba56933ced7eafdf56a8a9",
+    "address": "0x53ac1d1fa4f9f6c604b8b198ce29a50d28cba893",
     "startBlock": "13487524"
   },
   "masterchefV2": {
@@ -30,8 +34,8 @@
     "startBlock": "13543284"
   },
   "bar": {
-    "address": "0x8798249c2e607446efb7ad49ec89dd1865ff4272",
-    "startBlock": "10801571"
+    "address": "0xad41f311c835224447c54c98fadf5e0ad9eff077",
+    "startBlock": "13619914"
   },
   "whitelist": [
     "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
@@ -40,6 +44,7 @@
     "0x9040e237c3bf18347bb00957dc22167d0f2b999d",
     "0xdac17f958d2ee523a2206206994597c13d831ec7",
     "0x00e856ee945a49bb73436e719d96910cd9d116a4",
-    "0x2370f9d504c7a6e775bf6e14b3f12846b594cd53"
+    "0x2370f9d504c7a6e775bf6e14b3f12846b594cd53",
+    "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599"
   ]
 }

@@ -70,7 +70,6 @@ jobs:
         run: |
           yarn install --prefer-offline
           yarn prepare
-          yarn codegen
 
       - name: Yarn - Deploy Subgraph
         shell: bash
@@ -78,9 +77,11 @@ jobs:
         run: |
           for WORKSPACE in ${{ env.SUBGRAPHS }}; do
             if [[ ${{ matrix.graph_hosted }} == 'false' ]]; then
+              yarn workspace $WORKSPACE codegen
               yarn workspace $WORKSPACE create-subgraph
               yarn workspace $WORKSPACE deploy --version-label 1.0.1
             else
+              yarn workspace $WORKSPACE codegen
               yarn workspace $WORKSPACE deploy --access-token ${{ secrets.GRAPH_API_KEY }}
             fi
           done

@@ -76,7 +76,7 @@ jobs:
         shell: bash
         run: |
           for PACKAGE in ${{ env.REQUIRED_PACKAGES }}; do
-              yarn workspace $PACKAGE codegen
+            yarn workspace $PACKAGE codegen
           done
 
           for WORKSPACE in ${{ env.SUBGRAPHS }}; do

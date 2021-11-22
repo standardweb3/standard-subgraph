@@ -6,8 +6,12 @@
   "minimum_liquidity_threshold_eth": "0.01",
   "usdc_address": "0xfa9343c3897324496a05fc75abed6bac29f8a40f",
   "usdc_weth_pair": "0x1a313816bfebe895c92514f3049f82166b723003",
+  "usdc_weth_liquidity_block": "574476",
   "sushi_token_address": "0x722377a047e89ca735f09eb7cccab780943c4cb4",
   "sushi_usdc_pair": "0xa6f213f63973c2815fa9c8079965f933694a3251",
+  "sushi_usdc_pair_liquidity_block": "575503",
+  "sushi_weth_pair": "0xbc14873c7daeb1887950083030afd2ff9c9b20a0",
+  "sushi_weth_liquidity_block": "575882",
   "native_address": "0x0f933dc137d21ca519ae4c7e93f87a4c8ef365ef",
   "weth_address": "0x0f933dc137d21ca519ae4c7e93f87a4c8ef365ef",
   "factory": {

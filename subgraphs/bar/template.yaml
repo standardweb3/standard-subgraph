@@ -25,6 +25,8 @@ dataSources:
           file: ../../packages/abis/Stnd.json
         - name: Pair
           file: ../../packages/abis/UniswapV2Pair.json
+        - name: Factory
+          file: ../../node_modules/@sushiswap/core/build/abi/UniswapV2Factory.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: transfer

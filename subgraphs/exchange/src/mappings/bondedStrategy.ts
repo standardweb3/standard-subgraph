@@ -12,7 +12,7 @@ import { getBundle, getPair } from '../entities'
 import { getBondedStrategyHistory } from '../entities/bondedStrategyHistory'
 import { getStndPrice } from '../pricing'
 import { getBondedStrategyPairHistory } from '../entities/BondedStrategyPairHistory'
-import { Pair } from '../../../exchange-dev/generated/schema'
+import { Pair } from '../../generated/schema'
 
 export function onBonded(event: Bonded): void {
   // START: update bondedStrategy

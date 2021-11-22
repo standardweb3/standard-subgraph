@@ -55,6 +55,7 @@ jobs:
       IPFS_URL: ${{ github.event_name == 'push' && matrix.ipfs_url || github.event.inputs.ipfs_url }}
       GRAPH_USER: digitalnativeinc
       GRAPH_CLI_VERSION: 0.22.2
+      REQUIRED_PACKAGES: const pricing
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -70,17 +71,21 @@ jobs:
         run: |
           yarn install --prefer-offline
           yarn prepare
-          yarn codegen
 
       - name: Yarn - Deploy Subgraph
         shell: bash
-        if:
         run: |
+          for PACKAGE in ${{ env.REQUIRED_PACKAGES }}; do
+            yarn workspace $PACKAGE codegen
+          done
+
           for WORKSPACE in ${{ env.SUBGRAPHS }}; do
             if [[ ${{ matrix.graph_hosted }} == 'false' ]]; then
+              yarn workspace $WORKSPACE codegen
               yarn workspace $WORKSPACE create-subgraph
-              yarn workspace $WORKSPACE deploy --version-label 1.0.0
+              yarn workspace $WORKSPACE deploy --version-label 1.0.1
             else
+              yarn workspace $WORKSPACE codegen
               yarn workspace $WORKSPACE deploy --access-token ${{ secrets.GRAPH_API_KEY }}
             fi
           done

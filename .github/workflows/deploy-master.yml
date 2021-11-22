@@ -43,7 +43,7 @@ jobs:
             graph_url: https://graph.shiden.standardtech.xyz:4443
             ipfs_url: https://api.thegraph.com/ipfs/
           - chain: metis
-            subgraphs: exchange masterchefV2 blocks candles
+            subgraphs: blocks
             graph_hosted: false
             graph_url: https://graph.metis.standardtech.xyz:4443
             ipfs_url: https://api.thegraph.com/ipfs/

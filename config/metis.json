@@ -1,3 +1,41 @@
 {
-  "metis": "mainnet"
+  "network": "metis",
+  "factory_address": "0xfa68baadbdcf014fa20bd1a4542967ae40ddca53",
+  "uniswap_factory_address": "0xfa68baadbdcf014fa20bd1a4542967ae40ddca53",
+  "factory": {
+    "address": "0xfa68baadbdcf014fa20bd1a4542967ae40ddca53",
+    "startBlock": "730"
+  },
+  "minimum_usd_threshold_new_pairs": "1000",
+  "minimum_liquidity_threshold_eth": "0.2",
+  "dai_address": "0x4c078361fc9bbb78df910800a991c7c3dd2f6ce0",
+  "dai_weth_pair": "",
+  "usdc_address": "0xea32a96608495e54156ae48931a7c20f0dcc1a21",
+  "usdc_weth_pair": "",
+  "usdc_weth_liquidity_block": "",
+  "usdt_address": "0xbb06dca3ae6887fabf931640f67cab3e3a16f4dc",
+  "usdt_weth_pair": "",
+  "sushi_token_address": "0xc12cac7090baa48ec750cceec57c80768f6ee58e",
+  "sushi_usdc_pair": "",
+  "sushi_usdc_pair_liquidity_block": "",
+  "sushi_weth_pair": "",
+  "sushi_weth_liquidity_block": "",
+  "native_address": "0x75cb093E4D61d2A2e65D8e0BBb01DE8d89b53481",
+  "weth_address": "0x75cb093E4D61d2A2e65D8e0BBb01DE8d89b53481",
+  "masterchefV2": {
+    "address": "0x23423292396a37c0c2e4d384dce7ab67738bec28",
+    "startBlock": "733"
+  },
+  "erc721": {
+    "startBlock": "0"
+  },
+  "bondedstrategy": {
+    "address": "0x284c9540f6c3f9eba711bf3dea2bfdbfa495d647",
+    "startBlock": "730"
+  },
+  "bar": {
+    "address": "0xbf4dd73c9f90e9f2ddba56933ced7eafdf56a8a9",
+    "startBlock": "736"
+  },
+  "whitelist": ["0xc12cac7090baa48ec750cceec57c80768f6ee58e", "0x75cb093E4D61d2A2e65D8e0BBb01DE8d89b53481"]
 }

@@ -3,10 +3,6 @@ name: Subgraph Develop Deploy
 
 # Controls when the action will run.
 on:
-  push:
-    branches:
-      - develop
-
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
     inputs:
@@ -28,32 +24,21 @@ on:
         description: 'IPFS URL'
         required: false
         default: https://api.thegraph.com/ipfs/
+      graph_user:
+        description: 'Graph User'
+        required: false
+        default: digitalnativeinc
 
 jobs:
   subgraph-deploy:
     runs-on: ubuntu-20.04
-    strategy:
-      fail-fast: false
-      max-parallel: 1
-      matrix:
-        include:
-          - chain: rinkeby
-            subgraphs: exchange masterchefV2 blocks candles
-            graph_hosted: true
-            graph_url: https://api.thegraph.com/deploy/
-            ipfs_url: https://api.thegraph.com/ipfs/
-          - chain: shibuya
-            subgraphs: exchange masterchefV2 blocks candles
-            graph_hosted: false
-            graph_url: https://graph.shibuya.standardtech.xyz:4443
-            ipfs_url: https://api.thegraph.com/ipfs/
     env:
-      CHAIN: ${{ github.event_name == 'push' && matrix.chain || github.event.inputs.chain }}
-      SUBGRAPHS: ${{ github.event_name == 'push' && matrix.subgraphs || github.event.inputs.subgraphs }}
-      GRAPH_HOSTED: ${{ github.event_name == 'push' && matrix.graph_hosted || github.event.inputs.graph_hosted }}
-      GRAPH_URL: ${{ github.event_name == 'push' && matrix.graph_url || github.event.inputs.graph_url }}
-      IPFS_URL: ${{ github.event_name == 'push' && matrix.ipfs_url || github.event.inputs.ipfs_url }}
-      GRAPH_USER: digitalnativeinc
+      CHAIN: ${{ github.event.inputs.chain }}
+      SUBGRAPHS: ${{ github.event.inputs.subgraphs }}
+      GRAPH_HOSTED: ${{ github.event.inputs.graph_hosted }}
+      GRAPH_URL: ${{ github.event.inputs.graph_url }}
+      IPFS_URL: ${{ github.event.inputs.ipfs_url }}
+      GRAPH_USER: ${{ github.event.inputs.graph_user }}
       GRAPH_CLI_VERSION: 0.22.2
       REQUIRED_PACKAGES: const pricing
     steps:
@@ -80,10 +65,10 @@ jobs:
           done
 
           for WORKSPACE in ${{ env.SUBGRAPHS }}; do
-            if [[ ${{ matrix.graph_hosted }} == 'false' ]]; then
+            if [[ ${{ github.event.inputs.graph_hosted }} == 'false' ]]; then
               yarn workspace $WORKSPACE codegen
               yarn workspace $WORKSPACE create-subgraph
-              yarn workspace $WORKSPACE deploy --version-label 1.0.0
+              yarn workspace $WORKSPACE deploy --version-label 1.0.1
             else
               yarn workspace $WORKSPACE codegen
               yarn workspace $WORKSPACE deploy --access-token ${{ secrets.GRAPH_API_KEY }}

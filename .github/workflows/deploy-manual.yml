@@ -1,40 +1,44 @@
 ---
-name: Subgraph Master Deploy
+name: Subgraph Develop Deploy
 
 # Controls when the action will run.
 on:
-  push:
-    branches:
-      - master
-
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+    inputs:
+      chain:
+        description: 'Chain to deploy, e.g. rinkeby or shiden'
+        required: true
+      subgraphs:
+        description: 'Space-separated list of subgraphs to deploy, e.g. exchange or exchange masterchefV2'
+        required: true
+      graph_hosted:
+        description: 'Bool defining if this is deployed to Hosted Graph'
+        required: false
+        default: true
+      graph_url:
+        description: 'Graph URL'
+        required: false
+        default: https://api.thegraph.com/deploy/
+      ipfs_url:
+        description: 'IPFS URL'
+        required: false
+        default: https://api.thegraph.com/ipfs/
+      graph_user:
+        description: 'Graph User'
+        required: false
+        default: digitalnativeinc
 
 jobs:
   subgraph-deploy:
     runs-on: ubuntu-20.04
-    strategy:
-      fail-fast: false
-      max-parallel: 1
-      matrix:
-        include:
-          - chain: shiden
-            subgraphs: exchange masterchefV2 blocks candles bar
-            graph_hosted: false
-            graph_url: https://graph.shiden.standardtech.xyz:4443
-            ipfs_url: https://api.thegraph.com/ipfs/
-          - chain: metis
-            subgraphs: blocks
-            graph_hosted: false
-            graph_url: https://graph.metis.standardtech.xyz:4443
-            ipfs_url: https://api.thegraph.com/ipfs/
     env:
-      CHAIN: ${{ matrix.chain }}
-      SUBGRAPHS: ${{ matrix.subgraphs }}
-      GRAPH_HOSTED: ${{ matrix.graph_hosted }}
-      GRAPH_URL: ${{ matrix.graph_url }}
-      IPFS_URL: ${{ matrix.ipfs_url }}
-      GRAPH_USER: digitalnativeinc
+      CHAIN: ${{ github.event.inputs.chain }}
+      SUBGRAPHS: ${{ github.event.inputs.subgraphs }}
+      GRAPH_HOSTED: ${{ github.event.inputs.graph_hosted }}
+      GRAPH_URL: ${{ github.event.inputs.graph_url }}
+      IPFS_URL: ${{ github.event.inputs.ipfs_url }}
+      GRAPH_USER: ${{ github.event.inputs.graph_user }}
       GRAPH_CLI_VERSION: 0.22.2
       REQUIRED_PACKAGES: const pricing
     steps:
@@ -61,7 +65,7 @@ jobs:
           done
 
           for WORKSPACE in ${{ env.SUBGRAPHS }}; do
-            if [[ ${{ matrix.graph_hosted }} == 'false' ]]; then
+            if [[ ${{ github.event.inputs.graph_hosted }} == 'false' ]]; then
               yarn workspace $WORKSPACE codegen
               yarn workspace $WORKSPACE create-subgraph
               yarn workspace $WORKSPACE deploy --version-label 1.0.1

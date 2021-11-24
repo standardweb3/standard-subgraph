@@ -9,25 +9,6 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-    inputs:
-      chain:
-        description: 'Chain to deploy, e.g. rinkeby or shiden'
-        required: true
-      subgraphs:
-        description: 'Space-separated list of subgraphs to deploy, e.g. exchange or exchange masterchefV2'
-        required: true
-      graph_hosted:
-        description: 'Bool defining if this is deployed to Hosted Graph'
-        required: false
-        default: true
-      graph_url:
-        description: 'Graph URL'
-        required: false
-        default: https://api.thegraph.com/deploy/
-      ipfs_url:
-        description: 'IPFS URL'
-        required: false
-        default: https://api.thegraph.com/ipfs/
 
 jobs:
   subgraph-deploy:
@@ -48,11 +29,11 @@ jobs:
             graph_url: https://graph.shibuya.standardtech.xyz:4443
             ipfs_url: https://api.thegraph.com/ipfs/
     env:
-      CHAIN: ${{ github.event_name == 'push' && matrix.chain || github.event.inputs.chain }}
-      SUBGRAPHS: ${{ github.event_name == 'push' && matrix.subgraphs || github.event.inputs.subgraphs }}
-      GRAPH_HOSTED: ${{ github.event_name == 'push' && matrix.graph_hosted || github.event.inputs.graph_hosted }}
-      GRAPH_URL: ${{ github.event_name == 'push' && matrix.graph_url || github.event.inputs.graph_url }}
-      IPFS_URL: ${{ github.event_name == 'push' && matrix.ipfs_url || github.event.inputs.ipfs_url }}
+      CHAIN: ${{ matrix.chain }}
+      SUBGRAPHS: ${{ matrix.subgraphs }}
+      GRAPH_HOSTED: ${{ matrix.graph_hosted }}
+      GRAPH_URL: ${{ matrix.graph_url }}
+      IPFS_URL: ${{ matrix.ipfs_url }}
       GRAPH_USER: digitalnativeinc
       GRAPH_CLI_VERSION: 0.22.2
       REQUIRED_PACKAGES: const pricing
@@ -83,7 +64,7 @@ jobs:
             if [[ ${{ matrix.graph_hosted }} == 'false' ]]; then
               yarn workspace $WORKSPACE codegen
               yarn workspace $WORKSPACE create-subgraph
-              yarn workspace $WORKSPACE deploy --version-label 1.0.1
+              yarn workspace $WORKSPACE deploy --version-label 1.0.0
             else
               yarn workspace $WORKSPACE codegen
               yarn workspace $WORKSPACE deploy --access-token ${{ secrets.GRAPH_API_KEY }}

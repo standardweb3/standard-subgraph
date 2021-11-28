@@ -18,10 +18,10 @@
   "sushi_token_address": "0xc12cac7090baa48ec750cceec57c80768f6ee58e",
   "sushi_usdc_pair": "",
   "sushi_usdc_pair_liquidity_block": "",
-  "sushi_weth_pair": "",
-  "sushi_weth_liquidity_block": "",
-  "native_address": "0x75cb093E4D61d2A2e65D8e0BBb01DE8d89b53481",
-  "weth_address": "0x75cb093E4D61d2A2e65D8e0BBb01DE8d89b53481",
+  "sushi_weth_pair": "0xb93799632d760087a2556f6d1bfb964f826dcfe8",
+  "sushi_weth_liquidity_block": "13584",
+  "native_address": "0x75cb093e4d61d2a2e65d8e0bbb01de8d89b53481",
+  "weth_address": "0x75cb093e4d61d2a2e65d8e0bbb01de8d89b53481",
   "masterchefV2": {
     "address": "0x23423292396a37c0c2e4d384dce7ab67738bec28",
     "startBlock": "733"
@@ -37,5 +37,5 @@
     "address": "0xbf4dd73c9f90e9f2ddba56933ced7eafdf56a8a9",
     "startBlock": "736"
   },
-  "whitelist": ["0xc12cac7090baa48ec750cceec57c80768f6ee58e", "0x75cb093E4D61d2A2e65D8e0BBb01DE8d89b53481"]
+  "whitelist": ["0xc12cac7090baa48ec750cceec57c80768f6ee58e", "0x75cb093e4d61d2a2e65d8e0bbb01de8d89b53481"]
 }

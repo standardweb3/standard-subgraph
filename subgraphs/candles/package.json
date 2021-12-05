@@ -11,6 +11,7 @@
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 $GRAPH_USER/candles",
     "deploy:rinkeby": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ billjhlee/rinkeby-candles subgraph.yaml",
     "deploy:mainnet": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ billjhlee/ethereum-candles subgraph.yaml",
+    "deploy:avax": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ billjhlee/avax-candles subgraph.yaml",
     "deploy": "graph deploy --node $GRAPH_URL --ipfs $IPFS_URL $GRAPH_USER/$CHAIN-candles subgraph.yaml",
     "create-subgraph": "graph create --node $GRAPH_URL $GRAPH_USER/$CHAIN-candles",
     "prepare": "mustache ../../config/$CHAIN.json template.yaml > subgraph.yaml"

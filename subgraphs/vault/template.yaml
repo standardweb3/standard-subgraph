@@ -1,0 +1,88 @@
+specVersion: 0.0.3
+description: Vault
+repository: https://github.com/digitalnativeinc/standard-subgraph
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: VaultManager
+    network: {{ network }}
+    source:
+      address: '{{ vaultManager.address }}'
+      abi: VaultManager
+      startBlock: {{ vaultManager.startBlock }}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ./src/mappings/vaultManager.ts
+      entities:
+        - VaultManager
+        - Vault
+      abis:
+        - name: VaultManager
+          file: ../../packages/abis/VaultManager.json
+        - name: Vault
+          file: ../../packages/abis/Vault.json
+        - name: Factory
+          file: ../../node_modules/@sushiswap/core/build/abi/UniswapV2Factory.json
+        - name: ERC20
+          file: ../../node_modules/@sushiswap/core/build/abi/ERC20.json
+        - name: ERC20SymbolBytes
+          file: ../../packages/abis/ERC20SymbolBytes.json
+        - name: ERC20NameBytes
+          file: ../../packages/abis/ERC20NameBytes.json
+      eventHandlers:
+        - event: VaultCreated(uint256,address,address,address,address,uint256,uint256)
+          handler: onVaultCreated
+        - event: SetFees(address,address,address)
+          handler: onSetFees
+        - event: CDPInitialized(address,uint256,uint256,uint256,uint8)
+          handler: onCDPInitialized
+        - event: Rebase(uint256,uint256)
+          handler: onRebase
+        - event: RebaseActive(bool)
+          handler: onRebaseActive
+      blockHandlers:
+        - handler: onBlockChange
+      
+
+templates:
+  - kind: ethereum/contract
+    name: Vault
+    network: {{ network }}
+    source:
+      abi: Vault
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ./src/mappings/vault.ts
+      entities:
+        - VaultManager
+        - VaultManagerHistory
+        - Vault
+        - VaultHistory
+        - User
+        - UserHistory
+        - CollateralAMM
+        - CollateralAMMHIstory
+        - CDP
+      abis:
+        - name: VaultManager
+          file: ../../packages/abis/VaultManager.json
+        - name: Vault
+          file: ../../packages/abis/Vault.json
+        - name: Pair
+          file: ./packages/abis/UniswapV2Pair.json
+        - name: ERC20
+          file: ../../node_modules/@sushiswap/core/build/abi/ERC20.json
+        - name: Factory
+          file: ../../node_modules/@sushiswap/core/build/abi/UniswapV2Factory.json
+      eventHandlers:
+        - event: DepositCollateral(uint256,uint256)
+          handler: onDepositCollateral
+        - event: WithdrawCollateral(uint256,uint256)
+          handler: onWithdrawCollateral(uint256,uint256)
+        - event: PayBack(uint256,uint256,uint256,uint256)
+          handler: onPayBack

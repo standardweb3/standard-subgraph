@@ -1,0 +1,351 @@
+type VaultManager @entity {
+  id: ID!
+  desiredSupply: BigDecimal!
+  rebaseActive: Boolean!
+
+  v1: Bytes!
+  stablecoin: Bytes!
+  v2Factory: Bytes!
+  
+  # parameter to mark if desired supply and rebase has been obtained
+  initialized: Boolean!
+
+  # feeTo: Bytes!
+  # dividend: Bytes!
+  # treasury: Bytes!
+  # weth: Bytes!
+
+  historicBorrowed: BigDecimal!
+  currentBorrowed: BigDecimal!
+  historicPaidBack: BigDecimal!
+  collectedStabilityFee: BigDecimal!
+
+  runningStat: VaultManagerRunningStat
+  liquidation: VaultManagerLiquidation
+
+  historicVaultCount: BigInt!
+  activeVaultCount: BigInt!
+
+  historicUserCount: BigInt!
+  activeUserCount: BigInt!
+
+  vaults: [Vault!] @derivedFrom(field: "manager")
+
+  block: BigInt!
+  timestamp: BigInt!
+
+  cdps: [CDP!]!
+}
+
+type VaultManagerRunningStat @entity {
+  id: ID!
+
+  autoUpdateTimestamp: BigInt!
+  vaultManager: VaultManager!
+
+  ammReserveCollateralUSD: BigDecimal!
+  currentCollateralizedUSD: BigDecimal!
+  historicCollateralizedUSD: BigDecimal!
+
+  historicBorrowedUSD: BigDecimal!
+  currentBorrowedUSD: BigDecimal!
+
+  stablecoinPrice: BigDecimal!
+
+  block: BigInt!
+  timestamp: BigInt!
+}
+
+type VaultManagerLiquidation @entity {
+  id: ID!
+  vault: VaultManager!
+
+  liquidationCount: BigInt!
+
+  # total amount
+  liquidationAmountUSD: BigDecimal!
+
+  # fee + AMM = total
+  liquidationFeeUSD: BigDecimal!
+  liquidationAMMUSD: BigDecimal!
+}
+
+
+type VaultManagerHistory @entity {
+  id: ID!
+  date: Int!
+
+  desiredSupply: BigDecimal!
+  rebaseActive: Boolean!
+  v1: Bytes!
+  stablecoin: Bytes!
+  v2Factory: Bytes!
+  # feeTo: Bytes!
+  # dividend: Bytes!
+  # treasury: Bytes!
+  # weth: Bytes!
+
+  currentBorrowed: BigDecimal!
+  historicBorrowed: BigDecimal!
+  historicPaidBack: BigDecimal!
+
+  historicVaultCount: BigInt!
+  activeVaultCount: BigInt!
+  
+  historicUserCount: BigInt!
+  activeUserCount: BigInt!
+
+  collectedStabilityFee: BigDecimal!
+
+  # comes from running stat
+  ammReserveCollateralUSD: BigDecimal!
+  currentCollateralizedUSD: BigDecimal!
+  historicCollateralizedUSD: BigDecimal!
+  historicBorrowedUSD: BigDecimal!
+  currentBorrowedUSD: BigDecimal!
+
+
+  # comes from vault manager liquidation
+  liquidationCount: BigInt!
+  liquidationAmountUSD: BigDecimal!
+  liquidationFeeUSD: BigDecimal!
+  liquidationAMMUSD: BigDecimal!
+
+  block: BigInt!
+  timestamp: BigInt!
+}
+
+type CollateralAMM @entity {
+  id: ID!
+
+  reserveCollateral: BigDecimal!
+  reserveStablecoin: BigDecimal!
+  reserveCollateralUSD: BigDecimal!
+  reserveStablecoinUSD: BigDecimal!
+  
+  block: BigInt!
+  timestamp: BigInt!
+}
+
+type CollateralAMMHistory @entity {
+  id: ID!
+  date: Int!
+  
+  collateralAMM: CollateralAMM!
+
+  reserveCollateral: BigDecimal!
+  reserveStablecoin: BigDecimal!
+  reserveCollateralUSD: BigDecimal!
+  reserveStablecoinUSD: BigDecimal!
+
+  block: BigInt!
+  timestamp: BigInt!
+}
+
+type CDP @entity {
+  id: ID!
+  vaultManager: VaultManager!
+  lfr: BigDecimal!
+  mcr: BigDecimal!
+  sfr: BigDecimal!
+  decimals: BigDecimal!
+}
+
+type CDPHistory @entity {
+  id: ID!
+  date: Int!
+
+  vaultManager: VaultManager!
+  lfr: BigDecimal!
+  mcr: BigDecimal!
+  sfr: BigDecimal!
+  decimals: BigDecimal!
+
+  block: BigInt!
+  timestamp: BigInt!
+}
+
+
+type User @entity {
+  id: ID!
+  vaults: [Vault!] @derivedFrom(field: "user")
+
+  historicBorrowed: BigDecimal!
+  currentBorrowed: BigDecimal!
+  historicPaidBack: BigDecimal!
+
+  historicVaultCount: BigInt!
+  activeVaultCount: BigInt!
+  liquidateCount: BigInt!
+
+  block: BigInt!
+  timestamp: BigInt!
+}
+
+enum Status {
+  Danger,
+  Warning,
+  Safe
+}
+
+type Vault @entity {
+  id: ID!
+  stablecoin: Bytes!
+  address: Bytes!
+  CDP: CDP!
+  user: User!
+
+  collectedStabilityFee: BigDecimal!
+
+  isClosed: Boolean!
+  isLiquidated: Boolean!
+  liquidation: VaultLiquidation
+  runningStat: VaultRunningStat
+
+  manager: VaultManager!
+
+  collateral: Bytes!
+
+  currentBorrowed: BigDecimal!
+  historicBorrowed: BigDecimal!
+
+  currrentCollateralized: BigDecimal!
+  historicCollateralized: BigDecimal!
+  
+  historicPaidBack: BigDecimal!
+  
+  block: BigInt!
+  timestamp: BigInt!
+}
+
+type VaultRunningStat @entity {
+  id: ID!
+  vault: Vault!
+
+  autoUpdateTimestamp: BigInt!
+  needsLiquidation: Boolean!
+  # status: Status!
+
+  collateralPrice: BigDecimal!
+  currentCollateralizedUSD: BigDecimal!
+
+  stablecoinPrice: BigDecimal!
+  currentBorrowedUSD: BigDecimal!
+
+  debt: BigDecimal!
+  debtUSD: BigDecimal!
+  accruedStabilityFee: BigDecimal!
+  accruedStabilityFeeUSD: BigDecimal!
+
+  block: BigInt!
+  timestamp: BigInt!
+}
+
+type VaultLiquidation @entity {
+  id: ID!
+  vault: Vault!
+  
+  # fee + AMM = total
+  # liquidation amount = vault's collateralized
+  liquidationAmount: BigDecimal!
+  liquidationAmountUSD: BigDecimal!
+  liquidationFeeUSD: BigDecimal!
+  liquidationAMM: BigDecimal!
+  liquidationAMMUSD: BigDecimal!
+}
+
+
+type CollateralVault @entity {
+  id: ID!
+  collateral: Bytes!
+
+  historicBorrowed: BigDecimal!
+  currentBorrowed: BigDecimal!
+
+  historicPaidBack: BigDecimal!
+
+  currentCollateralized: BigDecimal!
+  historicCollateralized: BigDecimal!
+
+  historicVaultCount: BigInt!
+  activeVaultCount: BigInt!
+
+  collectedStabilityFee: BigDecimal!
+
+  runningStat: CollateralVaultRunningStat
+  liquidation: CollateralVaultLiquidation
+
+  block: BigInt!
+  timestamp: BigInt!
+}
+
+type CollateralVaultRunningStat @entity {
+  id: ID!
+
+  collateralVault: CollateralVault!
+  autoUpdateTimestamp: BigInt!
+
+  collateralPrice: BigDecimal!
+  currentCollateralizedUSD: BigDecimal!
+  historicCollateralizedUSD: BigDecimal!
+
+  stablecoinPrice: BigDecimal!
+  currentBorrowedUSD: BigDecimal!
+  historicBorrowedUSD: BigDecimal!
+
+  block: BigInt!
+  timestamp: BigInt!
+}
+
+type CollateralVaultLiquidation @entity {
+  id: ID!
+  
+  # USD values calculated at time of liquidation
+
+  liquidationCount: BigInt!
+  # total amount
+  liquidationAmount: BigDecimal!
+  liquidationAmountUSD: BigDecimal!
+
+  # fee + AMM = total
+  liquidationFeeUSD: BigDecimal!
+  liquidationAMM: BigDecimal!
+  liquidationAMMUSD: BigDecimal!
+
+  block: BigInt!
+  timestamp:BigInt!
+}
+
+type CollateralVaultHistory @entity {
+  id: ID!
+  date: Int!
+
+  collateral: Bytes
+  collateralPrice: BigDecimal!
+
+  collateralVault: CollateralVault!
+
+  historicBorrowed: BigDecimal!
+  historicBorrowedUSD: BigDecimal!
+  
+  currentBorrowed: BigDecimal!
+  currentBorrowedUSD: BigDecimal!
+
+  historicPaidBack: BigDecimal!
+
+  currentCollateralized: BigDecimal!
+  currentCollateralizedUSD: BigDecimal!
+
+  historicCollateralized: BigDecimal!
+  historicCollateralizedUSD: BigDecimal!
+  
+
+  liquidationCount: BigInt!
+  liquidationAmount: BigDecimal!
+  liquidationAmountUSD: BigDecimal!
+
+  # fee + AMM = total
+  liquidationFeeUSD: BigDecimal!
+  liquidationAMM: BigDecimal!
+  liquidationAMMUSD: BigDecimal!
+}

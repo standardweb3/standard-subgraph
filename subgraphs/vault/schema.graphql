@@ -6,7 +6,7 @@ type VaultManager @entity {
   v1: Bytes!
   stablecoin: Bytes!
   v2Factory: Bytes!
-  
+
   # parameter to mark if desired supply and rebase has been obtained
   initialized: Boolean!
 
@@ -20,8 +20,10 @@ type VaultManager @entity {
   historicPaidBack: BigDecimal!
   collectedStabilityFee: BigDecimal!
 
-  runningStat: VaultManagerRunningStat
-  liquidation: VaultManagerLiquidation
+  historicCollateralizedUSD: BigDecimal!
+
+  runningStat: VaultManagerRunningStat @derivedFrom(field: "manager")
+  liquidation: VaultManagerLiquidation @derivedFrom(field: "manager")
 
   historicVaultCount: BigInt!
   activeVaultCount: BigInt!
@@ -40,14 +42,13 @@ type VaultManager @entity {
 type VaultManagerRunningStat @entity {
   id: ID!
 
+  # autoUpdateTimestamp = last collateral value update timestamp
   autoUpdateTimestamp: BigInt!
-  vaultManager: VaultManager!
+  manager: VaultManager!
 
   ammReserveCollateralUSD: BigDecimal!
   currentCollateralizedUSD: BigDecimal!
-  historicCollateralizedUSD: BigDecimal!
 
-  historicBorrowedUSD: BigDecimal!
   currentBorrowedUSD: BigDecimal!
 
   stablecoinPrice: BigDecimal!
@@ -58,7 +59,7 @@ type VaultManagerRunningStat @entity {
 
 type VaultManagerLiquidation @entity {
   id: ID!
-  vault: VaultManager!
+  manager: VaultManager!
 
   liquidationCount: BigInt!
 
@@ -68,8 +69,10 @@ type VaultManagerLiquidation @entity {
   # fee + AMM = total
   liquidationFeeUSD: BigDecimal!
   liquidationAMMUSD: BigDecimal!
-}
 
+  block: BigInt!
+  timestamp: BigInt!
+}
 
 type VaultManagerHistory @entity {
   id: ID!
@@ -77,9 +80,10 @@ type VaultManagerHistory @entity {
 
   desiredSupply: BigDecimal!
   rebaseActive: Boolean!
-  v1: Bytes!
-  stablecoin: Bytes!
-  v2Factory: Bytes!
+
+  manager: VaultManager!
+
+  cdps: [CDP!]!
   # feeTo: Bytes!
   # dividend: Bytes!
   # treasury: Bytes!
@@ -91,7 +95,7 @@ type VaultManagerHistory @entity {
 
   historicVaultCount: BigInt!
   activeVaultCount: BigInt!
-  
+
   historicUserCount: BigInt!
   activeUserCount: BigInt!
 
@@ -101,42 +105,13 @@ type VaultManagerHistory @entity {
   ammReserveCollateralUSD: BigDecimal!
   currentCollateralizedUSD: BigDecimal!
   historicCollateralizedUSD: BigDecimal!
-  historicBorrowedUSD: BigDecimal!
   currentBorrowedUSD: BigDecimal!
-
 
   # comes from vault manager liquidation
   liquidationCount: BigInt!
   liquidationAmountUSD: BigDecimal!
   liquidationFeeUSD: BigDecimal!
   liquidationAMMUSD: BigDecimal!
-
-  block: BigInt!
-  timestamp: BigInt!
-}
-
-type CollateralAMM @entity {
-  id: ID!
-
-  reserveCollateral: BigDecimal!
-  reserveStablecoin: BigDecimal!
-  reserveCollateralUSD: BigDecimal!
-  reserveStablecoinUSD: BigDecimal!
-  
-  block: BigInt!
-  timestamp: BigInt!
-}
-
-type CollateralAMMHistory @entity {
-  id: ID!
-  date: Int!
-  
-  collateralAMM: CollateralAMM!
-
-  reserveCollateral: BigDecimal!
-  reserveStablecoin: BigDecimal!
-  reserveCollateralUSD: BigDecimal!
-  reserveStablecoinUSD: BigDecimal!
 
   block: BigInt!
   timestamp: BigInt!
@@ -149,22 +124,25 @@ type CDP @entity {
   mcr: BigDecimal!
   sfr: BigDecimal!
   decimals: BigDecimal!
+  isOpen: Boolean!
+  symbol: String!
 }
 
 type CDPHistory @entity {
   id: ID!
   date: Int!
 
-  vaultManager: VaultManager!
+  cdp: CDP!
+
   lfr: BigDecimal!
   mcr: BigDecimal!
   sfr: BigDecimal!
   decimals: BigDecimal!
+  isOpen: Boolean!
 
   block: BigInt!
   timestamp: BigInt!
 }
-
 
 type User @entity {
   id: ID!
@@ -182,9 +160,26 @@ type User @entity {
   timestamp: BigInt!
 }
 
+type UserHistory @entity {
+  id: ID!
+  user: User!
+  date: Int!
+
+  historicBorrowed: BigDecimal!
+  currentBorrowed: BigDecimal!
+  historicPaidBack: BigDecimal!
+
+  historicVaultCount: BigInt!
+  activeVaultCount: BigInt!
+  liquidateCount: BigInt!
+
+  block: BigInt!
+  timestamp: BigInt!
+}
+
 enum Status {
-  Danger,
-  Warning,
+  Danger
+  Warning
   Safe
 }
 
@@ -199,8 +194,8 @@ type Vault @entity {
 
   isClosed: Boolean!
   isLiquidated: Boolean!
-  liquidation: VaultLiquidation
-  runningStat: VaultRunningStat
+  liquidation: VaultLiquidation @derivedFrom(field: "vault")
+  runningStat: VaultRunningStat @derivedFrom(field: "vault")
 
   manager: VaultManager!
 
@@ -209,13 +204,18 @@ type Vault @entity {
   currentBorrowed: BigDecimal!
   historicBorrowed: BigDecimal!
 
-  currrentCollateralized: BigDecimal!
+  currentCollateralized: BigDecimal!
   historicCollateralized: BigDecimal!
-  
+
   historicPaidBack: BigDecimal!
-  
+
+  lastPaidBack: BigInt!
+
   block: BigInt!
   timestamp: BigInt!
+
+  createdAt: BigInt!
+  numId: BigInt!
 }
 
 type VaultRunningStat @entity {
@@ -223,7 +223,7 @@ type VaultRunningStat @entity {
   vault: Vault!
 
   autoUpdateTimestamp: BigInt!
-  needsLiquidation: Boolean!
+  # needsLiquidation: Boolean!
   # status: Status!
 
   collateralPrice: BigDecimal!
@@ -244,7 +244,7 @@ type VaultRunningStat @entity {
 type VaultLiquidation @entity {
   id: ID!
   vault: Vault!
-  
+
   # fee + AMM = total
   # liquidation amount = vault's collateralized
   liquidationAmount: BigDecimal!
@@ -252,12 +252,39 @@ type VaultLiquidation @entity {
   liquidationFeeUSD: BigDecimal!
   liquidationAMM: BigDecimal!
   liquidationAMMUSD: BigDecimal!
+
+  block: BigInt!
+  timestamp: BigInt!
 }
 
+type VaultHistory @entity {
+  id: ID!
+  date: Int!
+
+  vault: Vault!
+  user: User!
+
+  collectedStabilityFee: BigDecimal!
+
+  isClosed: Boolean!
+  isLiquidated: Boolean!
+
+  currentBorrowed: BigDecimal!
+  historicBorrowed: BigDecimal!
+
+  currentCollateralized: BigDecimal!
+  historicCollateralized: BigDecimal!
+
+  historicPaidBack: BigDecimal!
+
+  block: BigInt!
+  timestamp: BigInt!
+}
 
 type CollateralVault @entity {
   id: ID!
   collateral: Bytes!
+  cdp: CDP
 
   historicBorrowed: BigDecimal!
   currentBorrowed: BigDecimal!
@@ -266,14 +293,15 @@ type CollateralVault @entity {
 
   currentCollateralized: BigDecimal!
   historicCollateralized: BigDecimal!
+  historicCollateralizedUSD: BigDecimal!
 
   historicVaultCount: BigInt!
   activeVaultCount: BigInt!
 
   collectedStabilityFee: BigDecimal!
 
-  runningStat: CollateralVaultRunningStat
-  liquidation: CollateralVaultLiquidation
+  runningStat: CollateralVaultRunningStat @derivedFrom(field: "collateralVault")
+  liquidation: CollateralVaultLiquidation @derivedFrom(field: "collateralVault")
 
   block: BigInt!
   timestamp: BigInt!
@@ -287,11 +315,9 @@ type CollateralVaultRunningStat @entity {
 
   collateralPrice: BigDecimal!
   currentCollateralizedUSD: BigDecimal!
-  historicCollateralizedUSD: BigDecimal!
 
   stablecoinPrice: BigDecimal!
   currentBorrowedUSD: BigDecimal!
-  historicBorrowedUSD: BigDecimal!
 
   block: BigInt!
   timestamp: BigInt!
@@ -299,7 +325,7 @@ type CollateralVaultRunningStat @entity {
 
 type CollateralVaultLiquidation @entity {
   id: ID!
-  
+  collateralVault: CollateralVault!
   # USD values calculated at time of liquidation
 
   liquidationCount: BigInt!
@@ -313,21 +339,19 @@ type CollateralVaultLiquidation @entity {
   liquidationAMMUSD: BigDecimal!
 
   block: BigInt!
-  timestamp:BigInt!
+  timestamp: BigInt!
 }
 
 type CollateralVaultHistory @entity {
   id: ID!
   date: Int!
 
-  collateral: Bytes
   collateralPrice: BigDecimal!
 
   collateralVault: CollateralVault!
 
   historicBorrowed: BigDecimal!
-  historicBorrowedUSD: BigDecimal!
-  
+
   currentBorrowed: BigDecimal!
   currentBorrowedUSD: BigDecimal!
 
@@ -338,7 +362,6 @@ type CollateralVaultHistory @entity {
 
   historicCollateralized: BigDecimal!
   historicCollateralizedUSD: BigDecimal!
-  
 
   liquidationCount: BigInt!
   liquidationAmount: BigDecimal!
@@ -348,4 +371,77 @@ type CollateralVaultHistory @entity {
   liquidationFeeUSD: BigDecimal!
   liquidationAMM: BigDecimal!
   liquidationAMMUSD: BigDecimal!
+}
+
+# Pair
+type Factory @entity {
+  id: ID!
+  pairs: [Pair!]!
+}
+
+type Pair @entity {
+  # Contract address
+  id: ID!
+
+  address: String!
+
+  isToken0Mtr: Boolean!
+
+  symbolToken0: String!
+  symbolToken1: String!
+
+  # mirrored from the smart contract
+  token0: Bytes!
+  token1: Bytes!
+
+  reserve0: BigDecimal!
+  reserve0USD: BigDecimal!
+  reserve1: BigDecimal!
+  reserve1USD: BigDecimal!
+
+  # Pair day data
+  dayData: [PairDayData!]! @derivedFrom(field: "pair")
+
+  # Pair hour data
+  hourData: [PairHourData!]! @derivedFrom(field: "pair")
+
+  # Created at
+  timestamp: BigInt!
+  block: BigInt!
+}
+
+# Pair day data
+type PairDayData @entity {
+  # pair id - day start timestamp
+  id: ID!
+
+  # date - day start timestamp
+  date: Int!
+
+  # pair
+  pair: Pair!
+
+  # reserves
+  reserve0: BigDecimal!
+  reserve0USD: BigDecimal!
+  reserve1: BigDecimal!
+  reserve1USD: BigDecimal!
+}
+
+# Pair hour data
+type PairHourData @entity {
+  # pair.id - hour start timestamp
+  id: ID!
+
+  # date - hour start timestamp
+  date: Int!
+
+  # pair
+  pair: Pair!
+
+  # reserves
+  reserve0: BigDecimal!
+  reserve0USD: BigDecimal!
+  reserve1: BigDecimal!
+  reserve1USD: BigDecimal!
 }

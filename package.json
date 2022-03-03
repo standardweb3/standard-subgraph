@@ -11,7 +11,8 @@
     "subgraphs/masterchefV2",
     "subgraphs/erc721",
     "subgraphs/candles",
-    "subgraphs/exchange-dev"
+    "subgraphs/exchange-dev",
+    "subgraphs/vault"
   ],
   "scripts": {
     "build": "yarn workspaces run build",

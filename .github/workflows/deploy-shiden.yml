@@ -18,7 +18,7 @@ jobs:
       max-parallel: 1
       matrix:
         include:
-          - chain: metis
+          - chain: shiden
             subgraphs: exchange masterchefV2 blocks candles bar
             graph_hosted: false
             graph_url: https://graph.shiden.standardtech.xyz:4443

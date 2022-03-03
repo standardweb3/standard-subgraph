@@ -1,0 +1,67 @@
+---
+name: Subgraph Master Deploy
+
+# Controls when the action will run.
+on:
+  push:
+    branches:
+      - only/shiden
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  subgraph-deploy:
+    runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        include:
+          - chain: metis
+            subgraphs: exchange masterchefV2 blocks candles bar
+            graph_hosted: false
+            graph_url: https://graph.shiden.standardtech.xyz:4443
+            ipfs_url: https://api.thegraph.com/ipfs/
+    env:
+      CHAIN: ${{ matrix.chain }}
+      SUBGRAPHS: ${{ matrix.subgraphs }}
+      GRAPH_HOSTED: ${{ matrix.graph_hosted }}
+      GRAPH_URL: ${{ matrix.graph_url }}
+      IPFS_URL: ${{ matrix.ipfs_url }}
+      GRAPH_USER: digitalnativeinc
+      GRAPH_CLI_VERSION: 0.22.2
+      REQUIRED_PACKAGES: const pricing
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Yarn - Restore cache
+        uses: actions/cache@v2
+        with:
+          path: '**/node_modules'
+          key: node_modules-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Yarn - Prepare
+        shell: bash
+        run: |
+          yarn install --prefer-offline
+          yarn prepare
+
+      - name: Yarn - Deploy Subgraph
+        shell: bash
+        run: |
+          for PACKAGE in ${{ env.REQUIRED_PACKAGES }}; do
+            yarn workspace $PACKAGE codegen
+          done
+
+          for WORKSPACE in ${{ env.SUBGRAPHS }}; do
+            if [[ ${{ matrix.graph_hosted }} == 'false' ]]; then
+              yarn workspace $WORKSPACE codegen
+              yarn workspace $WORKSPACE create-subgraph
+              yarn workspace $WORKSPACE deploy --version-label 1.0.1
+            else
+              yarn workspace $WORKSPACE codegen
+              yarn workspace $WORKSPACE deploy --access-token ${{ secrets.GRAPH_API_KEY }}
+            fi
+          done

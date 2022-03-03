@@ -42,5 +42,9 @@
     "0x75cb093e4d61d2a2e65d8e0bbb01de8d89b53481",
     "0xea32a96608495e54156ae48931a7c20f0dcc1a21",
     "0xbb06dca3ae6887fabf931640f67cab3e3a16f4dc"
-  ]
+  ],
+  "vaultManager": {
+    "address": "0x0000000000000000000000000000000000000000",
+    "startBlock": "0"
+  }
 }

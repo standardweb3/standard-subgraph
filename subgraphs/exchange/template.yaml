@@ -36,7 +36,7 @@ dataSources:
           handler: onPairCreated
   - kind: ethereum/contract
     name: BondedStrategy
-    network: {{ network }}
+    network: {{ network }} 
     source:
       address: '{{ bondedstrategy.address }}'
       abi: BondedStrategy
@@ -51,8 +51,8 @@ dataSources:
         - BondedStrategyHistory
         - BondedStrategyUser
         - BondedStrategyUserClaim
-        - BondedStrategyPair
-        - BondedStrategyPairHistory
+        - BondedStrategyToken
+        - BondedStrategyTokenHistory
         - Pair
         - Token
         - Bundle
@@ -76,7 +76,7 @@ dataSources:
           handler: onBonded
         - event: UnBonded(address,uint256)
           handler: onUnBonded
-  
+
 templates:
   - kind: ethereum/contract
     name: Pair
@@ -89,7 +89,7 @@ templates:
       language: wasm/assemblyscript
       file: ./src/mappings/pair.ts
       entities:
-        - BondedStrategyPair
+        - BondedStrategyToken
         - Bundle
         - Burn
         - LiquidityPosition

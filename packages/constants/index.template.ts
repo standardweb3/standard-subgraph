@@ -8,6 +8,8 @@ export const NETWORK = '{{ network }}'
 
 export const BIG_DECIMAL_1E6 = BigDecimal.fromString('1e6')
 
+export const BIG_DECIMAL_1E8= BigDecimal.fromString('1e8')
+
 export const BIG_DECIMAL_1E12 = BigDecimal.fromString('1e12')
 
 export const BIG_DECIMAL_1E18 = BigDecimal.fromString('1e18')
@@ -232,3 +234,20 @@ export const WHITELIST: string[] = '{{ whitelist }}'.split(',')
 // ];
 
 const CUSTOM_BASES = new Map<string, string>()
+
+export const MTR_ADDRESS = Address.fromString('{{ mtr_address }}{{^mtr_address}}0x0000000000000000000000000000000000000000{{/mtr_address}}')
+export const STND_ADDRESS = Address.fromString('{{ stnd_address }}{{^stnd_address}}0x0000000000000000000000000000000000000000{{/stnd_address}}')
+
+export const V1_ADDRESS = Address.fromString('{{ v1.address }}{{^v1.address}}0x0000000000000000000000000000000000000000{{/v1.address}}')
+
+export const VAULT_MANAGER_ADDRESS = Address.fromString(
+  '{{ vaultManager.address }}{{^vaultManager.address}}0x0000000000000000000000000000000000000000{{/vaultManager.address}}'
+)
+
+
+export const VAULT_FACTORY_ADDRESS = Address.fromString(
+  '{{ vaultFactory.address }}{{^vaultFactory.address}}0x0000000000000000000000000000000000000000{{/vaultFactory.address}}'
+)
+
+
+export const INIT_CODE_HASH = '{{ init_code_hash }}{{^init_code_hash}}0x0000000000000000000000000000000000000000{{/init_code_hash}}'

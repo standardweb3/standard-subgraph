@@ -1,10 +1,11 @@
 import { BigInt, Bytes } from '@graphprotocol/graph-ts'
 import { Candle, Pair } from '../generated/schema'
-
 import { PairCreated } from '../generated/Factory/Factory'
 import { Pair as PairTemplate } from '../generated/templates'
 import { Swap } from '../generated/templates/Pair/Pair'
 import { concat } from '@graphprotocol/graph-ts/helper-functions'
+import { Liquidated } from '../../vault/generated/VaultManager/Vault'
+import { getCDP } from './cdp'
 
 export function handleNewPair(event: PairCreated): void {
     let pair = new Pair(event.params.pair.toHex());
@@ -67,4 +68,11 @@ export function handleSwap(event: Swap): void {
 
         candle.save();
     }
+}
+
+
+export function onLiquidated(event: Liquidated): void {
+    const cdp = getCDP(event.params.collateral)
+    const amount = event.params.amount.toBigDecimal().div(cdp.decimals)
+
 }

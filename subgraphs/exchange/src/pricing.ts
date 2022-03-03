@@ -43,7 +43,7 @@ export function getStndPrice(): BigDecimal {
   if (pair) {
     return pair.token1Price
   }
-  
+
   const token = getToken(SUSHI_TOKEN_ADDRESS)
   const bundle = getBundle()
 

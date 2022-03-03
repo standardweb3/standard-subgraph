@@ -18,12 +18,44 @@ dataSources:
       file: ./src/dexcandles.ts
       entities:
         - Pair
+        - Vault
       abis:
         - name: Factory
           file: ../../node_modules/@sushiswap/core/build/abi/UniswapV2Factory.json
+        - name: Vault
+          file: ../../packages/abis/Vault.json
       eventHandlers:
         - event: PairCreated(indexed address,indexed address,address,uint256)
           handler: handleNewPair
+  - kind: ethereum/contract
+    name: VaultManager
+    network: {{ network }}
+    source:
+      address: '{{ vaultManager.address }}'
+      abi: VaultManager
+      startBlock: {{ vaultManager.startBlock }}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      file: ./src/vaultmanager.ts
+      entities:
+        - VaultManager
+        - Vault
+      abis:
+        - name: VaultManager
+          file: ../../packages/abis/VaultManager.json
+        - name: Vault
+          file: ../../packages/abis/Vault.json
+        - name: ERC20
+          file: ../../node_modules/@sushiswap/core/build/abi/ERC20.json
+        - name: ERC20SymbolBytes
+          file: ../../packages/abis/ERC20SymbolBytes.json
+        - name: ERC20NameBytes
+          file: ../../packages/abis/ERC20NameBytes.json
+      eventHandlers:
+        - event: VaultCreated(uint256,address,address,address,address,uint256,uint256)
+          handler: onVaultCreated
 templates:
   - kind: ethereum/contract
     name: Pair
@@ -43,3 +75,25 @@ templates:
       eventHandlers:
         - event: Swap(indexed address,uint256,uint256,uint256,uint256,indexed address)
           handler: handleSwap
+  - kind: ethereum/contract
+    name: Vault
+    network: {{ network }}
+    source:
+      abi: Vault
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      file: ./src/dexcandles.ts
+      entities:
+        - VaultManager
+        - Pair
+        - Vault
+      abis:
+        - name: VaultManager
+          file: ../../packages/abis/VaultManager.json
+        - name: Vault
+          file: ../../packages/abis/Vault.json
+      eventHandlers:
+        - event: Liquidated(uint256,address,uint256)
+          handler: onLiquidated

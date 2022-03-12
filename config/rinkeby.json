@@ -38,18 +38,18 @@
   "sushi_weth_liquidity_block": "10006474",
   "sushi_usdc_liquidity_block": "",
   "vaultManager": {
-    "address": "0xa567c3b808e18bfcc903f7f7a403a8dd02f5d0cc",
-    "startBlock": "10156566"
+    "address": "0x3196b30ac0976b911c9fe0940c2e48fd28f6bae6",
+    "startBlock": "10225896"
   },
   "vaultFactory": {
-    "address": "0x6a1cbee58d87560a07b4ca6987ff7d8e269b0931",
-    "startBlock": "10156563"
+    "address": "0x079354e2a47ec10039ac5514b58f04e07f602e76",
+    "startBlock": "10225877"
   },
-  "mtr_address": "0x6388e0cc745b3c5ed23c6d569a01a4d27eda3e14",
+  "mtr_address": "0x9d4d96d0c7d81668ed93891b386fb9baf5d72fd8",
   "stnd_address": "0x2a810715ef7f06b1e1ba8779cc1d01c82a201dcc",
   "v1": {
-    "address": "0x34199b137da656c9d5305200ec2eeada2a5248b9",
-    "startBlock": "10156564"
+    "address": "0xa6183aa7bb50e5afa72eb93650413d327654aa42",
+    "startBlock": "10225895"
   },
   "bar": {
     "address": "0x9da260dd60440997ebb88b133f48df1670911171",

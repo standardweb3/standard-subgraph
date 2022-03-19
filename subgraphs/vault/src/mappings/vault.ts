@@ -11,6 +11,7 @@ import {
 } from '../../generated/VaultManager/Vault'
 import { getCDP } from '../entities/CDP'
 import { getCollateralVault, updateCollateralVaultHistory } from '../entities/CollateralVault'
+import { createVaultLiquidation } from '../entities/Liquidations'
 import {
   updateCollateralVaultRunningStat,
   updateVaultManagerRunningStat,
@@ -274,5 +275,14 @@ export function onCloseVault(event: CloseVault): void {
 }
 
 export function onLiquidated(event: Liquidated): void {
+  const vault = getVault(event.params.vaultID, event.block)
+  vault.isLiquidated = true
+
+  const vaultLiquidation = createVaultLiquidation(event.params.vaultID, event.block)
+
+  const user = getUser(Address.fromString(vault.user), event.block)
+  user.liquidateCount = user.liquidateCount.plus(BIG_INT_ONE)
+  user.activeVaultCount = user.activeVaultCount.minus(BIG_INT_ONE)
+
   log.info('Liquidated', [])
 }

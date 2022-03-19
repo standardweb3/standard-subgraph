@@ -1,4 +1,4 @@
-import { Address, ethereum } from '@graphprotocol/graph-ts'
+import { Address, BigInt, ethereum } from '@graphprotocol/graph-ts'
 import { BIG_DECIMAL_ZERO, BIG_INT_ZERO, VAULT_MANAGER_ADDRESS } from 'const'
 import { CollateralVaultLiquidation, Vault, VaultLiquidation, VaultManagerLiquidation } from '../../generated/schema'
 

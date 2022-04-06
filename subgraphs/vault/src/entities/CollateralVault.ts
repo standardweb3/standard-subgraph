@@ -1,8 +1,8 @@
 import { Address, ethereum } from '@graphprotocol/graph-ts'
 import { BIG_DECIMAL_ZERO, BIG_INT_ONE_DAY_SECONDS, BIG_INT_ZERO } from 'const'
-import { CollateralVault, CollateralVaultHistory, CollateralVaultRunningStat } from '../../generated/schema'
+import { CollateralVault, CollateralVaultHistory } from '../../generated/schema'
 import { getCollateralVaultLiquidation } from './Liquidations'
-import { getCollateralVaultRunningStat } from './RunningStats'
+// import { getCollateralVaultRunningStat } from './RunningStats'
 
 export function getCollateralVault(collateral: Address, block: ethereum.Block): CollateralVault {
   let vault = CollateralVault.load(collateral.toHex())
@@ -44,19 +44,19 @@ export function updateCollateralVaultHistory(collateral: Address, block: ethereu
     history.date = date
   }
 
-  const runningStat = getCollateralVaultRunningStat(collateral, block)
+  // const runningStat = getCollateralVaultRunningStat(collateral, block)
   const liquidation = getCollateralVaultLiquidation(collateral, block)
 
   history.collateralVault = cVault.id
-  history.collateralPrice = runningStat.collateralPrice
+  // history.collateralPrice = runningStat.collateralPrice
 
   history.historicBorrowed = cVault.historicBorrowed
   history.currentBorrowed = cVault.currentBorrowed
-  history.currentBorrowedUSD = runningStat.currentBorrowedUSD
+  // history.currentBorrowedUSD = runningStat.currentBorrowedUSD
 
   history.historicPaidBack = cVault.historicPaidBack
   history.currentCollateralized = cVault.currentCollateralized
-  history.currentCollateralizedUSD = runningStat.currentCollateralizedUSD
+  // history.currentCollateralizedUSD = runningStat.currentCollateralizedUSD
   history.historicCollateralized = cVault.historicCollateralized
   history.historicCollateralizedUSD = cVault.historicCollateralizedUSD
 
@@ -67,6 +67,9 @@ export function updateCollateralVaultHistory(collateral: Address, block: ethereu
   history.liquidationFeeUSD = liquidation.liquidationFeeUSD
   history.liquidationAMM = liquidation.liquidationAMM
   history.liquidationAMMUSD = liquidation.liquidationAMMUSD
+
+  history.timestamp = block.timestamp
+  history.block = block.number
 
   history.save()
 

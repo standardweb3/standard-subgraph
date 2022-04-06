@@ -33,6 +33,7 @@ export function getCollateralVaultLiquidation(collateral: Address, block: ethere
     liquidation.liquidationCount = BIG_INT_ZERO
     liquidation.liquidationAmount = BIG_DECIMAL_ZERO
     liquidation.liquidationAmountUSD = BIG_DECIMAL_ZERO
+    liquidation.liquidationFee = BIG_DECIMAL_ZERO
     liquidation.liquidationFeeUSD = BIG_DECIMAL_ZERO
     liquidation.liquidationAMM = BIG_DECIMAL_ZERO
     liquidation.liquidationAMMUSD = BIG_DECIMAL_ZERO
@@ -54,6 +55,7 @@ export function createVaultLiquidation(gIndex: BigInt, block: ethereum.Block): V
   liquidation.vault = gIndex.toString()
   liquidation.liquidationAmount = BIG_DECIMAL_ZERO
   liquidation.liquidationAmountUSD = BIG_DECIMAL_ZERO
+  liquidation.liquidationFee = BIG_DECIMAL_ZERO
   liquidation.liquidationFeeUSD = BIG_DECIMAL_ZERO
   liquidation.liquidationAMM = BIG_DECIMAL_ZERO
   liquidation.liquidationAMMUSD = BIG_DECIMAL_ZERO

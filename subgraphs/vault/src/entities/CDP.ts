@@ -1,4 +1,4 @@
-import { Address, BigDecimal, BigInt, ethereum, log } from '@graphprotocol/graph-ts'
+import { Address, BigDecimal, ethereum } from '@graphprotocol/graph-ts'
 import { BIG_DECIMAL_ZERO, BIG_INT_ONE_DAY_SECONDS, VAULT_MANAGER_ADDRESS } from 'const'
 import { CDP, CDPHistory } from '../../generated/schema'
 import { ERC20 } from '../../generated/VaultManager/ERC20'

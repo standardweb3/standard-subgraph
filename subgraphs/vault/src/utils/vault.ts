@@ -1,6 +1,5 @@
 import { Address, BigDecimal } from '@graphprotocol/graph-ts'
-import { BIG_DECIMAL_1E8, BIG_DECIMAL_ZERO, VAULT_MANAGER_ADDRESS } from 'const'
-import { VaultManager } from '../../generated/schema'
+import { BIG_DECIMAL_1E8, BIG_DECIMAL_ZERO } from 'const'
 import { Vault as VaultContract } from '../../generated/VaultManager/Vault'
 
 export function getDebt(vault: Address): BigDecimal {

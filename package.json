@@ -12,7 +12,9 @@
     "subgraphs/erc721",
     "subgraphs/candles",
     "subgraphs/exchange-dev",
-    "subgraphs/vault"
+    "subgraphs/vault",
+    "subgraphs/vault-reserve",
+    "subgraphs/campaign"
   ],
   "scripts": {
     "build": "yarn workspaces run build",

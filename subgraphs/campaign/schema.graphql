@@ -1,0 +1,29 @@
+type VaultIdTracker @entity {
+  id: ID!
+  vaultId: BigInt!
+}
+
+type Vault @entity {
+  id: ID!
+  createdAt: BigInt!
+  createdAtBlock: BigInt!
+  score: BigDecimal!
+  user: User!
+}
+
+type VaultHistory @entity {
+  id: ID!
+  date: Int!
+  previousDayScore: BigDecimal!
+}
+
+type User @entity {
+  id: ID!
+  score: BigDecimal!
+}
+
+type ScoreAggregator @entity {
+  id: ID!
+  usersCount: BigInt!
+  totalScore: BigDecimal!
+}

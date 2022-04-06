@@ -1,7 +1,6 @@
-import { Address, ethereum, log } from '@graphprotocol/graph-ts'
+import { Address, ethereum } from '@graphprotocol/graph-ts'
 import { BIG_DECIMAL_1E18, BIG_DECIMAL_ZERO, BIG_INT_ONE } from 'const'
 import {
-  Borrow,
   BorrowMore,
   CloseVault,
   DepositCollateral,
@@ -11,9 +10,12 @@ import {
 } from '../../generated/VaultManager/Vault'
 import { getCDP } from '../entities/CDP'
 import { getCollateralVault, updateCollateralVaultHistory } from '../entities/CollateralVault'
-import { createVaultLiquidation } from '../entities/Liquidations'
 import {
-  updateCollateralVaultRunningStat,
+  createVaultLiquidation,
+  getCollateralVaultLiquidation,
+  getVaultManagerLiquidation,
+} from '../entities/Liquidations'
+import {
   updateVaultManagerRunningStat,
   updateVaultRunningStat,
 } from '../entities/RunningStats'
@@ -22,15 +24,11 @@ import { getVault, updateVaultHistory } from '../entities/Vault'
 import { getVaultManager } from '../entities/vaultManager'
 import { updateVaultManagerHistory } from '../entities/VaultManagerHistory'
 import { getAssetPrice } from '../utils/vaultManager'
-import { updateVaultManagerRunningStat2 } from './vaultManager'
 
 export function onBlockChange(block: ethereum.Block): void {
-  log.info('vaultblock', [])
 }
 
 export function onDepositCollateral(event: DepositCollateral): void {
-  log.info('Collateral Deposited {} {}', [event.params.amount.toHexString(), event.params.vaultID.toString()])
-
   const vault = getVault(event.params.vaultID, event.block)
   const cdp = getCDP(Address.fromString(vault.collateral.toHex()))
 
@@ -54,10 +52,10 @@ export function onDepositCollateral(event: DepositCollateral): void {
   collateralVault.save()
 
   // // update cVault running stat
-  const cVaultStats = updateCollateralVaultRunningStat(
-    Address.fromString(collateralVault.collateral.toHex()),
-    event.block
-  )
+  // const cVaultStats = updateCollateralVaultRunningStat(
+  //   Address.fromString(collateralVault.collateral.toHex()),
+  //   event.block
+  // )
 
   const manager = getVaultManager(event.block)
   manager.historicCollateralizedUSD = manager.historicCollateralizedUSD.plus(depositAmountUSD)
@@ -67,12 +65,10 @@ export function onDepositCollateral(event: DepositCollateral): void {
   updateUserHistory(Address.fromString(vault.user), event.block)
   updateCollateralVaultHistory(Address.fromString(vault.collateral.toHex()), event.block)
   updateVaultManagerHistory(event.block)
-  updateVaultManagerRunningStat2(event.block)
+  // updateVaultManagerRunningStat2(event.block)
 }
 
 export function onWithdrawCollateral(event: WithdrawCollateral): void {
-  log.info('Collateral withdrawn', [])
-
   const vault = getVault(event.params.vaultID, event.block)
   const cdp = getCDP(Address.fromString(vault.collateral.toHex()))
 
@@ -90,20 +86,18 @@ export function onWithdrawCollateral(event: WithdrawCollateral): void {
   collateralVault.save()
 
   // // update cVault running stat
-  const cVaultStats = updateCollateralVaultRunningStat(
-    Address.fromString(collateralVault.collateral.toHex()),
-    event.block
-  )
+  // const cVaultStats = updateCollateralVaultRunningStat(
+  //   Address.fromString(collateralVault.collateral.toHex()),
+  //   event.block
+  // )
 
   updateVaultHistory(event.params.vaultID, event.block)
   updateUserHistory(Address.fromString(vault.user), event.block)
   updateCollateralVaultHistory(Address.fromString(vault.collateral.toHex()), event.block)
-  updateVaultManagerRunningStat2(event.block)
+  // updateVaultManagerRunningStat2(event.block)
 }
 
 export function onPayBack(event: PayBack): void {
-  log.info('Pay back', [])
-
   // get vault
   const vault = getVault(event.params.vaultID, event.block)
 
@@ -151,20 +145,19 @@ export function onPayBack(event: PayBack): void {
   collateralVault.historicPaidBack = collateralVault.historicPaidBack.plus(payBackAmt).minus(fee)
   collateralVault.save()
 
-  const cVaultStats = updateCollateralVaultRunningStat(
-    Address.fromString(collateralVault.collateral.toHex()),
-    event.block
-  )
+  // const cVaultStats = updateCollateralVaultRunningStat(
+  //   Address.fromString(collateralVault.collateral.toHex()),
+  //   event.block
+  // )
 
   updateVaultHistory(event.params.vaultID, event.block)
   updateUserHistory(Address.fromString(vault.user), event.block)
   updateCollateralVaultHistory(Address.fromString(vault.collateral.toHex()), event.block)
   updateVaultManagerHistory(event.block)
-  updateVaultManagerRunningStat2(event.block)
+  // updateVaultManagerRunningStat2(event.block)
 }
 
 export function onBorrowMore(event: BorrowMore): void {
-  log.info('Borrow', [])
   const vault = getVault(event.params.vaultID, event.block)
   const cdp = getCDP(Address.fromString(vault.collateral.toHex()))
   const borrowAmount = event.params.dAmount.toBigDecimal().div(BIG_DECIMAL_1E18)
@@ -202,21 +195,19 @@ export function onBorrowMore(event: BorrowMore): void {
   collateralVault.historicCollateralizedUSD = collateralVault.historicCollateralizedUSD.plus(depositAmountUSD)
   collateralVault.save()
 
-  const cVaultStats = updateCollateralVaultRunningStat(
-    Address.fromString(collateralVault.collateral.toHex()),
-    event.block
-  )
+  // const cVaultStats = updateCollateralVaultRunningStat(
+  //   Address.fromString(collateralVault.collateral.toHex()),
+  //   event.block
+  // )
 
   updateVaultHistory(event.params.vaultID, event.block)
   updateUserHistory(Address.fromString(vault.user), event.block)
   updateCollateralVaultHistory(Address.fromString(vault.collateral.toHex()), event.block)
   updateVaultManagerHistory(event.block)
-  updateVaultManagerRunningStat2(event.block)
+  // updateVaultManagerRunningStat2(event.block)
 }
 
 export function onCloseVault(event: CloseVault): void {
-  log.info('Close Vault', [])
-
   const vault = getVault(event.params.vaultID, event.block)
   let amount = event.params.amount.toBigDecimal()
   if (amount.gt(BIG_DECIMAL_ZERO)) {
@@ -262,27 +253,80 @@ export function onCloseVault(event: CloseVault): void {
   collateralVault.currentCollateralized = collateralVault.currentCollateralized.minus(vaultPreviousCollateralized)
   collateralVault.save()
 
-  const cVaultStats = updateCollateralVaultRunningStat(
-    Address.fromString(collateralVault.collateral.toHex()),
-    event.block
-  )
+  // const cVaultStats = updateCollateralVaultRunningStat(
+  //   Address.fromString(collateralVault.collateral.toHex()),
+  //   event.block
+  // )
 
   updateVaultHistory(event.params.vaultID, event.block)
   updateUserHistory(Address.fromString(vault.user), event.block)
   updateCollateralVaultHistory(Address.fromString(vault.collateral.toHex()), event.block)
   updateVaultManagerHistory(event.block)
-  updateVaultManagerRunningStat2(event.block)
+  // updateVaultManagerRunningStat2(event.block)
 }
 
 export function onLiquidated(event: Liquidated): void {
   const vault = getVault(event.params.vaultID, event.block)
   vault.isLiquidated = true
+  vault.save()
 
+  const cdp = getCDP(Address.fromString(vault.collateral.toHex()))
   const vaultLiquidation = createVaultLiquidation(event.params.vaultID, event.block)
+  vaultLiquidation.liquidationAmount = event.params.amount.toBigDecimal().div(cdp.decimals)
+  vaultLiquidation.liquidationAMM = event.params.pairSentAmount.toBigDecimal().div(cdp.decimals)
+  vaultLiquidation.liquidationFee = vaultLiquidation.liquidationAmount.minus(vaultLiquidation.liquidationAMM)
+
+  const collateralPrice = getAssetPrice(Address.fromString(vault.collateral.toHex()))
+  vaultLiquidation.liquidationAmountUSD = vaultLiquidation.liquidationAmount.times(collateralPrice)
+  vaultLiquidation.liquidationFeeUSD = vaultLiquidation.liquidationFee.times(collateralPrice)
+  vaultLiquidation.liquidationAMMUSD = vaultLiquidation.liquidationAMM.times(collateralPrice)
+
+  vaultLiquidation.save()
+
+  const collateralVaultLiquidation = getCollateralVaultLiquidation(
+    Address.fromString(vault.collateral.toHex()),
+    event.block
+  )
+  collateralVaultLiquidation.liquidationCount = collateralVaultLiquidation.liquidationCount.plus(BIG_INT_ONE)
+  collateralVaultLiquidation.liquidationAmount = collateralVaultLiquidation.liquidationAmount.plus(
+    vaultLiquidation.liquidationAmount
+  )
+  collateralVaultLiquidation.liquidationAmountUSD = collateralVaultLiquidation.liquidationAmountUSD.plus(
+    vaultLiquidation.liquidationAmountUSD
+  )
+  collateralVaultLiquidation.liquidationFee = collateralVaultLiquidation.liquidationFee.plus(
+    vaultLiquidation.liquidationFee
+  )
+  collateralVaultLiquidation.liquidationFeeUSD = collateralVaultLiquidation.liquidationFeeUSD.plus(
+    vaultLiquidation.liquidationFeeUSD
+  )
+  collateralVaultLiquidation.liquidationAMM = collateralVaultLiquidation.liquidationAMM.plus(
+    vaultLiquidation.liquidationAMM
+  )
+  collateralVaultLiquidation.liquidationAMMUSD = collateralVaultLiquidation.liquidationAMMUSD.plus(
+    vaultLiquidation.liquidationAMMUSD
+  )
+
+  collateralVaultLiquidation.save()
+
+  const vaultManagerLiquidation = getVaultManagerLiquidation(event.block)
+  vaultManagerLiquidation.liquidationCount = vaultManagerLiquidation.liquidationCount.plus(BIG_INT_ONE)
+  vaultManagerLiquidation.liquidationAmountUSD = vaultManagerLiquidation.liquidationAmountUSD.plus(
+    vaultLiquidation.liquidationAmountUSD
+  )
+  vaultManagerLiquidation.liquidationFeeUSD = vaultManagerLiquidation.liquidationFeeUSD.plus(
+    vaultLiquidation.liquidationFeeUSD
+  )
+  vaultManagerLiquidation.liquidationAMMUSD = vaultManagerLiquidation.liquidationAMMUSD.plus(
+    vaultLiquidation.liquidationAMMUSD
+  )
+
+  vaultManagerLiquidation.save()
 
   const user = getUser(Address.fromString(vault.user), event.block)
   user.liquidateCount = user.liquidateCount.plus(BIG_INT_ONE)
   user.activeVaultCount = user.activeVaultCount.minus(BIG_INT_ONE)
 
-  log.info('Liquidated', [])
+  updateCollateralVaultHistory(Address.fromString(vault.collateral.toHex()), event.block)
+  updateVaultHistory(vault.numId, event.block)
 }

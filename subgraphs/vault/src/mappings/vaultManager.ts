@@ -3,7 +3,7 @@ import { BIG_DECIMAL_1E18, BIG_DECIMAL_ZERO, BIG_INT_ONE, FACTORY_ADDRESS, MTR_A
 import { Pair, User } from '../../generated/schema'
 import { CDPInitialized, Rebase, RebaseActive, SetFees, VaultCreated, SetDesiredSupply } from '../../generated/VaultManager/VaultManager'
 import { getCDP, updateCDPHistory } from '../entities/CDP'
-import { createVault, getVault, updateVaultHistory } from '../entities/Vault'
+import { createVault, updateVaultHistory } from '../entities/Vault'
 import { getVaultManager } from '../entities/vaultManager'
 import { ERC20 } from '../../generated/VaultManager/ERC20'
 import { getCollateralVault, updateCollateralVaultHistory } from '../entities/CollateralVault'
@@ -19,7 +19,6 @@ import { getFactory } from '../entities/factory'
 import { getCollateralReserveUSD } from '../functions'
 
 export function onVaultCreated(event: VaultCreated): void {
-  log.info('{} vault created', [event.params.vault.toHex()])
   const cdp = getCDP(event.params.collateral)
 
   // vault
@@ -84,14 +83,12 @@ export function onVaultCreated(event: VaultCreated): void {
   updateCollateralVaultHistory(event.params.collateral, event.block)
   updateVaultHistory(event.params.vaultId, event.block)
   updateUserHistory(event.params.creator, event.block)
-  updateVaultManagerRunningStat2(event.block)
+  // updateVaultManagerRunningStat2(event.block)
 }
 
 export function onSetFees(event: SetFees): void {}
 
 export function onCDPInitialized(event: CDPInitialized): void {
-  log.info('{} CDP initialized', [event.params.collateral.toHex()])
-
   // create manager
   const manager = getVaultManager(event.block)
 
@@ -127,7 +124,7 @@ export function onCDPInitialized(event: CDPInitialized): void {
 
   updateVaultManagerHistory(event.block)
   updateCDPHistory(event.params.collateral, event.block)
-  updateVaultManagerRunningStat2(event.block)
+  // updateVaultManagerRunningStat2(event.block)
 }
 
 export function onRebase(event: Rebase): void {
@@ -140,7 +137,7 @@ export function onRebase(event: Rebase): void {
   manager.desiredSupply = newDesiredSupply
 
   manager.save()
-  updateVaultManagerRunningStat2(event.block)
+  // updateVaultManagerRunningStat2(event.block)
 }
 
 export function onRebaseActive(event: RebaseActive): void {
@@ -155,7 +152,7 @@ export function onRebaseActive(event: RebaseActive): void {
   manager.rebaseActive = event.params.set
 
   manager.save()
-  updateVaultManagerRunningStat2(event.block)
+  // updateVaultManagerRunningStat2(event.block)
 }
 
 export function onSetDesiredSupply(event:SetDesiredSupply): void {
@@ -166,11 +163,10 @@ export function onSetDesiredSupply(event:SetDesiredSupply): void {
   }
   manager.desiredSupply = newDesiredSupply
   manager.save()
-  updateVaultManagerRunningStat2(event.block)
+  // updateVaultManagerRunningStat2(event.block)
 }
 
 export function updateVaultManagerRunningStat2(block: ethereum.Block): void {
-  log.info('vaultManager blockchange', [])
   // get vault manager
   const manager = getVaultManager(block)
   const cdps = manager.cdps
@@ -211,10 +207,8 @@ export function updateVaultManagerRunningStat2(block: ethereum.Block): void {
       const collateralReserveUSD = getCollateralReserveUSD(Address.fromString(pairId))
       ammReserveCollateralUSD = ammReserveCollateralUSD.plus(collateralReserveUSD)
     }
-    log.info('{} amm', [ammReserveCollateralUSD.toString()])
     managerStat.ammReserveCollateralUSD = ammReserveCollateralUSD
 
-    // log.info('end of blockchange', [])
     managerStat.save()
   }
 

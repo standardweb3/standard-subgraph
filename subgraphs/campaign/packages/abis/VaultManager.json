@@ -10,6 +10,25 @@
       {
         "indexed": false,
         "internalType": "address",
+        "name": "asset",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "aggregator",
+        "type": "address"
+      }
+    ],
+    "name": "AggregatorAdded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
         "name": "collateral",
         "type": "address"
       },
@@ -33,9 +52,9 @@
       },
       {
         "indexed": false,
-        "internalType": "uint8",
-        "name": "cDecimals",
-        "type": "uint8"
+        "internalType": "bool",
+        "name": "isOpen",
+        "type": "bool"
       }
     ],
     "name": "CDPInitialized",
@@ -153,6 +172,19 @@
     "inputs": [
       {
         "indexed": false,
+        "internalType": "uint256",
+        "name": "desiredSupply",
+        "type": "uint256"
+      }
+    ],
+    "name": "SetDesiredSupply",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
         "internalType": "address",
         "name": "feeTo",
         "type": "address"
@@ -237,7 +269,26 @@
   },
   {
     "inputs": [],
-    "name": "WETH",
+    "name": "ORACLE_OPERATOR_ROLE",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "PriceFeeds",
     "outputs": [
       {
         "internalType": "address",
@@ -251,12 +302,85 @@
   {
     "inputs": [
       {
+        "internalType": "address",
+        "name": "asset_",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "aggregator_",
+        "type": "address"
+      }
+    ],
+    "name": "addOracle",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "collateral_",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "cAmount_",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "dAmount_",
+        "type": "uint256"
+      }
+    ],
+    "name": "createCDP",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "success",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "dAmount_",
+        "type": "uint256"
+      }
+    ],
+    "name": "createCDPNative",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "success",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "desiredSupply",
+    "outputs": [
+      {
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
       }
     ],
-    "name": "allVaults",
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "dividend",
     "outputs": [
       {
         "internalType": "address",
@@ -269,7 +393,63 @@
   },
   {
     "inputs": [],
-    "name": "allVaultsLength",
+    "name": "factory",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "feeTo",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "asset_",
+        "type": "address"
+      }
+    ],
+    "name": "getAssetPrice",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "asset_",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount_",
+        "type": "uint256"
+      }
+    ],
+    "name": "getAssetValue",
     "outputs": [
       {
         "internalType": "uint256",
@@ -286,37 +466,132 @@
         "internalType": "address",
         "name": "collateral_",
         "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "debt_",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "amount_",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "recipient",
-        "type": "address"
       }
     ],
-    "name": "createVault",
+    "name": "getCDPConfig",
     "outputs": [
       {
-        "internalType": "address",
-        "name": "vault",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "MCR",
+        "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "id",
+        "name": "LFR",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "SFR",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "cDecimals",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "isOpen",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "collateral_",
+        "type": "address"
+      }
+    ],
+    "name": "getCDecimal",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
         "type": "uint256"
       }
     ],
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "collateral_",
+        "type": "address"
+      }
+    ],
+    "name": "getExpiary",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "collateral_",
+        "type": "address"
+      }
+    ],
+    "name": "getLFR",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "collateral_",
+        "type": "address"
+      }
+    ],
+    "name": "getMCR",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "collateral_",
+        "type": "address"
+      }
+    ],
+    "name": "getOpen",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -341,17 +616,17 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "vaultId_",
-        "type": "uint256"
+        "internalType": "address",
+        "name": "collateral_",
+        "type": "address"
       }
     ],
-    "name": "getVault",
+    "name": "getSFR",
     "outputs": [
       {
-        "internalType": "address",
+        "internalType": "uint256",
         "name": "",
-        "type": "address"
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -400,38 +675,20 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "impl",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "address",
-        "name": "v1_",
+        "name": "stablecoin_",
         "type": "address"
       },
       {
         "internalType": "address",
-        "name": "v2Factory_",
+        "name": "factory_",
         "type": "address"
       },
       {
         "internalType": "address",
-        "name": "weth_",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "manager_",
+        "name": "liquidator_",
         "type": "address"
       }
     ],
@@ -444,15 +701,87 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "vault",
+        "name": "collateral_",
         "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "MCR_",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "LFR_",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "SFR_",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "expiary_",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "on",
+        "type": "bool"
       }
     ],
-    "name": "isClone",
+    "name": "initializeCDP",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "collateral_",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "debt_",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "cAmount_",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "dAmount_",
+        "type": "uint256"
+      }
+    ],
+    "name": "isValidCDP",
     "outputs": [
       {
         "internalType": "bool",
-        "name": "cloned",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "issueAmount_",
+        "type": "uint256"
+      }
+    ],
+    "name": "isValidSupply",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
         "type": "bool"
       }
     ],
@@ -461,12 +790,45 @@
   },
   {
     "inputs": [],
-    "name": "manager",
+    "name": "lastRebase",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "liquidator",
     "outputs": [
       {
         "internalType": "address",
         "name": "",
         "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "rebase",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "rebaseActive",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
       }
     ],
     "stateMutability": "view",
@@ -511,6 +873,68 @@
   {
     "inputs": [
       {
+        "internalType": "uint256",
+        "name": "desiredSupply_",
+        "type": "uint256"
+      }
+    ],
+    "name": "setDesiredSupply",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "feeTo_",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "dividend_",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "treasury_",
+        "type": "address"
+      }
+    ],
+    "name": "setFees",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bool",
+        "name": "set_",
+        "type": "bool"
+      }
+    ],
+    "name": "setRebaseActive",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "stablecoin",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "bytes4",
         "name": "interfaceId",
         "type": "bytes4"
@@ -529,7 +953,7 @@
   },
   {
     "inputs": [],
-    "name": "v1",
+    "name": "treasury",
     "outputs": [
       {
         "internalType": "address",
@@ -538,32 +962,6 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "v2Factory",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "vaultCodeHash",
-    "outputs": [
-      {
-        "internalType": "bytes32",
-        "name": "vaultCode",
-        "type": "bytes32"
-      }
-    ],
-    "stateMutability": "pure",
     "type": "function"
   }
 ]

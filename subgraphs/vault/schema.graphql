@@ -249,6 +249,7 @@ type VaultLiquidation @entity {
   # liquidation amount = vault's collateralized
   liquidationAmount: BigDecimal!
   liquidationAmountUSD: BigDecimal!
+  liquidationFee: BigDecimal!
   liquidationFeeUSD: BigDecimal!
   liquidationAMM: BigDecimal!
   liquidationAMMUSD: BigDecimal!
@@ -334,6 +335,7 @@ type CollateralVaultLiquidation @entity {
   liquidationAmountUSD: BigDecimal!
 
   # fee + AMM = total
+  liquidationFee: BigDecimal!
   liquidationFeeUSD: BigDecimal!
   liquidationAMM: BigDecimal!
   liquidationAMMUSD: BigDecimal!
@@ -346,19 +348,19 @@ type CollateralVaultHistory @entity {
   id: ID!
   date: Int!
 
-  collateralPrice: BigDecimal!
+  # collateralPrice: BigDecimal!
 
   collateralVault: CollateralVault!
 
   historicBorrowed: BigDecimal!
 
   currentBorrowed: BigDecimal!
-  currentBorrowedUSD: BigDecimal!
+  # currentBorrowedUSD: BigDecimal!
 
   historicPaidBack: BigDecimal!
 
   currentCollateralized: BigDecimal!
-  currentCollateralizedUSD: BigDecimal!
+  # currentCollateralizedUSD: BigDecimal!
 
   historicCollateralized: BigDecimal!
   historicCollateralizedUSD: BigDecimal!
@@ -371,6 +373,9 @@ type CollateralVaultHistory @entity {
   liquidationFeeUSD: BigDecimal!
   liquidationAMM: BigDecimal!
   liquidationAMMUSD: BigDecimal!
+
+  block: BigInt!
+  timestamp: BigInt!
 }
 
 # Pair
@@ -384,20 +389,23 @@ type Pair @entity {
   id: ID!
 
   address: String!
-
   isToken0Mtr: Boolean!
 
   symbolToken0: String!
   symbolToken1: String!
+  collateralSymbol: String!
 
   # mirrored from the smart contract
-  token0: Bytes!
-  token1: Bytes!
+  token0: String!
+  token1: String!
+
+  collateral: String!
 
   reserve0: BigDecimal!
-  reserve0USD: BigDecimal!
+
   reserve1: BigDecimal!
-  reserve1USD: BigDecimal!
+
+  collateralReserve: BigDecimal!
 
   # Pair day data
   dayData: [PairDayData!]! @derivedFrom(field: "pair")
@@ -414,6 +422,7 @@ type Pair @entity {
 type PairDayData @entity {
   # pair id - day start timestamp
   id: ID!
+  collateral: String!
 
   # date - day start timestamp
   date: Int!
@@ -423,9 +432,12 @@ type PairDayData @entity {
 
   # reserves
   reserve0: BigDecimal!
-  reserve0USD: BigDecimal!
   reserve1: BigDecimal!
-  reserve1USD: BigDecimal!
+
+  collateralReserve: BigDecimal!
+
+  block: BigInt!
+  timestamp: BigInt!
 }
 
 # Pair hour data

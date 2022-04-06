@@ -1,4 +1,4 @@
-import { dataSource, ethereum, log } from '@graphprotocol/graph-ts'
+import { ethereum } from '@graphprotocol/graph-ts'
 import {
   BIG_DECIMAL_1E18,
   BIG_DECIMAL_ZERO,

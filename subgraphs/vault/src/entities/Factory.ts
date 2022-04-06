@@ -1,4 +1,3 @@
-import { log } from '@graphprotocol/graph-ts'
 import { FACTORY_ADDRESS } from "const";
 import { Factory } from '../../generated/schema'
 

@@ -1,12 +1,8 @@
 ---
-name: Subgraph Master Deploy
+name: Subgraph Shiden Deploy
 
 # Controls when the action will run.
 on:
-  push:
-    branches:
-      - only/shiden
-
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -18,7 +14,7 @@ jobs:
       max-parallel: 1
       matrix:
         include:
-          - chain: shiden 
+          - chain: shiden
             subgraphs: exchange masterchefV2 blocks candles bar
             graph_hosted: false
             graph_url: https://graph.shiden.standardtech.xyz:4443

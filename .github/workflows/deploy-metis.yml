@@ -1,12 +1,8 @@
 ---
-name: Subgraph Master Deploy
+name: Subgraph Metis Deploy
 
 # Controls when the action will run.
 on:
-  push:
-    branches:
-      - only/metis
-
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -19,7 +15,7 @@ jobs:
       matrix:
         include:
           - chain: metis
-            subgraphs: exchange masterchefV2 blocks candles bar vault campaign
+            subgraphs: exchange masterchefV2 blocks candles bar vault vault-reserve
             graph_hosted: false
             graph_url: https://graph.metis.standardtech.xyz:4443
             ipfs_url: https://api.thegraph.com/ipfs/

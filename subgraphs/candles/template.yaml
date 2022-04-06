@@ -1,4 +1,4 @@
-specVersion: 0.0.2
+specVersion: 0.0.3
 description: DEX trades candles (5m/15m/1h/4h/1d/1w)
 repository: https://github.com/digitalnativeinc/standard-subgraph
 schema:
@@ -13,17 +13,56 @@ dataSources:
       startBlock: {{ factory.startBlock }}
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.3
+      apiVersion: 0.0.4
       language: wasm/assemblyscript
       file: ./src/dexcandles.ts
       entities:
         - Pair
+        - UsmPairCollateralMapper
+        - Vault
       abis:
         - name: Factory
           file: ../../node_modules/@sushiswap/core/build/abi/UniswapV2Factory.json
+        - name: Vault
+          file: ../../packages/abis/Vault.json
+        - name: Pair
+          file: ../../packages/abis/UniswapV2Pair.json
       eventHandlers:
         - event: PairCreated(indexed address,indexed address,address,uint256)
           handler: handleNewPair
+  - kind: ethereum/contract
+    name: VaultManager
+    network: {{ network }}
+    source:
+      address: '{{ vaultManager.address }}'
+      abi: VaultManager
+      startBlock: {{ vaultManager.startBlock }}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ./src/vaultmanager.ts
+      entities:
+        - VaultManager
+        - Vault
+      abis:
+        - name: Pair
+          file: ../../node_modules/@sushiswap/core/build/abi/UniswapV2Pair.json
+        - name: VaultManager
+          file: ../../packages/abis/VaultManager.json
+        - name: Vault
+          file: ../../packages/abis/Vault.json
+        - name: ERC20
+          file: ../../node_modules/@sushiswap/core/build/abi/ERC20.json
+        - name: ERC20SymbolBytes
+          file: ../../packages/abis/ERC20SymbolBytes.json
+        - name: ERC20NameBytes
+          file: ../../packages/abis/ERC20NameBytes.json
+      eventHandlers:
+        - event: VaultCreated(uint256,address,address,address,address,uint256,uint256)
+          handler: onVaultCreated
+        - event: CDPInitialized(address,uint256,uint256,uint256,bool)
+          handler: onCDPInitialized
 templates:
   - kind: ethereum/contract
     name: Pair
@@ -32,14 +71,40 @@ templates:
       abi: Pair
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.3
+      apiVersion: 0.0.4
       language: wasm/assemblyscript
       file: ./src/dexcandles.ts
       entities:
         - Pair
+        - UsmPairCollateralMapper
       abis:
         - name: Pair
           file: ../../node_modules/@sushiswap/core/build/abi/UniswapV2Pair.json
       eventHandlers:
         - event: Swap(indexed address,uint256,uint256,uint256,uint256,indexed address)
           handler: handleSwap
+  - kind: ethereum/contract
+    name: Vault
+    network: {{ network }}
+    source:
+      abi: Vault
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ./src/vault.ts
+      entities:
+        - VaultManager
+        - Pair
+        - UsmPairCollateralMapper
+        - Vault
+      abis:
+        - name: Pair
+          file: ../../node_modules/@sushiswap/core/build/abi/UniswapV2Pair.json
+        - name: VaultManager
+          file: ../../packages/abis/VaultManager.json
+        - name: Vault
+          file: ../../packages/abis/Vault.json
+      eventHandlers:
+        - event: Liquidated(uint256,address,uint256,uint256)
+          handler: onLiquidated

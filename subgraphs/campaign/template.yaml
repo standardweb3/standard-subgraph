@@ -1,0 +1,79 @@
+specVersion: 0.0.3
+description: Vault
+repository: https://github.com/digitalnativeinc/standard-subgraph
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: VaultManager
+    network: {{ network }}
+    source:
+      address: '{{ vaultManager.address }}'
+      abi: VaultManager
+      startBlock: {{ vaultManager.startBlock }}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ./src/mappings/vaultManager.ts
+      entities:
+        - Vault
+        - CDP
+        - User
+        - VaultHistory
+        - VaultIdTracker
+      abis:
+        - name: VaultManager
+          file: ../../packages/abis/VaultManager.json
+        - name: Vault
+          file: ../../packages/abis/Vault.json
+        - name: Pair
+          file: ./packages/abis/UniswapV2Pair.json
+        - name: Factory
+          file: ../../node_modules/@sushiswap/core/build/abi/UniswapV2Factory.json
+        - name: ERC20
+          file: ../../node_modules/@sushiswap/core/build/abi/ERC20.json
+        - name: ERC20SymbolBytes
+          file: ../../packages/abis/ERC20SymbolBytes.json
+        - name: ERC20NameBytes
+          file: ../../packages/abis/ERC20NameBytes.json
+      eventHandlers:
+        - event: VaultCreated(uint256,address,address,address,address,uint256,uint256)
+          handler: onVaultCreated
+
+templates:
+  - kind: ethereum/contract
+    name: Vault
+    network: {{ network }}
+    source:
+      abi: Vault
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ./src/mappings/vault.ts
+      entities:
+        - Pair
+        - Vault
+        - User
+        - VaultHistory
+        - VaultIdTracker
+      abis:
+        - name: Vault
+          file: ../../packages/abis/Vault.json
+        - name: Pair
+          file: ./packages/abis/UniswapV2Pair.json
+        - name: ERC20
+          file: ../../node_modules/@sushiswap/core/build/abi/ERC20.json
+        - name: Factory
+          file: ../../node_modules/@sushiswap/core/build/abi/UniswapV2Factory.json
+      eventHandlers:
+        - event: BorrowMore(uint256,uint256,uint256,uint256)
+          handler: onBorrowMore
+        - event: PayBack(uint256,uint256,uint256,uint256)
+          handler: onPayBack
+        - event: CloseVault(uint256,uint256,uint256,uint256,uint256)
+          handler: onCloseVault
+      blockHandlers:
+        - handler: handleBlock
+

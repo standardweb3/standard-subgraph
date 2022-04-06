@@ -7,17 +7,17 @@
     "startBlock": "730"
   },
   "minimum_usd_threshold_new_pairs": "1000",
-  "minimum_liquidity_threshold_eth": "0.2",
+  "minimum_liquidity_threshold_eth": "10",
   "dai_address": "0x4c078361fc9bbb78df910800a991c7c3dd2f6ce0",
   "dai_weth_pair": "",
   "usdc_address": "0xea32a96608495e54156ae48931a7c20f0dcc1a21",
-  "usdc_weth_pair": "",
-  "usdc_weth_liquidity_block": "",
+  "usdc_weth_pair": "0x3305c50f43b83f4c58c40f4b73f93ad72f94bfcb",
+  "usdc_weth_liquidity_block": "20685",
   "usdt_address": "0xbb06dca3ae6887fabf931640f67cab3e3a16f4dc",
-  "usdt_weth_pair": "",
+  "usdt_weth_pair": "0x6e90e50c8a04824104db4b456b7edea3469d9b5f",
   "sushi_token_address": "0xc12cac7090baa48ec750cceec57c80768f6ee58e",
-  "sushi_usdc_pair": "",
-  "sushi_usdc_pair_liquidity_block": "",
+  "sushi_usdc_pair": "0xf48c7b00c26b46d316267460c4aaba2b84546d21",
+  "sushi_usdc_pair_liquidity_block": "20686",
   "sushi_weth_pair": "0xb93799632d760087a2556f6d1bfb964f826dcfe8",
   "sushi_weth_liquidity_block": "13584",
   "native_address": "0x75cb093e4d61d2a2e65d8e0bbb01de8d89b53481",
@@ -37,5 +37,25 @@
     "address": "0xbf4dd73c9f90e9f2ddba56933ced7eafdf56a8a9",
     "startBlock": "736"
   },
-  "whitelist": ["0xc12cac7090baa48ec750cceec57c80768f6ee58e", "0x75cb093e4d61d2a2e65d8e0bbb01de8d89b53481"]
+  "whitelist": [
+    "0xc12cac7090baa48ec750cceec57c80768f6ee58e",
+    "0x75cb093e4d61d2a2e65d8e0bbb01de8d89b53481",
+    "0xea32a96608495e54156ae48931a7c20f0dcc1a21",
+    "0xbb06dca3ae6887fabf931640f67cab3e3a16f4dc",
+    "0x141133fb6cc58451b903bc9007f43cd63c19e3a1"
+  ],
+  "stnd_address": "0xc12cac7090baa48ec750cceec57c80768f6ee58e",
+  "mtr_address": "0x141133fb6cc58451b903bc9007f43cd63c19e3a1",
+  "vaultManager": {
+    "address": "0x8b3d37b4c3013e5c43caf5b01a860f74ea3f0225",
+    "startBlock": "1988440"
+  },
+  "v1": {
+    "address": "0x5b5ef52799b544ae715e092ad4dc33396a0b4f19",
+    "startBlock": "1988438"
+  },
+  "vaultFactory": {
+    "address": "0xa1341dac752ce0d48c67ef205c577854553269a2",
+    "startBlock": "1988437"
+  }
 }

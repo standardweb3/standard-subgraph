@@ -1,0 +1,232 @@
+specVersion: 0.0.3
+description: Vault
+repository: https://github.com/digitalnativeinc/standard-subgraph
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: VaultManager
+    network: {{ network }}
+    source:
+      address: '{{ vaultManager.address }}'
+      abi: VaultManager
+      startBlock: {{ vaultManager.startBlock }}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ./src/mappings/vaultManager.ts
+      entities:
+        - VaultManager
+        - VaultManagerRunningStat
+        - VaultManagerLiquidation
+        - VaultManagerHistory
+        - CollateralAMM
+        - CollateralAMMHistory
+        - CDP
+        - CDPHistory
+        - User
+        - Vault
+        - VaultRunningStat
+        - VaultLiquidation
+        - CollateralVault
+        - CollateralVaultRunningStat
+        - CollateralVaultLiquidation
+        - CollateralVaultHistory
+      abis:
+        - name: VaultFactory
+          file: ../../packages/abis/VaultFactory.json
+        - name: VaultManager
+          file: ../../packages/abis/VaultManager.json
+        - name: Vault
+          file: ../../packages/abis/Vault.json
+        - name: MTR
+          file: ../../packages/abis/MTR.json
+        - name: V1
+          file: ../../packages/abis/V1.json
+        - name: Pair
+          file: ./packages/abis/UniswapV2Pair.json
+        - name: Factory
+          file: ../../node_modules/@sushiswap/core/build/abi/UniswapV2Factory.json
+        - name: ERC20
+          file: ../../node_modules/@sushiswap/core/build/abi/ERC20.json
+        - name: ERC20SymbolBytes
+          file: ../../packages/abis/ERC20SymbolBytes.json
+        - name: ERC20NameBytes
+          file: ../../packages/abis/ERC20NameBytes.json
+      eventHandlers:
+        - event: VaultCreated(uint256,address,address,address,address,uint256,uint256)
+          handler: onVaultCreated
+        - event: SetFees(address,address,address)
+          handler: onSetFees
+        - event: CDPInitialized(address,uint256,uint256,uint256,bool)
+          handler: onCDPInitialized
+        - event: Rebase(uint256,uint256)
+          handler: onRebase
+        - event: RebaseActive(bool)
+          handler: onRebaseActive
+        - event: SetDesiredSupply(uint256)
+          handler: onSetDesiredSupply
+  - kind: ethereum/contract
+    name: V1
+    network: {{ network }}
+    source:
+      abi: V1
+      address: '{{ v1.address }}'
+      startBlock: {{ v1.startBlock }}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - VaultManager
+        - VaultManagerRunningStat
+        - VaultManagerLiquidation
+        - VaultManagerHistory
+        - CollateralAMM
+        - CollateralAMMHistory
+        - CDP
+        - CDPHistory
+        - User
+        - Vault
+        - VaultRunningStat
+        - VaultLiquidation
+        - CollateralVault
+        - CollateralVaultRunningStat
+        - CollateralVaultLiquidation
+        - CollateralVaultHistory
+      abis:
+        - name: VaultFactory
+          file: ../../packages/abis/VaultFactory.json
+        - name: VaultManager
+          file: ../../packages/abis/VaultManager.json
+        - name: Vault
+          file: ../../packages/abis/Vault.json
+        - name: MTR
+          file: ../../packages/abis/MTR.json
+        - name: V1
+          file: ../../packages/abis/V1.json
+        - name: Pair
+          file: ./packages/abis/UniswapV2Pair.json
+        - name: Factory
+          file: ../../node_modules/@sushiswap/core/build/abi/UniswapV2Factory.json
+        - name: ERC20
+          file: ../../node_modules/@sushiswap/core/build/abi/ERC20.json
+        - name: ERC20SymbolBytes
+          file: ../../packages/abis/ERC20SymbolBytes.json
+        - name: ERC20NameBytes
+          file: ../../packages/abis/ERC20NameBytes.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ./src/mappings/v1.ts
+  - kind: ethereum/contract
+    name: Factory
+    network: {{ network }}
+    source:
+      address: '{{ factory.address }}'
+      abi: Factory
+      startBlock: {{ factory.startBlock }}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ./src/mappings/factory.ts
+      entities:
+        - Factory
+      abis:
+        - name: Factory
+          file: ../../node_modules/@sushiswap/core/build/abi/UniswapV2Factory.json
+        - name: Pair
+          file: ./packages/abis/UniswapV2Pair.json
+        - name: ERC20
+          file: ../../node_modules/@sushiswap/core/build/abi/ERC20.json
+        - name: ERC20SymbolBytes
+          file: ../../packages/abis/ERC20SymbolBytes.json
+        - name: ERC20NameBytes
+          file: ../../packages/abis/ERC20NameBytes.json
+      eventHandlers:
+        - event: PairCreated(indexed address,indexed address,address,uint256)
+          handler: onPairCreated
+
+templates:
+  - kind: ethereum/contract
+    name: Vault
+    network: {{ network }}
+    source:
+      abi: Vault
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ./src/mappings/vault.ts
+      entities:
+        - VaultManager
+        - VaultManagerRunningStat
+        - VaultManagerLiquidation
+        - VaultManagerHistory
+        - CollateralAMM
+        - CollateralAMMHistory
+        - CDP
+        - CDPHistory
+        - User
+        - Vault
+        - VaultRunningStat
+        - VaultLiquidation
+        - CollateralVault
+        - CollateralVaultRunningStat
+        - CollateralVaultLiquidation
+        - CollateralVaultHistory
+      abis:
+        - name: VaultFactory
+          file: ../../packages/abis/VaultFactory.json
+        - name: VaultManager
+          file: ../../packages/abis/VaultManager.json
+        - name: Vault
+          file: ../../packages/abis/Vault.json
+        - name: MTR
+          file: ../../packages/abis/MTR.json
+        - name: V1
+          file: ../../packages/abis/V1.json
+        - name: Pair
+          file: ./packages/abis/UniswapV2Pair.json
+        - name: ERC20
+          file: ../../node_modules/@sushiswap/core/build/abi/ERC20.json
+        - name: Factory
+          file: ../../node_modules/@sushiswap/core/build/abi/UniswapV2Factory.json
+      eventHandlers:
+        - event: DepositCollateral(uint256,uint256)
+          handler: onDepositCollateral
+        - event: WithdrawCollateral(uint256,uint256)
+          handler: onWithdrawCollateral
+        - event: BorrowMore(uint256,uint256,uint256,uint256)
+          handler: onBorrowMore
+        - event: PayBack(uint256,uint256,uint256,uint256)
+          handler: onPayBack
+        - event: CloseVault(uint256,uint256,uint256,uint256,uint256)
+          handler: onCloseVault
+        - event: Liquidated(uint256,address,uint256,uint256)
+          handler: onLiquidated
+  - kind: ethereum/contract
+    name: Pair 
+    network: {{ network }}
+    source:
+      abi: Pair
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ./src/mappings/pair.ts
+      entities:
+        - Pair
+        - Factory
+      abis:
+        - name: Pair
+          file: ./packages/abis/UniswapV2Pair.json
+        - name: ERC20
+          file: ../../node_modules/@sushiswap/core/build/abi/ERC20.json
+        - name: Factory
+          file: ../../node_modules/@sushiswap/core/build/abi/UniswapV2Factory.json
+      eventHandlers:
+        - event: Sync(uint112,uint112)
+          handler: onSync

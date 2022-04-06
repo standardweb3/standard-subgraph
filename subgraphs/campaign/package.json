@@ -1,0 +1,26 @@
+{
+  "name": "vault-reserve",
+  "license": "MIT",
+  "version": "1.1.0",
+  "author": "DigitalNative",
+  "files": [
+    "generated"
+  ],
+  "scripts": {
+    "codegen": "graph codegen subgraph.yaml",
+    "build": "graph build subgraph.yaml",
+    "test": "graph test subgraph.yaml",
+    "create-local": "graph create --node http://localhost:8020/ digitalnative/standardprotocol-vault-campaign",
+    "remove-local": "graph remove --node http://localhost:8020/ digitalnative/standardprotocol-vault-campaign",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 digitalnative/standardprotocol-vault-campaign",
+    "deploy": "graph deploy --node $GRAPH_URL --ipfs $IPFS_URL $GRAPH_USER/$CHAIN-vault-campaign subgraph.yaml",
+    "create-subgraph": "graph create --node $GRAPH_URL $GRAPH_USER/$CHAIN-vault-campaign",
+    "deploy:rinkeby": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ billjhlee/rinkeby-vault-campaign subgraph.yaml",
+    "deploy:mainnet": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ billjhlee/ethereum-vault-campaign subgraph.yaml",
+    "deploy:avax": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ billjhlee/avax-vault-campaign subgraph.yaml",
+    "prepare": "mustache ../../config/$CHAIN.json template.yaml > subgraph.yaml",
+    "prepare:constants": "mustache ../../config/$CHAIN.json src/constants/index.template.ts > src/constants/index.ts",
+    "create-subgraph:shiden": "graph create --node https://graph.shiden.standardtech.xyz:4443 digitalnativeinc/shiden-vault-campaign",
+    "deploy:shiden": "graph deploy --node https://graph.shiden.standardtech.xyz:4443 --ipfs https://ipfs.shiden.standardtech.xyz digitalnativeinc/shiden-vault-campaign subgraph.yaml --version-label 1.0.0"
+  }
+}

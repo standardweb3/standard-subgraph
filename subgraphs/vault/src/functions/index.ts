@@ -1,10 +1,9 @@
-import { Address, BigDecimal, log } from '@graphprotocol/graph-ts'
-import {  BIG_DECIMAL_1E18, BIG_DECIMAL_ZERO, NULL_CALL_RESULT_VALUE } from 'const'
+import { Address, BigDecimal } from '@graphprotocol/graph-ts'
+import {  BIG_DECIMAL_ZERO, NULL_CALL_RESULT_VALUE } from 'const'
 import { ERC20 } from '../../generated/Factory/ERC20'
 import { ERC20SymbolBytes } from '../../generated/Factory/ERC20SymbolBytes'
 import { Pair as PairContract } from '../../generated/Factory/Pair'
 import { CDP, Pair } from '../../generated/schema'
-import { getCDP } from '../entities/CDP'
 import { getAssetPrice } from '../utils/vaultManager'
 
 export function getSymbol(address: Address): string {
@@ -36,9 +35,9 @@ export function getCollateralReserveUSD(address: Address): BigDecimal {
 
   if (!result.reverted) {
     if (pair.isToken0Mtr) {
-      const cdp = CDP.load(pair.token1.toHex())
+      const cdp = CDP.load(pair.token1)
       if (cdp !== null) {
-      const collateralPrice = getAssetPrice(Address.fromString(pair.token1.toHex()))
+      const collateralPrice = getAssetPrice(Address.fromString(pair.token1))
       // const reserveMtr = result.value.value0.toBigDecimal()
       let reserveCollateral = result.value.value1.toBigDecimal()
       if (reserveCollateral.gt(BIG_DECIMAL_ZERO)) {
@@ -50,10 +49,10 @@ export function getCollateralReserveUSD(address: Address): BigDecimal {
       }
     }
     if (!pair.isToken0Mtr) {
-      const cdp = CDP.load(pair.token0.toHex())
+      const cdp = CDP.load(pair.token0)
       if (cdp !== null) {
 
-      const collateralPrice = getAssetPrice(Address.fromString(pair.token0.toHex()))
+      const collateralPrice = getAssetPrice(Address.fromString(pair.token0))
       // const reserveMtr = result.value.value1.toBigDecimal()
       let reserveCollateral = result.value.value0.toBigDecimal()
       if (reserveCollateral.gt(BIG_DECIMAL_ZERO)) {

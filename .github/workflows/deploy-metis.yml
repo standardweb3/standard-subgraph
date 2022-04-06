@@ -19,7 +19,7 @@ jobs:
       matrix:
         include:
           - chain: metis
-            subgraphs: exchange masterchefV2 blocks candles bar
+            subgraphs: exchange masterchefV2 blocks candles bar vault campaign
             graph_hosted: false
             graph_url: https://graph.metis.standardtech.xyz:4443
             ipfs_url: https://api.thegraph.com/ipfs/

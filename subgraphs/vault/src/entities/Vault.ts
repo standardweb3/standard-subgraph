@@ -1,4 +1,4 @@
-import { Address, BigInt, ethereum, log } from '@graphprotocol/graph-ts'
+import { Address, BigInt, ethereum } from '@graphprotocol/graph-ts'
 import { BIG_DECIMAL_ZERO, BIG_INT_ONE_DAY_SECONDS, MTR_ADDRESS, VAULT_MANAGER_ADDRESS } from 'const'
 import { Vault, VaultHistory } from '../../generated/schema'
 import { getCDP } from './CDP'

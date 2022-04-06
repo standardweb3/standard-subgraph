@@ -32,24 +32,24 @@
     "0xc778417e063141139fce010982780140aa0cd5ab",
     "0xc7ad46e0b8a400bb3c915120d284aafba8fc4735",
     "0x2a810715ef7f06b1e1ba8779cc1d01c82a201dcc",
-    "0x6388e0cc745b3c5ed23c6d569a01a4d27eda3e14",
+    "0x9f89d6bdd4adc964d8124bf857a26fcb83f4939e",
     "0x4dbcdf9b62e891a7cec5a2568c3f4faf9e8abe2b"
   ],
   "sushi_weth_liquidity_block": "10006474",
   "sushi_usdc_liquidity_block": "",
   "vaultManager": {
-    "address": "0xa567c3b808e18bfcc903f7f7a403a8dd02f5d0cc",
-    "startBlock": "10156566"
+    "address": "0x023eeac49a5901e7435569bbecf05eeef00418f4",
+    "startBlock": "10322380"
   },
   "vaultFactory": {
-    "address": "0x6a1cbee58d87560a07b4ca6987ff7d8e269b0931",
-    "startBlock": "10156563"
+    "address": "0x1923cec511490d61201d8544e3071d0398f07bc0",
+    "startBlock": "10322378"
   },
-  "mtr_address": "0x6388e0cc745b3c5ed23c6d569a01a4d27eda3e14",
+  "mtr_address": "0x9f89d6bdd4adc964d8124bf857a26fcb83f4939e",
   "stnd_address": "0x2a810715ef7f06b1e1ba8779cc1d01c82a201dcc",
   "v1": {
-    "address": "0x34199b137da656c9d5305200ec2eeada2a5248b9",
-    "startBlock": "10156564"
+    "address": "0x9d3f00ef618cd4cb6f401472ff45e55de014ecb2",
+    "startBlock": "10322379"
   },
   "bar": {
     "address": "0x9da260dd60440997ebb88b133f48df1670911171",

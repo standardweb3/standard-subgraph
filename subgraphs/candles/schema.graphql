@@ -4,6 +4,11 @@ type Pair @entity {
   token1: Bytes!
 }
 
+type UsmPairCollateralMapper @entity {
+  id: ID!
+  pair: Pair!
+}
+
 type Candle @entity {
   id: ID! # time + period + srcToken + dstToken
   time: Int!
@@ -28,10 +33,5 @@ type Vault @entity {
 
 type CDP @entity {
   id: ID!
-  lfr: BigDecimal!
-  mcr: BigDecimal!
-  sfr: BigDecimal!
   decimals: BigDecimal!
-  isOpen: Boolean!
-  symbol: String!
 }

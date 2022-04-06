@@ -1,5 +1,5 @@
-import { Address, BigInt, ethereum, log } from '@graphprotocol/graph-ts'
-import { BIG_DECIMAL_ONE, BIG_DECIMAL_ZERO, BIG_INT_ONE_HUNDRED, MTR_ADDRESS, VAULT_MANAGER_ADDRESS } from 'const'
+import { Address, BigInt, ethereum } from '@graphprotocol/graph-ts'
+import { BIG_DECIMAL_ZERO, MTR_ADDRESS, VAULT_MANAGER_ADDRESS } from 'const'
 import { CollateralVaultRunningStat, VaultManagerRunningStat, VaultRunningStat } from '../../generated/schema'
 import { getAssetPrice } from '../utils/vaultManager'
 import { getVault } from './Vault'

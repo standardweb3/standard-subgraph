@@ -1,17 +1,35 @@
 import { BigInt, Bytes } from '@graphprotocol/graph-ts'
-import { Candle, Pair } from '../generated/schema'
+import { Candle, CDP, Pair, UsmPairCollateralMapper } from '../generated/schema'
 import { PairCreated } from '../generated/Factory/Factory'
 import { Pair as PairTemplate } from '../generated/templates'
 import { Swap } from '../generated/templates/Pair/Pair'
 import { concat } from '@graphprotocol/graph-ts/helper-functions'
-import { Liquidated } from '../generated/VaultManager/Vault'
-import { getCDP } from './cdp'
+import { MTR_ADDRESS } from 'const'
 
 export function handleNewPair(event: PairCreated): void {
+  const isToken0Mtr = event.params.token0.equals(MTR_ADDRESS)
+  const isToken1Mtr = event.params.token1.equals(MTR_ADDRESS)
+
+  let cdp = CDP.load(event.params.token0.toHex())
+  if (isToken0Mtr) {
+    cdp = CDP.load(event.params.token1.toHex())
+  }
+
   let pair = new Pair(event.params.pair.toHex())
   pair.token0 = event.params.token0
   pair.token1 = event.params.token1
+
   pair.save()
+
+  if (isToken0Mtr) {
+    let usmPairCollateralMapper = new UsmPairCollateralMapper(pair.token1.toHex())
+    usmPairCollateralMapper.pair = pair.id
+    usmPairCollateralMapper.save()
+  } else if (isToken1Mtr) {
+    let usmPairCollateralMapper = new UsmPairCollateralMapper(pair.token0.toHex())
+    usmPairCollateralMapper.pair = pair.id
+    usmPairCollateralMapper.save()
+  }
 
   PairTemplate.create(event.params.pair)
 }
@@ -68,7 +86,3 @@ export function handleSwap(event: Swap): void {
   }
 }
 
-export function onLiquidated(event: Liquidated): void {
-  const cdp = getCDP(event.params.collateral)
-  const amount = event.params.amount.toBigDecimal().div(cdp.decimals)
-}

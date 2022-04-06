@@ -29,7 +29,7 @@
     "prepare:shibuya": "yarn workspaces run prepare:shibuya"
   },
   "devDependencies": {
-    "@graphprotocol/graph-cli": "^0.29.0",
+    "@graphprotocol/graph-cli": "^0.25.0",
     "@graphprotocol/graph-ts": "^0.23.0",
     "@sushiswap/core": "^1.4.2",
     "@sushiswap/prettier-config": "^0.1.0",

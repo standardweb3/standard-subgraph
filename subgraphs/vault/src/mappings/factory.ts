@@ -3,7 +3,7 @@ import { PairCreated } from '../../generated/Factory/Factory'
 import { CDP } from '../../generated/schema'
 import { getCDP } from '../entities/CDP'
 import { getFactory } from '../entities/Factory'
-import { createPair } from '../entities/Pair'
+import { createCollateralPairMapper, createPair } from '../entities/Pair'
 
 export function onPairCreated(event: PairCreated): void {
   const isToken0Mtr = event.params.token0.equals(MTR_ADDRESS)
@@ -18,7 +18,20 @@ export function onPairCreated(event: PairCreated): void {
     return
   }
 
-  const pair = createPair(event.params.pair, event.block, event.params.token0, event.params.token1, isToken0Mtr)
+  const pair = createPair(
+    event.params.pair,
+    event.block,
+    event.params.token0,
+    event.params.token1,
+    isToken0Mtr,
+    cdp.isOpen
+  )
+  
+  if (isToken0Mtr) {
+    createCollateralPairMapper(event.params.pair, event.params.token1)
+  } else {
+    createCollateralPairMapper(event.params.pair, event.params.token0)
+  }
 
   // We returned null for some reason, we should silently bail without creating this pair
   if (!pair) {

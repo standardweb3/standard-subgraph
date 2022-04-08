@@ -4,7 +4,7 @@ import { CollateralVaultRunningStat, VaultManagerRunningStat, VaultRunningStat }
 import { getAssetPrice } from '../utils/vaultManager'
 import { getVault } from './Vault'
 import { getCollateralVault } from './CollateralVault'
-import { getVaultManager } from './Vault'
+import { getVaultManager } from './VaultManager'
 import { getCDP } from './CDP'
 import { getDebt } from '../utils/vault'
 
@@ -113,7 +113,7 @@ export function updateVaultRunningStat(gIndex: BigInt, block: ethereum.Block): V
 
   stats.accruedStabilityFee = stats.debt.minus(vault.currentBorrowed)
   stats.accruedStabilityFeeUSD = stats.debtUSD.minus(stats.currentBorrowedUSD)
-  
+
   // const ratio = stats.currentCollateralizedUSD.div(stats.currentBorrowedUSD).times(BIG_INT_ONE_HUNDRED.toBigDecimal())
   // if (ratio.lt(cdp.mcr)) {
   //   stats.needsLiquidation = true

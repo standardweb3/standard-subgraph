@@ -190,6 +190,7 @@ type Vault @entity {
   address: Bytes!
   CDP: CDP!
   user: User!
+  ex_sfr: BigDecimal!
 
   collectedStabilityFee: BigDecimal!
 

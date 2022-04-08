@@ -28,6 +28,7 @@ export function createVault(
 
     const cdp = getCDP(collateral)
     vault.CDP = cdp.id
+    vault.ex_sfr = cdp.sfr
     vault.isClosed = false
     vault.isLiquidated = false
 

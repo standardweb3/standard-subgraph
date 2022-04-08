@@ -19,7 +19,7 @@ jobs:
       matrix:
         include:
           - chain: rinkeby
-            subgraphs: exchange masterchefV2 blocks candles vault vault-reserve
+            subgraphs: exchange masterchefV2 blocks candles vault
             graph_hosted: true
             graph_url: https://api.thegraph.com/deploy/
             ipfs_url: https://api.thegraph.com/ipfs/

@@ -3,16 +3,17 @@
 import { Address } from '@graphprotocol/graph-ts'
 import { BIG_DECIMAL_1E18, BIG_INT_ONE, BIG_INT_ZERO, NETWORK } from 'const'
 import { Bonded, DividendClaimed, UnBonded } from '../../generated/BondedStrategy/BondedStrategy'
-import { getBondedStrategyPair } from '../entities/bondedStrategyPair'
+import { getBondedStrategyToken } from '../entities/bondedStrategyToken'
 import { getBondedStrategy } from '../entities/bondedStrategy'
 import { getBondedStrategyUser } from '../entities/bondedStrategyUser'
 import { Pair as PairContract } from '../../generated/BondedStrategy/Pair'
+import { ERC20 as ERC20Contract } from '../../generated/BondedStrategy/ERC20'
 import { getBondedStrategyUserClaim } from '../entities/bondedStrategyUserClaim'
-import { getBundle, getPair } from '../entities'
+import { getBundle, getPair, getToken } from '../entities'
 import { getBondedStrategyHistory } from '../entities/bondedStrategyHistory'
 import { getStndPrice } from '../pricing'
-import { getBondedStrategyPairHistory } from '../entities/BondedStrategyPairHistory'
-import { Pair } from '../../generated/schema'
+import { getBondedStrategyTokenHistory } from '../entities/BondedStrategyTokenHistory'
+import { Pair, Token } from '../../generated/schema'
 
 export function onBonded(event: Bonded): void {
   // START: update bondedStrategy
@@ -86,24 +87,26 @@ export function onDividendClaimed(event: DividendClaimed): void {
   const bondedStrategy = getBondedStrategy(event.block)
 
   // get pair instances (hard coded for rinkeby as of now. contract code needs to be updated)
-  const pairAddress = event.params.claimingWith
-  // pair contract is needed to query the balance of bondedStrategy
-  const pairContract = PairContract.bind(pairAddress)
-  // exchange pair is needed to get the lpToken price
-  const exchangePair = Pair.load(pairAddress.toHex())
-  if (exchangePair !== null) {
+  const tokenAddress = event.params.claimingWith
+  const bondedStrategyToken = getBondedStrategyToken(tokenAddress, event.block)
+
+  if (bondedStrategyToken.isPair) {
+    const tokenContract = PairContract.bind(tokenAddress)
+    // exchange pair is needed to get the lpToken price
+    const exchangeToken = getPair(tokenAddress, event.block)
+
     // get bundle for ethPrice to find lpTokenPrice
     const bundle = getBundle()
-    const lpTokenPrice = exchangePair.reserveETH.times(bundle.ethPrice).div(exchangePair.totalSupply)
+    const tokenPrice = exchangeToken.reserveETH.times(bundle.ethPrice).div(exchangeToken.totalSupply)
 
     // claim amount in USD
-    const amountUSD = lpTokenPrice.times(event.params.amount.divDecimal(BIG_DECIMAL_1E18))
+    const amountUSD = tokenPrice.times(event.params.amount.divDecimal(BIG_DECIMAL_1E18))
 
     // START: update User
     const user = getBondedStrategyUser(event.params.claimer.toHex(), event.block)
 
     // START: update UserClaim
-    const userClaim = getBondedStrategyUserClaim(user.id, pairAddress)
+    const userClaim = getBondedStrategyUserClaim(user.id, tokenAddress, bondedStrategyToken.isPair)
     userClaim.lastClaimed = event.block.timestamp
     userClaim.amount = userClaim.amount.plus(event.params.amount)
     userClaim.amountUSD = userClaim.amountUSD.plus(amountUSD)
@@ -115,29 +118,28 @@ export function onDividendClaimed(event: DividendClaimed): void {
     // END: update userClaim
 
     // START: update bondedStrategyPair (aggregates all users)
-    const bondedStrategyPair = getBondedStrategyPair(pairAddress, event.block)
-    bondedStrategyPair.claimedReward = bondedStrategyPair.claimedReward.plus(event.params.amount)
-    bondedStrategyPair.claimedRewardUSD = bondedStrategyPair.claimedRewardUSD.plus(amountUSD)
+    bondedStrategyToken.claimedReward = bondedStrategyToken.claimedReward.plus(event.params.amount)
+    bondedStrategyToken.claimedRewardUSD = bondedStrategyToken.claimedRewardUSD.plus(amountUSD)
 
     // query bondedStrategy's new balance of lpToken
-    let remainingRewardResult = pairContract.try_balanceOf(Address.fromString(bondedStrategy.id))
+    let remainingRewardResult = tokenContract.try_balanceOf(Address.fromString(bondedStrategy.id))
 
     if (!remainingRewardResult.reverted) {
       // previous to calculate the difference in ETH
-      const previousRemainingRewardETH = bondedStrategyPair.remainingRewardETH
+      const previousRemainingRewardETH = bondedStrategyToken.remainingRewardETH
 
-      bondedStrategyPair.remainingReward = remainingRewardResult.value
+      bondedStrategyToken.remainingReward = remainingRewardResult.value
       // find reamining reward in ETH using the exchangePair's reserveETH
-      bondedStrategyPair.remainingRewardETH = remainingRewardResult.value
+      bondedStrategyToken.remainingRewardETH = remainingRewardResult.value
         .divDecimal(BIG_DECIMAL_1E18)
-        .div(exchangePair.totalSupply)
-        .times(exchangePair.reserveETH)
+        .div(exchangeToken.totalSupply)
+        .times(exchangeToken.reserveETH)
 
-      const reduced = bondedStrategyPair.remainingRewardETH.lt(previousRemainingRewardETH)
+      const reduced = bondedStrategyToken.remainingRewardETH.lt(previousRemainingRewardETH)
 
       const difference = reduced
-        ? previousRemainingRewardETH.minus(bondedStrategyPair.remainingRewardETH)
-        : bondedStrategyPair.remainingRewardETH.minus(previousRemainingRewardETH)
+        ? previousRemainingRewardETH.minus(bondedStrategyToken.remainingRewardETH)
+        : bondedStrategyToken.remainingRewardETH.minus(previousRemainingRewardETH)
 
       // update reamingRewardETH of bondedStrategy
       if (reduced) {
@@ -147,7 +149,7 @@ export function onDividendClaimed(event: DividendClaimed): void {
       }
     }
 
-    bondedStrategyPair.save()
+    bondedStrategyToken.save()
     // END: update bondedStrategyPair
 
     bondedStrategy.totalClaimedUSD = bondedStrategy.totalClaimedUSD.plus(amountUSD)
@@ -164,18 +166,108 @@ export function onDividendClaimed(event: DividendClaimed): void {
     // END: update bondedStrategyHistory
 
     // START: update bondedStrategyHistoryPair
-    const bondedStrategyPairHistory = getBondedStrategyPairHistory(
-      Address.fromString(bondedStrategyPair.id),
-      event.block
+    const bondedStrategyTokenHistory = getBondedStrategyTokenHistory(
+      Address.fromString(bondedStrategyToken.id),
+      event.block,
+      bondedStrategyToken.isPair
     )
 
-    bondedStrategyPairHistory.claimedReward = bondedStrategyPair.claimedReward
-    bondedStrategyPairHistory.claimedRewardUSD = bondedStrategyPair.claimedRewardUSD
-    bondedStrategyPairHistory.remainingReward = bondedStrategyPair.remainingReward
-    bondedStrategyPairHistory.remainingRewardETH = bondedStrategyPair.remainingRewardETH
-    bondedStrategyPairHistory.remainingRewardUSD = bondedStrategyPair.remainingRewardETH.times(bundle.ethPrice)
+    bondedStrategyTokenHistory.claimedReward = bondedStrategyToken.claimedReward
+    bondedStrategyTokenHistory.claimedRewardUSD = bondedStrategyToken.claimedRewardUSD
+    bondedStrategyTokenHistory.remainingReward = bondedStrategyToken.remainingReward
+    bondedStrategyTokenHistory.remainingRewardETH = bondedStrategyToken.remainingRewardETH
+    bondedStrategyTokenHistory.remainingRewardUSD = bondedStrategyToken.remainingRewardETH.times(bundle.ethPrice)
 
-    bondedStrategyPairHistory.save()
+    bondedStrategyTokenHistory.save()
+  } else {
+    const tokenContract = ERC20Contract.bind(tokenAddress)
+    // exchange pair is needed to get the lpToken price
+    const exchangeToken = getToken(tokenAddress)
+
+    // get bundle for ethPrice to find lpTokenPrice
+    const bundle = getBundle()
+    const tokenPrice = exchangeToken.derivedETH.times(bundle.ethPrice)
+
+    // claim amount in USD
+    const amountUSD = tokenPrice.times(event.params.amount.divDecimal(exchangeToken.decimals.toBigDecimal()))
+
+    // START: update User
+    const user = getBondedStrategyUser(event.params.claimer.toHex(), event.block)
+
+    // START: update UserClaim
+    const userClaim = getBondedStrategyUserClaim(user.id, tokenAddress, bondedStrategyToken.isPair)
+    userClaim.lastClaimed = event.block.timestamp
+    userClaim.amount = userClaim.amount.plus(event.params.amount)
+    userClaim.amountUSD = userClaim.amountUSD.plus(amountUSD)
+    userClaim.save()
+    // END: update userClaim
+
+    user.totalClaimedUSD = user.totalClaimedUSD.plus(amountUSD)
+    user.save()
+    // END: update userClaim
+
+    // START: update bondedStrategyPair (aggregates all users)
+    bondedStrategyToken.claimedReward = bondedStrategyToken.claimedReward.plus(event.params.amount)
+    bondedStrategyToken.claimedRewardUSD = bondedStrategyToken.claimedRewardUSD.plus(amountUSD)
+
+    // query bondedStrategy's new balance of lpToken
+    let remainingRewardResult = tokenContract.try_balanceOf(Address.fromString(bondedStrategy.id))
+
+    if (!remainingRewardResult.reverted) {
+      // previous to calculate the difference in ETH
+      const previousRemainingRewardETH = bondedStrategyToken.remainingRewardETH
+
+      bondedStrategyToken.remainingReward = remainingRewardResult.value
+      // find reamining reward in ETH using the exchangePair's reserveETH
+      bondedStrategyToken.remainingRewardETH = remainingRewardResult.value
+        .divDecimal(exchangeToken.decimals.toBigDecimal())
+        .times(exchangeToken.derivedETH)
+
+      const reduced = bondedStrategyToken.remainingRewardETH.lt(previousRemainingRewardETH)
+
+      const difference = reduced
+        ? previousRemainingRewardETH.minus(bondedStrategyToken.remainingRewardETH)
+        : bondedStrategyToken.remainingRewardETH.minus(previousRemainingRewardETH)
+
+      // update reamingRewardETH of bondedStrategy
+      if (reduced) {
+        bondedStrategy.remainingRewardETH = bondedStrategy.remainingRewardETH.minus(difference)
+      } else {
+        bondedStrategy.remainingRewardETH = bondedStrategy.remainingRewardETH.plus(difference)
+      }
+    }
+
+    bondedStrategyToken.save()
+    // END: update bondedStrategyPair
+
+    bondedStrategy.totalClaimedUSD = bondedStrategy.totalClaimedUSD.plus(amountUSD)
+    bondedStrategy.save()
+    // END: update bondedStrategy
+
+    // START: update bondedStrategyHistory
+    const bondedStrategyHistory = getBondedStrategyHistory(event.block)
+    bondedStrategyHistory.remainingRewardETH = bondedStrategy.remainingRewardETH
+    bondedStrategyHistory.remainingRewardUSD = bondedStrategyHistory.remainingRewardETH.times(bundle.ethPrice)
+    bondedStrategyHistory.totalClaimedUSD = bondedStrategy.totalClaimedUSD
+
+    bondedStrategyHistory.save()
+    // END: update bondedStrategyHistory
+
+    // START: update bondedStrategyHistoryPair
+    const bondedStrategyTokenHistory = getBondedStrategyTokenHistory(
+      Address.fromString(bondedStrategyToken.id),
+      event.block,
+      bondedStrategyToken.isPair
+    )
+
+    bondedStrategyTokenHistory.claimedReward = bondedStrategyToken.claimedReward
+    bondedStrategyTokenHistory.claimedRewardUSD = bondedStrategyToken.claimedRewardUSD
+    bondedStrategyTokenHistory.remainingReward = bondedStrategyToken.remainingReward
+    bondedStrategyTokenHistory.remainingRewardETH = bondedStrategyToken.remainingRewardETH
+    bondedStrategyTokenHistory.remainingRewardUSD = bondedStrategyToken.remainingRewardETH.times(bundle.ethPrice)
+
+    bondedStrategyTokenHistory.save()
   }
+
   // END: update bondedStrategyHistoryPair
 }

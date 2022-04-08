@@ -1,6 +1,7 @@
 import { MTR_ADDRESS } from 'const'
 import { PairCreated } from '../../generated/Factory/Factory'
 import { CDP } from '../../generated/schema'
+import { getCDP } from '../entities/CDP'
 import { getFactory } from '../entities/Factory'
 import { createPair } from '../entities/Pair'
 
@@ -8,9 +9,9 @@ export function onPairCreated(event: PairCreated): void {
   const isToken0Mtr = event.params.token0.equals(MTR_ADDRESS)
   const isToken1Mtr = event.params.token1.equals(MTR_ADDRESS)
 
-  let cdp = CDP.load(event.params.token0.toHex())
+  let cdp = getCDP(event.params.token0)
   if (isToken0Mtr) {
-    cdp = CDP.load(event.params.token1.toHex())
+    cdp = getCDP(event.params.token1)
   }
 
   if (cdp === null || (!isToken1Mtr && !isToken0Mtr)) {

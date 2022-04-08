@@ -16,7 +16,7 @@ export function getCDP(collateral: Address): CDP {
     cdp.mcr = BIG_DECIMAL_ZERO
     cdp.expiary = BIG_DECIMAL_ZERO
     cdp.decimals = BIG_DECIMAL_ZERO
-    cdp.isOpen = true
+    cdp.isOpen = false
   }
 
   cdp.save()

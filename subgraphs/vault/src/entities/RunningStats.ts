@@ -4,7 +4,7 @@ import { CollateralVaultRunningStat, VaultManagerRunningStat, VaultRunningStat }
 import { getAssetPrice } from '../utils/vaultManager'
 import { getVault } from './Vault'
 import { getCollateralVault } from './CollateralVault'
-import { getVaultManager } from './vaultManager'
+import { getVaultManager } from './Vault'
 import { getCDP } from './CDP'
 import { getDebt } from '../utils/vault'
 

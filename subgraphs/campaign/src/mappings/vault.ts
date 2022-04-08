@@ -3,7 +3,7 @@ import { BIG_DECIMAL_1E18, BIG_DECIMAL_ZERO } from 'const'
 import { VaultIdTracker } from '../../generated/schema'
 import { BorrowMore, CloseVault, PayBack } from '../../generated/VaultManager/Vault'
 import { updateUserScore } from '../entities/User'
-import { getVault } from '../entities/vault'
+import { getVault } from '../entities/Vault'
 
 export function onBorrowMore(event: BorrowMore): void {
   const vault = getVault(event.params.vaultID)

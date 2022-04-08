@@ -21,7 +21,7 @@ import {
 } from '../entities/RunningStats'
 import { getUser, updateUserHistory } from '../entities/User'
 import { getVault, updateVaultHistory } from '../entities/Vault'
-import { getVaultManager } from '../entities/vaultManager'
+import { getVaultManager } from '../entities/Vault'
 import { updateVaultManagerHistory } from '../entities/VaultManagerHistory'
 import { getAssetPrice } from '../utils/vaultManager'
 

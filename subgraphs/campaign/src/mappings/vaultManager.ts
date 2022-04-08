@@ -1,6 +1,6 @@
 import { VaultCreated } from '../../generated/VaultManager/VaultManager'
 import { Vault, Vault as VaultTemplate } from '../../generated/templates'
-import { createVault, createVaultIdTracker } from '../entities/vault'
+import { createVault, createVaultIdTracker } from '../entities/Vault'
 import { BIG_DECIMAL_1E18 } from 'const'
 import { getUser } from '../entities/User'
 

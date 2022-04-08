@@ -4,7 +4,7 @@ import { Pair, User } from '../../generated/schema'
 import { CDPInitialized, Rebase, RebaseActive, SetFees, VaultCreated, SetDesiredSupply } from '../../generated/VaultManager/VaultManager'
 import { getCDP, updateCDPHistory } from '../entities/CDP'
 import { createVault, updateVaultHistory } from '../entities/Vault'
-import { getVaultManager } from '../entities/vaultManager'
+import { getVaultManager } from '../entities/Vault'
 import { ERC20 } from '../../generated/VaultManager/ERC20'
 import { getCollateralVault, updateCollateralVaultHistory } from '../entities/CollateralVault'
 import {

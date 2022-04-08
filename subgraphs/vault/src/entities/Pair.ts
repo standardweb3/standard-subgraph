@@ -1,6 +1,6 @@
 import { Address, ethereum } from '@graphprotocol/graph-ts'
 import { BIG_DECIMAL_ZERO, BIG_INT_ONE_DAY_SECONDS } from 'const'
-import { Pair, PairDayData } from '../../generated/schema'
+import { CollateralPairMapper, Pair, PairDayData } from '../../generated/schema'
 import { Pair as PairContract } from '../../generated/templates/Pair/Pair'
 import { getSymbol } from '../functions'
 import { Pair as PairTemplate } from '../../generated/templates'
@@ -10,7 +10,8 @@ export function createPair(
   block: ethereum.Block = null,
   token0FromParams: Address = null,
   token1FromParams: Address = null,
-  isToken0Mtr: boolean = false
+  isToken0Mtr: boolean = false,
+  isOpen: boolean = false
 ): Pair | null {
   let pair = Pair.load(address.toHex())
 
@@ -56,6 +57,7 @@ export function createPair(
     pair.reserve0 = BIG_DECIMAL_ZERO
     pair.reserve1 = BIG_DECIMAL_ZERO
     pair.collateralReserve = BIG_DECIMAL_ZERO
+    pair.isOpen = isOpen
   }
 
   pair.timestamp = block.timestamp
@@ -92,4 +94,13 @@ export function getPairDayData(address: Address, block: ethereum.Block): PairDay
   dayData.save()
 
   return dayData as PairDayData
+}
+
+export function createCollateralPairMapper(
+  pairAddress: Address,
+  collateralAddress: Address,
+): void {
+  const pairCollateralMapper = new CollateralPairMapper(collateralAddress.toHex())
+  pairCollateralMapper.pair = pairAddress.toHex()
+  pairCollateralMapper.save()
 }

@@ -386,9 +386,16 @@ type Factory @entity {
   pairs: [Pair!]!
 }
 
+type CollateralPairMapper @entity {
+  id: ID!
+  pair: Pair!
+}
+
 type Pair @entity {
   # Contract address
   id: ID!
+
+  isOpen: Boolean!
 
   address: String!
   isToken0Mtr: Boolean!

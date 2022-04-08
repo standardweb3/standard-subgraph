@@ -1,6 +1,6 @@
 import { Address, BigDecimal, ethereum, log } from '@graphprotocol/graph-ts'
 import { BIG_DECIMAL_1E18, BIG_DECIMAL_ZERO, BIG_INT_ONE, FACTORY_ADDRESS, MTR_ADDRESS } from 'const'
-import { Pair, User } from '../../generated/schema'
+import { CollateralPairMapper, Pair, User } from '../../generated/schema'
 import {
   CDPInitialized,
   Rebase,
@@ -129,6 +129,13 @@ export function onCDPInitialized(event: CDPInitialized): void {
   }
 
   cdp.save()
+
+  const collateralPairMapper = CollateralPairMapper.load(event.params.collateral.toHex())
+  if (collateralPairMapper != null && cdp.isOpen) {
+    const pair = Pair.load(collateralPairMapper.pair)
+    pair.isOpen = cdp.isOpen
+    pair.save()
+  }
 
   updateVaultManagerHistory(event.block)
   updateCDPHistory(event.params.collateral, event.block)

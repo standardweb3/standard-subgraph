@@ -13,7 +13,6 @@
     "subgraphs/candles",
     "subgraphs/exchange-dev",
     "subgraphs/vault",
-    "subgraphs/vault-reserve",
     "subgraphs/campaign"
   ],
   "scripts": {

@@ -13,6 +13,7 @@ export function getUser(address: Address): User {
     user = new User(address.toHex())
     user.score = BIG_DECIMAL_ZERO
     scoreAggregator.usersCount = scoreAggregator.usersCount.plus(BIG_INT_ONE)
+    scoreAggregator.save()
   }
   user.save()
   return user as User

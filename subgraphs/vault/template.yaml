@@ -59,7 +59,7 @@ dataSources:
           handler: onVaultCreated
         - event: SetFees(address,address,address)
           handler: onSetFees
-        - event: CDPInitialized(address,uint256,uint256,uint256,bool)
+        - event: CDPInitialized(address,uint256,uint256,uint256,uint256,bool)
           handler: onCDPInitialized
         - event: Rebase(uint256,uint256)
           handler: onRebase

@@ -123,6 +123,7 @@ type CDP @entity {
   lfr: BigDecimal!
   mcr: BigDecimal!
   sfr: BigDecimal!
+  expiary: BigDecimal!
   decimals: BigDecimal!
   isOpen: Boolean!
   symbol: String!

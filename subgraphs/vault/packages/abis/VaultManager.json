@@ -52,6 +52,12 @@
       },
       {
         "indexed": false,
+        "internalType": "uint256",
+        "name": "expiary",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
         "internalType": "bool",
         "name": "isOpen",
         "type": "bool"

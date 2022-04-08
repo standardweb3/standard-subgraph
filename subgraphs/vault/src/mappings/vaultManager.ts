@@ -15,7 +15,7 @@ import {
 import { Vault as VaultTemplate } from '../../generated/templates'
 import { updateVaultManagerHistory } from '../entities/VaultManagerHistory'
 import { updateUserHistory } from '../entities/User'
-import { getFactory } from '../entities/factory'
+import { getFactory } from '../entities/Factory'
 import { getCollateralReserveUSD } from '../functions'
 
 export function onVaultCreated(event: VaultCreated): void {

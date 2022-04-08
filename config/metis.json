@@ -20,6 +20,7 @@
   "sushi_usdc_pair_liquidity_block": "20686",
   "sushi_weth_pair": "0xb93799632d760087a2556f6d1bfb964f826dcfe8",
   "sushi_weth_liquidity_block": "13584",
+  "natives": ["0x75cb093e4d61d2a2e65d8e0bbb01de8d89b53481", "0xdeaddeaddeaddeaddeaddeaddeaddeaddead0000"],
   "native_address": "0x75cb093e4d61d2a2e65d8e0bbb01de8d89b53481",
   "weth_address": "0x75cb093e4d61d2a2e65d8e0bbb01de8d89b53481",
   "masterchefV2": {
@@ -40,22 +41,23 @@
   "whitelist": [
     "0xc12cac7090baa48ec750cceec57c80768f6ee58e",
     "0x75cb093e4d61d2a2e65d8e0bbb01de8d89b53481",
+    "0xdeaddeaddeaddeaddeaddeaddeaddeaddead0000",
     "0xea32a96608495e54156ae48931a7c20f0dcc1a21",
     "0xbb06dca3ae6887fabf931640f67cab3e3a16f4dc",
-    "0x141133fb6cc58451b903bc9007f43cd63c19e3a1"
+    "0xfc76114c5adebfa257153ea82b8594c3b25baebe"
   ],
   "stnd_address": "0xc12cac7090baa48ec750cceec57c80768f6ee58e",
-  "mtr_address": "0x141133fb6cc58451b903bc9007f43cd63c19e3a1",
+  "mtr_address": "0xfc76114c5adebfa257153ea82b8594c3b25baebe",
   "vaultManager": {
-    "address": "0x8b3d37b4c3013e5c43caf5b01a860f74ea3f0225",
-    "startBlock": "1988440"
+    "address": "0x3a7bff385e5032a26aaf6d468aaf03919299f603",
+    "startBlock": "2224126"
   },
   "v1": {
-    "address": "0x5b5ef52799b544ae715e092ad4dc33396a0b4f19",
-    "startBlock": "1988438"
+    "address": "0xb8d67e84e6f91f94c3999c285764730f2bc1b68b",
+    "startBlock": "2224118"
   },
   "vaultFactory": {
-    "address": "0xa1341dac752ce0d48c67ef205c577854553269a2",
-    "startBlock": "1988437"
+    "address": "0xfc4e82b7113f269f2b6a8ae79409846c9ca8b67c",
+    "startBlock": "2224115"
   }
 }

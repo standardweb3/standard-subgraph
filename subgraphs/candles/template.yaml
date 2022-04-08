@@ -61,7 +61,7 @@ dataSources:
       eventHandlers:
         - event: VaultCreated(uint256,address,address,address,address,uint256,uint256)
           handler: onVaultCreated
-        - event: CDPInitialized(address,uint256,uint256,uint256,bool)
+        - event: CDPInitialized(address,uint256,uint256,uint256,uint256,bool)
           handler: onCDPInitialized
 templates:
   - kind: ethereum/contract

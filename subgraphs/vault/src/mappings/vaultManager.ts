@@ -109,6 +109,7 @@ export function onCDPInitialized(event: CDPInitialized): void {
   cdp.lfr = event.params.lfr.toBigDecimal()
   cdp.sfr = event.params.sfr.toBigDecimal()
   cdp.mcr = event.params.mcr.toBigDecimal()
+  cdp.expiary = event.params.expiary.toBigDecimal()
   cdp.isOpen = event.params.isOpen
 
   // call erc20 collateral contract to fetch decimals

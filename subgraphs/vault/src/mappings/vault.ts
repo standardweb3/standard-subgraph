@@ -15,18 +15,14 @@ import {
   getCollateralVaultLiquidation,
   getVaultManagerLiquidation,
 } from '../entities/Liquidations'
-import {
-  updateVaultManagerRunningStat,
-  updateVaultRunningStat,
-} from '../entities/RunningStats'
+import { updateVaultManagerRunningStat, updateVaultRunningStat } from '../entities/RunningStats'
 import { getUser, updateUserHistory } from '../entities/User'
 import { getVault, updateVaultHistory } from '../entities/Vault'
-import { getVaultManager } from '../entities/vaultManager'
+import { getVaultManager } from '../entities/VaultManager'
 import { updateVaultManagerHistory } from '../entities/VaultManagerHistory'
 import { getAssetPrice } from '../utils/vaultManager'
 
-export function onBlockChange(block: ethereum.Block): void {
-}
+export function onBlockChange(block: ethereum.Block): void {}
 
 export function onDepositCollateral(event: DepositCollateral): void {
   const vault = getVault(event.params.vaultID, event.block)

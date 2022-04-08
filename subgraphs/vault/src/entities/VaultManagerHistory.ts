@@ -3,7 +3,7 @@ import { BIG_DECIMAL_ZERO, BIG_INT_ONE_DAY_SECONDS } from 'const'
 import { VaultManagerHistory, VaultManagerRunningStat } from '../../generated/schema'
 import { getVaultManagerLiquidation } from './Liquidations'
 import { getVaultManagerRunningStat } from './RunningStats'
-import { getVaultManager } from './vaultManager'
+import { getVaultManager } from './VaultManager'
 
 export function getVaultManagerHistory(block: ethereum.Block): VaultManagerHistory {
   const date = block.timestamp.div(BIG_INT_ONE_DAY_SECONDS).toI32()

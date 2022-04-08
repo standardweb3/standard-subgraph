@@ -1,10 +1,17 @@
 import { Address, BigDecimal, ethereum, log } from '@graphprotocol/graph-ts'
 import { BIG_DECIMAL_1E18, BIG_DECIMAL_ZERO, BIG_INT_ONE, FACTORY_ADDRESS, MTR_ADDRESS } from 'const'
 import { Pair, User } from '../../generated/schema'
-import { CDPInitialized, Rebase, RebaseActive, SetFees, VaultCreated, SetDesiredSupply } from '../../generated/VaultManager/VaultManager'
+import {
+  CDPInitialized,
+  Rebase,
+  RebaseActive,
+  SetFees,
+  VaultCreated,
+  SetDesiredSupply,
+} from '../../generated/VaultManager/VaultManager'
 import { getCDP, updateCDPHistory } from '../entities/CDP'
 import { createVault, updateVaultHistory } from '../entities/Vault'
-import { getVaultManager } from '../entities/vaultManager'
+import { getVaultManager } from '../entities/VaultManager'
 import { ERC20 } from '../../generated/VaultManager/ERC20'
 import { getCollateralVault, updateCollateralVaultHistory } from '../entities/CollateralVault'
 import {
@@ -15,7 +22,7 @@ import {
 import { Vault as VaultTemplate } from '../../generated/templates'
 import { updateVaultManagerHistory } from '../entities/VaultManagerHistory'
 import { updateUserHistory } from '../entities/User'
-import { getFactory } from '../entities/factory'
+import { getFactory } from '../entities/Factory'
 import { getCollateralReserveUSD } from '../functions'
 
 export function onVaultCreated(event: VaultCreated): void {
@@ -156,7 +163,7 @@ export function onRebaseActive(event: RebaseActive): void {
   // updateVaultManagerRunningStat2(event.block)
 }
 
-export function onSetDesiredSupply(event:SetDesiredSupply): void {
+export function onSetDesiredSupply(event: SetDesiredSupply): void {
   const manager = getVaultManager(event.block)
   let newDesiredSupply = event.params.desiredSupply.toBigDecimal()
   if (newDesiredSupply.gt(BIG_DECIMAL_ZERO)) {

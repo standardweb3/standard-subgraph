@@ -3,13 +3,13 @@ import { BIG_DECIMAL_ZERO, BIG_INT_ONE } from 'const'
 import { User, Vault, VaultHistory } from '../../generated/schema'
 import { getDateFromTimestamp } from '../functions'
 import { getScoreAggregator } from './ScoreAggregator'
-import { getVaultHistory, getVaultHistoryId } from './vault'
+import { getVaultHistory, getVaultHistoryId } from './Vault'
 
 export function getUser(address: Address): User {
   let user = User.load(address.toHex())
   if (user === null) {
     let scoreAggregator = getScoreAggregator()
-    
+
     user = new User(address.toHex())
     user.score = BIG_DECIMAL_ZERO
     scoreAggregator.usersCount = scoreAggregator.usersCount.plus(BIG_INT_ONE)

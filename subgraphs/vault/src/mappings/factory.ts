@@ -1,7 +1,7 @@
 import { MTR_ADDRESS } from 'const'
 import { PairCreated } from '../../generated/Factory/Factory'
 import { CDP } from '../../generated/schema'
-import { getFactory } from '../entities/factory'
+import { getFactory } from '../entities/Factory'
 import { createPair } from '../entities/Pair'
 
 export function onPairCreated(event: PairCreated): void {

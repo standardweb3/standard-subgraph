@@ -1,7 +1,7 @@
 import { Address, ethereum } from '@graphprotocol/graph-ts'
 import { BIG_DECIMAL_ZERO, BIG_INT_ONE, BIG_INT_ONE_DAY_SECONDS, BIG_INT_ZERO } from 'const'
 import { User, UserHistory } from '../../generated/schema'
-import { getVaultManager } from './vaultManager'
+import { getVaultManager } from './VaultManager'
 
 export function getUser(address: Address, block: ethereum.Block): User {
   let user = User.load(address.toHex())

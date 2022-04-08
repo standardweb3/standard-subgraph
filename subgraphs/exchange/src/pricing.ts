@@ -8,6 +8,7 @@ import {
   FACTORY_ADDRESS,
   MINIMUM_LIQUIDITY_THRESHOLD_ETH,
   NATIVE,
+  NATIVES,
   SUSHI_TOKEN_ADDRESS,
   SUSHI_USDC_PAIR_ADDRESS,
   SUSHI_USDT_PAIR,
@@ -186,6 +187,10 @@ export function getEthPrice(block: ethereum.Block = null): BigDecimal {
 }
 
 export function findEthPerToken(token: Token): BigDecimal {
+  if (NATIVES.length > 0 && NATIVES.includes(token.id)) {
+    return BIG_DECIMAL_ONE
+  }
+
   if (Address.fromString(token.id) == NATIVE) {
     return BIG_DECIMAL_ONE
   }

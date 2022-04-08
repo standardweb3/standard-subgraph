@@ -216,6 +216,7 @@ export const USDT = '{{ usdt_address }}{{^usdt_address}}0x0000000000000000000000
 export const DAI = '{{ dai_address }}{{^dai_address}}0x0000000000000000000000000000000000000000{{/dai_address}}'
 
 export const WHITELIST: string[] = '{{ whitelist }}'.split(',')
+export const NATIVES: string[] = '{{ natives }}'.split(',')
 
 // export const WHITELIST: string[] = [
 //   "0xcf664087a5bb0237a0bad6742852ec6c8d69a27a",

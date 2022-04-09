@@ -28,7 +28,7 @@ Current subgraph locations:
 
 ## To setup and deploy
 
-For any of the subgraphs: `sushiswap` or `bar` as `[subgraph]`
+For any of the subgraphs: `sushiswap` or `bar` as `[subgraph]`.
 
 1. Run the `yarn run codegen:[subgraph]` command to prepare the TypeScript sources for the GraphQL (generated/schema) and the ABIs (generated/[ABI]/\*)
 2. [Optional] run the `yarn run build:[subgraph]` command to build the subgraph. Can be used to check compile errors before deploying.

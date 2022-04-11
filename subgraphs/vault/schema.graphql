@@ -350,7 +350,7 @@ type CollateralVaultHistory @entity {
   id: ID!
   date: Int!
 
-  # collateralPrice: BigDecimal!
+  collateralPrice: BigDecimal!
 
   collateralVault: CollateralVault!
 
@@ -362,7 +362,7 @@ type CollateralVaultHistory @entity {
   historicPaidBack: BigDecimal!
 
   currentCollateralized: BigDecimal!
-  # currentCollateralizedUSD: BigDecimal!
+  currentCollateralizedUSD: BigDecimal!
 
   historicCollateralized: BigDecimal!
   historicCollateralizedUSD: BigDecimal!
@@ -444,6 +444,8 @@ type PairDayData @entity {
   reserve1: BigDecimal!
 
   collateralReserve: BigDecimal!
+  collateralReserveUSD: BigDecimal!
+  collateralPrice: BigDecimal!
 
   block: BigInt!
   timestamp: BigInt!

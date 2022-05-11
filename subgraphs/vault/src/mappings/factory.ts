@@ -9,13 +9,13 @@ export function onPairCreated(event: PairCreated): void {
   const isToken0Mtr = event.params.token0.equals(MTR_ADDRESS)
   const isToken1Mtr = event.params.token1.equals(MTR_ADDRESS)
 
+  if  (!isToken1Mtr && !isToken0Mtr) {
+    return
+  }
+
   let cdp = getCDP(event.params.token0)
   if (isToken0Mtr) {
     cdp = getCDP(event.params.token1)
-  }
-
-  if (cdp === null || (!isToken1Mtr && !isToken0Mtr)) {
-    return
   }
 
   const pair = createPair(

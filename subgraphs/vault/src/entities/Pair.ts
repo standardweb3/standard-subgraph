@@ -4,6 +4,8 @@ import { CollateralPairMapper, Pair, PairDayData } from '../../generated/schema'
 import { Pair as PairContract } from '../../generated/templates/Pair/Pair'
 import { getSymbol } from '../functions'
 import { Pair as PairTemplate } from '../../generated/templates'
+import { getAssetPrice } from '../utils/pair'
+import { getCDP } from './CDP'
 
 export function createPair(
   address: Address,
@@ -87,6 +89,11 @@ export function getPairDayData(address: Address, block: ethereum.Block): PairDay
   dayData.reserve0 = pair.reserve0
   dayData.reserve1 = pair.reserve1
   dayData.collateralReserve = pair.collateralReserve
+
+  const cdp = getCDP(Address.fromString(pair.collateral))
+  let assetPrice = getAssetPrice(Address.fromString(pair.collateral))
+  dayData.collateralPrice = assetPrice
+  dayData.collateralReserveUSD = dayData.collateralReserve.times(assetPrice)
 
   dayData.timestamp = block.timestamp
   dayData.block = block.number

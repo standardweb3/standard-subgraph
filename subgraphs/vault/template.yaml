@@ -147,6 +147,8 @@ dataSources:
           file: ../../packages/abis/ERC20SymbolBytes.json
         - name: ERC20NameBytes
           file: ../../packages/abis/ERC20NameBytes.json
+        - name: VaultManager
+          file: ../../packages/abis/VaultManager.json
       eventHandlers:
         - event: PairCreated(indexed address,indexed address,address,uint256)
           handler: onPairCreated
@@ -224,6 +226,8 @@ templates:
         - Pair
         - CollateralPairMapper
         - Factory
+        - VaultManager
+        - CDP
       abis:
         - name: Pair
           file: ./packages/abis/UniswapV2Pair.json
@@ -231,6 +235,8 @@ templates:
           file: ../../node_modules/@sushiswap/core/build/abi/ERC20.json
         - name: Factory
           file: ../../node_modules/@sushiswap/core/build/abi/UniswapV2Factory.json
+        - name: VaultManager
+          file: ../../packages/abis/VaultManager.json
       eventHandlers:
         - event: Sync(uint112,uint112)
           handler: onSync

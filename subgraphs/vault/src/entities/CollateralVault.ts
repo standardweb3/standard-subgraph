@@ -1,6 +1,8 @@
 import { Address, ethereum } from '@graphprotocol/graph-ts'
 import { BIG_DECIMAL_ZERO, BIG_INT_ONE_DAY_SECONDS, BIG_INT_ZERO } from 'const'
 import { CollateralVault, CollateralVaultHistory } from '../../generated/schema'
+import { getAssetPrice } from '../utils/vaultManager'
+import { getCDP } from './CDP'
 import { getCollateralVaultLiquidation } from './Liquidations'
 // import { getCollateralVaultRunningStat } from './RunningStats'
 
@@ -46,17 +48,18 @@ export function updateCollateralVaultHistory(collateral: Address, block: ethereu
 
   // const runningStat = getCollateralVaultRunningStat(collateral, block)
   const liquidation = getCollateralVaultLiquidation(collateral, block)
+  let assetPrice = getAssetPrice(Address.fromString(cVault.collateral.toHex()));
+  const cdp = getCDP(Address.fromString(cVault.collateral.toHex()))
 
   history.collateralVault = cVault.id
-  // history.collateralPrice = runningStat.collateralPrice
+  history.collateralPrice = assetPrice
 
   history.historicBorrowed = cVault.historicBorrowed
   history.currentBorrowed = cVault.currentBorrowed
-  // history.currentBorrowedUSD = runningStat.currentBorrowedUSD
 
   history.historicPaidBack = cVault.historicPaidBack
   history.currentCollateralized = cVault.currentCollateralized
-  // history.currentCollateralizedUSD = runningStat.currentCollateralizedUSD
+  history.currentCollateralizedUSD = cVault.currentCollateralized.times(assetPrice)
   history.historicCollateralized = cVault.historicCollateralized
   history.historicCollateralizedUSD = cVault.historicCollateralizedUSD
 

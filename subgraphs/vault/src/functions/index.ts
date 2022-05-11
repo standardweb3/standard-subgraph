@@ -1,4 +1,4 @@
-import { Address, BigDecimal } from '@graphprotocol/graph-ts'
+import { Address, BigDecimal, log } from '@graphprotocol/graph-ts'
 import {  BIG_DECIMAL_ZERO, NULL_CALL_RESULT_VALUE } from 'const'
 import { ERC20 } from '../../generated/Factory/ERC20'
 import { ERC20SymbolBytes } from '../../generated/Factory/ERC20SymbolBytes'
@@ -24,7 +24,6 @@ export function getSymbol(address: Address): string {
     } else {
       symbolValue = symbolResult.value
     }
-  
     return symbolValue
   }
 

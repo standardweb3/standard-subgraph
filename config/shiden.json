@@ -42,20 +42,20 @@
     "0x765277eebeca2e31912c9946eae1021199b39c61",
     "0x922d641a426dcffaef11680e5358f34d97d112e1",
     "0x332730a4f6e03d9c55829435f10360e13cfa41ff",
-    "0x078CC24fFB84865149cB4Fce725c2F9248585BD4"
+    "0xCCD3C0ce2B05fdf4f9638C97009E29e3D9317B45"
   ],
   "stnd_address": "0x722377a047e89ca735f09eb7cccab780943c4cb4",
-  "mtr_address": "0x078CC24fFB84865149cB4Fce725c2F9248585BD4",
+  "mtr_address": "0xCCD3C0ce2B05fdf4f9638C97009E29e3D9317B45",
   "vaultManager": {
-    "address": "0xD3C62D91FDe52416a20fA606F3dC43b29363BEA9",
+    "address": "0x446DC83d3c7B2A2aB00543e1926802DB94493B09",
     "startBlock": "1539514"
   },
   "v1": {
-    "address": "0xd300D1C08b917b1C195fC8E2e2Cbb4dC2997aB20",
+    "address": "0x528F9AbBF357255E1864a3fAD8Ff5632659Bc61f",
     "startBlock": "1539512"
   },
   "vaultFactory": {
-    "address": "0x432652A2599ADa450b170c94fD3B62a3Ac5b50B8",
+    "address": "0xf398D2d61661D26e1afD6ae0401264f7562D2B50",
     "startBlock": "1539512"
   }
 }

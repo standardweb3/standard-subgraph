@@ -1,5 +1,5 @@
 ---
-name: Subgraph Develop Deploy
+name: Subgraph Manual Deploy
 
 # Controls when the action will run.
 on:

@@ -29,11 +29,6 @@ jobs:
             graph_hosted: true
             graph_url: https://api.thegraph.com/deploy/
             ipfs_url: https://api.thegraph.com/ipfs/
-          - chain: shibuya
-            subgraphs: exchange masterchefV2 blocks candles
-            graph_hosted: false
-            graph_url: https://graph.shibuya.standardtech.xyz:4443
-            ipfs_url: https://api.thegraph.com/ipfs/
     env:
       CHAIN: ${{ matrix.chain }}
       SUBGRAPHS: ${{ matrix.subgraphs }}
@@ -45,10 +40,10 @@ jobs:
       REQUIRED_PACKAGES: const pricing
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Yarn - Restore cache
-        uses: actions/cache@v2
+        uses: actions/checkout@v3
         with:
           path: '**/node_modules'
           key: node_modules-${{ hashFiles('**/yarn.lock') }}

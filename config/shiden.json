@@ -1,6 +1,6 @@
 {
   "network": "shiden",
-  "factory_address": "0x073386AE3292299a5814B00bC1ceB8f2bfC92c51",
+  "factory_address": "0x073386ae3292299a5814b00bc1ceb8f2bfc92c51",
   "uniswap_factory_address": "0x073386ae3292299a5814b00bc1ceb8f2bfc92c51",
   "minimum_usd_threshold_new_pairs": "1000",
   "minimum_liquidity_threshold_eth": "1668",
@@ -30,7 +30,7 @@
     "startBlock": "496924"
   },
   "bar": {
-    "address": "0xfC76114C5AdeBfa257153eA82b8594C3B25baebe",
+    "address": "0xfc76114c5adebfa257153ea82b8594c3b25baebe",
     "startBlock": "648843"
   },
   "whitelist": [
@@ -42,20 +42,20 @@
     "0x765277eebeca2e31912c9946eae1021199b39c61",
     "0x922d641a426dcffaef11680e5358f34d97d112e1",
     "0x332730a4f6e03d9c55829435f10360e13cfa41ff",
-    "0xCCD3C0ce2B05fdf4f9638C97009E29e3D9317B45"
+    "0xccd3c0ce2b05fdf4f9638c97009e29e3d9317b45"
   ],
   "stnd_address": "0x722377a047e89ca735f09eb7cccab780943c4cb4",
   "mtr_address": "0xCCD3C0ce2B05fdf4f9638C97009E29e3D9317B45",
   "vaultManager": {
-    "address": "0x446DC83d3c7B2A2aB00543e1926802DB94493B09",
+    "address": "0x446dc83d3c7b2a2ab00543e1926802db94493b09",
     "startBlock": "1539514"
   },
   "v1": {
-    "address": "0x528F9AbBF357255E1864a3fAD8Ff5632659Bc61f",
+    "address": "0x528f9abbf357255e1864a3fad8ff5632659bc61f",
     "startBlock": "1539512"
   },
   "vaultFactory": {
-    "address": "0xf398D2d61661D26e1afD6ae0401264f7562D2B50",
+    "address": "0xf398d2d61661d26e1afd6ae0401264f7562d2b50",
     "startBlock": "1539512"
   }
 }

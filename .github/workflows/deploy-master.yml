@@ -45,10 +45,10 @@ jobs:
       REQUIRED_PACKAGES: const pricing
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Yarn - Restore cache
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           path: '**/node_modules'
           key: node_modules-${{ hashFiles('**/yarn.lock') }}
